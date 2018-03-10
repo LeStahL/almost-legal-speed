@@ -87,13 +87,17 @@ void GameLogic::run()
         }
     }
     switch (state->player.a) {
-    case(LEFT):
+    case (LEFT):
+        if (state->player.v.x > 0)
+            state->player.v.x = 0;
         state->player.v.x -= acc * elapsed;
         break;
-    case(RIGHT):
+    case (RIGHT):
+        if (state->player.v.x < 0)
+            state->player.v.x = 0;
         state->player.v.x += acc * elapsed;
         break;
-    case(NONE):
+    case (NONE):
         state->player.v.x = 0;
         break;
     }
