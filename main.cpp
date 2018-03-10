@@ -60,11 +60,11 @@ int main(int argc, char **args)
     }
     printf("Rendering level: %s\n", levelpath);
     
-    /*GfxManager m    ;
+    GfxManager m;
     LevelImporter imp;
     std::string fn(levelpath);
     const Level *level = imp.LoadLevel(fn, m);
-    */
+
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
