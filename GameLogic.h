@@ -1,7 +1,6 @@
 // Almost Legal Speed - platform running game
 // Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
 //                     Daniel Hauck <mail@dhauck.eu>
-//                     Jonas Blahut <darkphoenix@jbtec.eu>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,34 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <SFML/Graphics.hpp>
-#include <GameLogic.h>
+#ifndef GAME_LOGIC_H
+#define GAME_LOGIC_H
+
 #include <GameState.h>
 
-#include "Renderer.h"
+void run_logic(GameState*);
 
-int main(int argc, char **args)
-{
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
-    GameState state;
-
-    Renderer r(&window);
-    
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear(sf::Color::Black);
-
-        run_logic(&state);
-
-        window.display();
-    }
-
-    return 0;
-}
+#endif
