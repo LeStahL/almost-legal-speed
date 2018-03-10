@@ -32,6 +32,7 @@ public:
 private:
     GameState* state;
     Time last;
+    const double grav_acc = 1;
 };
 
 #endif

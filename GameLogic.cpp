@@ -34,18 +34,36 @@ void GameLogic::run()
     }
 
     // Update speed vector.
+    bool inair = false; // TODO
+    auto current = state->timer.getElapsedTime();
+    double elapsed = (current - last).asSeconds();
     double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
-    switch (state->player.a) {
-    case(LEFT):
-        state->player.v.x -= acc;
-        break;
-    case(RIGHT):
-        state->player.v.x += acc;
-        break;
+    double max_speed = acc * 1;
+
+    if (inair) {
+        state->player.v.y -= grav_acc;
+    } else {
+        state->player.v.y = 0;
+        switch (state->player.a) {
+        case(LEFT):
+            state->player.v.x -= acc;
+            break;
+        case(RIGHT):
+            state->player.v.x += acc;
+            break;
+        case(NONE):
+            state->player.v.x = 0;
+            break;
+        }
+        if (state->player.v.x > max_speed) {
+            state->player.v.x = max_speed;
+        } else if (state->player.v.x < -max_speed) {
+            state->player.v.x = -max_speed;
+        }
     }
 
     // Apply speed vector.
-    auto current = state->timer.getElapsedTime();
-    double elapsed = (current - last).asSeconds();
-    state->player.pos += state->player.v * elapsed;
+    if (!state->player.stuck) {
+        state->player.pos += state->player.v * elapsed;
+    }
 }
