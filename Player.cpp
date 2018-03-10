@@ -30,3 +30,8 @@ void vec2::operator+=(vec2 const& rhs) {
     x += rhs.x;
     y += rhs.y;
 }
+
+void vec2::operator*(double f) {
+    x *= f;
+    y *= f;
+}
