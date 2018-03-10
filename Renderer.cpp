@@ -74,6 +74,8 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load p_red.png\n");
         exit(0);
     }
+
+    last_bg_change = sf::Time::Zero;
 }
 
 Renderer::~Renderer()
@@ -87,7 +89,11 @@ void Renderer::render(GameState *state)
     //backdrop
     if(player->forwardPower + player->upwardPower + player->speedPower > 1.5)
     {
-        if(state->timer.getElapsedTime().asMilliseconds() % 70 == 0)++drogen_counter;
+        sf::Time current = state->timer.getElapsedTime();
+        if ((current - last_bg_change).asMilliseconds() > 70) {
+            ++drogen_counter;
+            last_bg_change = current;
+        }
         if(drogen_counter == 14) drogen_counter = 0;
         sf::Sprite sprite;
         sprite.setTexture(t.at(drogen_counter));
