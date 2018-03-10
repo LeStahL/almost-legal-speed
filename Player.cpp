@@ -26,6 +26,7 @@ Player::Player()
     v.x = 0;
     v.y = 0;
     a = NONE;
+    face = LEFT;
 
     forwardPower = 0.0;
     upwardPower = 0.0;

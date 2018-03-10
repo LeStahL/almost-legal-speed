@@ -34,7 +34,7 @@ public:
     RenderWindow *window;
     Font *font;
     
-    void renderMenu();
+    void renderMenu(int);
     Player *player;
 };
 

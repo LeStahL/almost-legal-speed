@@ -31,7 +31,7 @@ struct vec2 {
     void operator/=(double);
 };
 
-typedef enum { LEFT, NONE, RIGHT } direction;
+typedef enum { LEFT = -1, NONE = 0, RIGHT = 1 } direction;
 
 class Player
 {
@@ -40,7 +40,7 @@ public:
     virtual ~Player() = default;
 
     vec2 pos, v;
-    direction a;
+    direction a, face;
 
     double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
     bool stuck, inair, jumping, double_jumped;
