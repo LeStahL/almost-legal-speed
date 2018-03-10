@@ -40,13 +40,11 @@ public:
     GameState();
     virtual ~GameState() = default;
 
-    bool jumping;
-
     Player player;
 
     Level level;
     Clock timer;
-    
+
     bool ingame;
 };
 

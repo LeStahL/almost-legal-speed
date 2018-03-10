@@ -67,7 +67,7 @@ int main(int argc, char **args)
                 switch (event.key.code)
                 {
                 case(sf::Keyboard::Space):
-                    state.jumping = true;
+                    state.player.jumping = true;
                 }
             }
         }
@@ -93,9 +93,9 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
-        if(state.ingame)
+        if (state.ingame)
             r.render();
-        else 
+        else
             r.renderMenu();
         logic.run();
 

@@ -38,6 +38,9 @@ void GameLogic::run()
     double elapsed = (current - last).asSeconds();
     double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
     double max_speed = acc * 1;
+    if (state->player.jumping) {
+        
+    }
 
     if (state->player.inair) {
         state->player.v.y -= grav_acc;
