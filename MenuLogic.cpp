@@ -85,6 +85,7 @@ void MenuLogic::activateMenuItem(int index) {
         state->onscores = true;
         curl = curl_easy_init();
         if (curl) {
+            state->highscores = "";
             CURLcode res;
             curl_easy_setopt(curl, CURLOPT_URL, "https://speed.jbtec.eu/score");
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
