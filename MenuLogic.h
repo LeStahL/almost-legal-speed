@@ -19,12 +19,15 @@
 #ifndef MENU_LOGIC_H
 #define MENU_LOGIC_H
 
+#include <SFML/Graphics.hpp>
+
 class MenuLogic {
 public:
     MenuLogic();
     virtual ~MenuLogic() = default;
 
     void run();
+    void keyPressed(sf::Keyboard::Key);
 
 private:
 };

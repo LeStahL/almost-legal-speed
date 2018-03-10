@@ -18,6 +18,8 @@
 
 #include <MenuLogic.h>
 
+#include <SFML/Graphics.hpp>
+
 MenuLogic::MenuLogic() {
 }
 
@@ -25,3 +27,5 @@ void MenuLogic::run()
 {
 
 }
+
+void MenuLogic::keyPressed(sf::Keyboard::Key);
