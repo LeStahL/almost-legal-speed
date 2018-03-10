@@ -28,8 +28,8 @@ Player::Player()
     a = NONE;
     face = LEFT;
 
-    forwardPower = 0.0;
-    upwardPower = 0.0;
+    forwardPower = 1.0;
+    upwardPower = 1.0;
     speedPower = 0.0;
     money = 0.0;
     brainfreeze = 0.0;
@@ -37,7 +37,7 @@ Player::Player()
     stuck = false;
     inair = false;
     jumping = false;
-    double_jumped = false;
+    jump_count = 0;
 }
 
 vec2 vec2::operator+(vec2 const& rhs) {

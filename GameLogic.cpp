@@ -66,41 +66,41 @@ void GameLogic::run()
     {
         if (state->player.jumping)
         {
-            if (!state->player.double_jumped)
+            if (state->player.jump_count < max_jumps * state->player.upwardPower)
             {
-                state->player.double_jumped = true;
-                state->player.v.y = jump_speed_y * (1 + state->player.upwardPower);
+                state->player.jump_count++;
+                state->player.v.y = jump_speed;
             }
             state->player.jumping = false;
         } else {
             state->player.v.y -= grav_acc;
         }
+        max_speed *= 1 + state->player.forwardPower;
     } else {
         if (state->player.jumping)
         {
             state->player.inair = true;
-            state->player.v.x = state->player.face * jump_speed_x * (1 + state->player.forwardPower);
-            state->player.v.y = jump_speed_y * (1 + state->player.upwardPower);
+            state->player.v.y = jump_speed;
             state->player.jumping = false;
         } else {
             state->player.v.y = 0;
-            switch (state->player.a) {
-            case(LEFT):
-                state->player.v.x -= acc;
-                break;
-            case(RIGHT):
-                state->player.v.x += acc;
-                break;
-            case(NONE):
-                state->player.v.x = 0;
-                break;
-            }
-            if (state->player.v.x > max_speed) {
-                state->player.v.x = max_speed;
-            } else if (state->player.v.x < -max_speed) {
-                state->player.v.x = -max_speed;
-            }
         }
+    }
+    switch (state->player.a) {
+    case(LEFT):
+        state->player.v.x -= acc;
+        break;
+    case(RIGHT):
+        state->player.v.x += acc;
+        break;
+    case(NONE):
+        state->player.v.x = 0;
+        break;
+    }
+    if (state->player.v.x > max_speed) {
+        state->player.v.x = max_speed;
+    } else if (state->player.v.x < -max_speed) {
+        state->player.v.x = -max_speed;
     }
 
     // Apply speed vector.
@@ -114,7 +114,7 @@ void GameLogic::run()
         state->player.pos.y = 0;
         state->player.v.y = 0;
         state->player.inair = false;
-        state->player.double_jumped = false;
+        state->player.jump_count = 0;
     }
 
     // Check for collision.

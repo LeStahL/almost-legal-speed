@@ -43,7 +43,8 @@ public:
     direction a, face;
 
     double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
-    bool stuck, inair, jumping, double_jumped;
+    bool stuck, inair, jumping;
+    int jump_count;
 };
 
 #endif

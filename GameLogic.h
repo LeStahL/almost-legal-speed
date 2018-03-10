@@ -35,9 +35,9 @@ private:
     GameState* state;
     Time last;
     const double grav_acc = 0.003;
-    const double jump_speed_x = 0.4;
-    const double jump_speed_y = 0.6;
+    const double jump_speed = 0.6;
     const double acc_scale = 0.05;
+    const int max_jumps = 10;
 };
 
 #endif
