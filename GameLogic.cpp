@@ -163,7 +163,7 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
             break;
         case (sf::Keyboard::A):
             state->player.speedPower -= 0.1;
-            if (state->player.speedPower < 1) state->player.speedPower = 1;
+            if (state->player.speedPower < 0) state->player.speedPower = 0;
             break;
         case (sf::Keyboard::W):
             state->player.forwardPower += 0.1;
@@ -171,7 +171,7 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
             break;
         case (sf::Keyboard::S):
             state->player.forwardPower -= 0.1;
-            if (state->player.forwardPower < 1) state->player.forwardPower = 1;
+            if (state->player.forwardPower < 0) state->player.forwardPower = 0;
             break;
         case (sf::Keyboard::E):
             state->player.upwardPower += 0.1;
@@ -179,7 +179,7 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
             break;
         case (sf::Keyboard::D):
             state->player.upwardPower -= 0.1;
-            if (state->player.upwardPower < 1) state->player.upwardPower = 1;
+            if (state->player.upwardPower < 0) state->player.upwardPower = 0;
             break;
         case (sf::Keyboard::R):
             state->player.brainfreeze += 0.1;
@@ -187,7 +187,7 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
             break;
         case (sf::Keyboard::F):
             state->player.brainfreeze -= 0.1;
-            if (state->player.brainfreeze < 1) state->player.brainfreeze = 1;
+            if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
             break;
         }
     }
