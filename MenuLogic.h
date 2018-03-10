@@ -21,15 +21,18 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <GameState.h>
+
 class MenuLogic {
 public:
-    MenuLogic();
+    MenuLogic(GameState*);
     virtual ~MenuLogic() = default;
 
     void run();
     void keyPressed(sf::Keyboard::Key);
 
 private:
+	GameState* state;
 };
 
 #endif

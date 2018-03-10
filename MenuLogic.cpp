@@ -17,10 +17,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <MenuLogic.h>
+#include <GameState.h>
 
 #include <SFML/Graphics.hpp>
 
-MenuLogic::MenuLogic() {
+MenuLogic::MenuLogic(GameState* s) {
+    state = s;
 }
 
 void MenuLogic::run()
@@ -28,6 +30,11 @@ void MenuLogic::run()
 
 }
 
-void MenuLogic::keyPressed(sf::Keyboard::Key) {
-
+void MenuLogic::keyPressed(sf::Keyboard::Key key) {
+    switch (key)
+    {
+    case(sf::Keyboard::Return):
+        state->ingame = true;
+        break;
+    }
 }

@@ -52,7 +52,7 @@ int main(int argc, char **args)
 
     Renderer r(&window, fontpath, &(state.player));
     GameLogic gameLogic(&state);
-    MenuLogic menuLogic;
+    MenuLogic menuLogic(&state);
 
     while (window.isOpen())
     {
