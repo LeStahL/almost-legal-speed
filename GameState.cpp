@@ -19,7 +19,7 @@
 #include "GameState.h"
 
 GameState::GameState()
-    : ingame(false)
+    : ingame(false), onscores(false)
 {
     
 }
