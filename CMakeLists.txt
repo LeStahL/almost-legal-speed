@@ -1,5 +1,5 @@
 # Almost Legal Speed - platform running game
-# Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
+# Copyright (C) 2018  Alexander Kraus <nr4@z10.info>, Christoph Hess <christoph.s.hess@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ message("SFML LIBS" ${SFML_LIBRARIES})
 
 set(SPEED_SOURCES
     main.cpp
+    level_importer.cpp
 )
 
 include_directories(${SFML_INCLUDE_DIR})
