@@ -32,6 +32,7 @@
 int main(int argc, char **args)
 {
     const char *fontpath = 0, *levelpath = 0;
+    bool cheat = false;
     for(int i=1; i<argc; ++i)
     {
         if(!strcmp(args[i], "--font") || !strcmp(args[i], "-f"))
@@ -44,6 +45,11 @@ int main(int argc, char **args)
             ++i;
             levelpath = args[i];
         }
+        else if(!strcmp(args[i], "--cheat") || !strcmp(args[i], "-c"))
+        {
+            ++i;
+            cheat = true;
+        }
     }
 
     if(0 == fontpath)
@@ -52,23 +58,22 @@ int main(int argc, char **args)
         return -1;
     }
     printf("Using font: %s\n", fontpath);
-    
+
     if(0 == levelpath)
     {
         fprintf(stderr, "ERROR: No level specified. Use -l flag.\n");
         return -1;
     }
     printf("Rendering level: %s\n", levelpath);
-    
+
     GfxManager m;
     LevelImporter imp;
     std::string fn(levelpath);
-    const Level *level = imp.roadLevel(fn, m);
-    
+    const Level *level = imp.roadLevel(fn, m);    
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
     Renderer r(&window, fontpath);
-    GameLogic gameLogic(&state);
+    GameLogic gameLogic(&state, cheat);
     MenuLogic menuLogic(&state, r.texts);
 
     while (window.isOpen())

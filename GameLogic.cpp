@@ -22,9 +22,10 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics.hpp>
 
-GameLogic::GameLogic(GameState* s) {
+GameLogic::GameLogic(GameState* s, bool c) {
     state = s;
     last = Time::Zero;
+    cheat = c;
 }
 
 void GameLogic::run()
@@ -89,12 +90,12 @@ void GameLogic::run()
     switch (state->player.a) {
     case (LEFT):
         if (state->player.v.x > 0)
-            state->player.v.x = 0;
+        state->player.v.x = 0;
         state->player.v.x -= acc * elapsed;
         break;
     case (RIGHT):
         if (state->player.v.x < 0)
-            state->player.v.x = 0;
+        state->player.v.x = 0;
         state->player.v.x += acc * elapsed;
         break;
     case (NONE):
@@ -113,9 +114,8 @@ void GameLogic::run()
     }
 
 
-    // Check for collision.
-    // TODO
-    // TODO reset double_jumped
+    // Check for collisions.
+    // TODO get powerups
     vec2 pos_foot_1 = state->player.pos;
     pos_foot_1.x -= 0.25;
     pos_foot_1.y -= 0.5;
@@ -152,5 +152,43 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
     case (sf::Keyboard::Escape):
         state->ingame = false;
         break;
+    }
+    if (cheat)
+    {
+        switch (key)
+        {
+        case (sf::Keyboard::Q):
+            state->player.speedPower += 0.1;
+            if (state->player.speedPower > 1) state->player.speedPower = 1;
+            break;
+        case (sf::Keyboard::A):
+            state->player.speedPower -= 0.1;
+            if (state->player.speedPower < 1) state->player.speedPower = 1;
+            break;
+        case (sf::Keyboard::W):
+            state->player.forwardPower += 0.1;
+            if (state->player.forwardPower > 1) state->player.forwardPower = 1;
+            break;
+        case (sf::Keyboard::S):
+            state->player.forwardPower -= 0.1;
+            if (state->player.forwardPower < 1) state->player.forwardPower = 1;
+            break;
+        case (sf::Keyboard::E):
+            state->player.upwardPower += 0.1;
+            if (state->player.upwardPower > 1) state->player.upwardPower = 1;
+            break;
+        case (sf::Keyboard::D):
+            state->player.upwardPower -= 0.1;
+            if (state->player.upwardPower < 1) state->player.upwardPower = 1;
+            break;
+        case (sf::Keyboard::R):
+            state->player.brainfreeze += 0.1;
+            if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
+            break;
+        case (sf::Keyboard::F):
+            state->player.brainfreeze -= 0.1;
+            if (state->player.brainfreeze < 1) state->player.brainfreeze = 1;
+            break;
+        }
     }
 }

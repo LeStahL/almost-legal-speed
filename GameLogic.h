@@ -25,7 +25,7 @@
 
 class GameLogic {
 public:
-    GameLogic(GameState*);
+    GameLogic(GameState*, bool);
     virtual ~GameLogic() = default;
 
     void run();
@@ -34,6 +34,7 @@ public:
 private:
     GameState* state;
     Time last;
+    bool cheat;
     const double grav_acc = 3;
     const double jump_speed = 0.8;
     const double acc_scale = 1.5;
