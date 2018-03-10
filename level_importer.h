@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "GameState.h"
 #include <vector>
-#include <SFML/Texture.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #ifndef LEVEL_IMPORTER_H
 #define LEVEL_IMPORTER_H
 
@@ -24,23 +23,36 @@
 using namespace sf;
 using namespace std;
 
-class Level {
-    std::vector<const Block*> blocks;
-    std::vector<std::vector<const Block*>> level;
-};
 
 class Block {
 public:
-    std::string pathToFile;
+    std::string name, pathToFile;
     size_t width, heigth;
     bool solid;
     Texture texture;
 
+    Block(std::string& _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid)
+        : name(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid)
+    {
+        if (!texture.loadFromFile(pathToFile))
+        {
+            // Fail
+            // FIXME throw an exception
+            throw std::exception();
+        }
+    }
 };
+
+class Level {
+public:
+    std::vector<const Block*> blocks;
+    std::vector<std::vector<const Block*>> level;
+};
+
 
 class GfxManger {
 public:
-    const Block& LoadBloack(std::string& pathToFile, size_t w, size_t h, bool solid) {
+    const Block* LoadBlock(std::string& name, std::string& pathToFile, size_t w, size_t h, bool solid) {
         for (size_t i = 0; i < blocks.size(); ++i)
         {
             auto& b = blocks[i];
@@ -50,17 +62,8 @@ public:
             }
         }
 
-        blocks.emplace_back();
-        auto& b = blocks[blocks.size() - 1];
-        b.pathToFile = pathToFile;
-        b.width = w;
-        b.heigth = h;
-        b.solid = solid;
-        if (!texture.loadFromFile(pathToFile))
-        {
-            assert(0) << "error while loading file";
-        }
-        return b;
+        blocks.emplace_back(name, pathToFile, w, h, solid);
+        return &blocks[blocks.size() - 1];
     }
 
     std::vector<Block> blocks;
@@ -72,6 +75,6 @@ class level_importer
 public:
     level_importer() {}
 
-    constexpr auto LoadLevel(std::string& pathToFile);
+    void LoadLevel(std::string& pathToFile, GfxManger& gfxManager) const;
 };
 #endif
