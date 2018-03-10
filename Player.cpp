@@ -31,7 +31,19 @@ void vec2::operator+=(vec2 const& rhs) {
     y += rhs.y;
 }
 
-void vec2::operator*(double f) {
+vec2 vec2::operator*(double f) {
+    vec2 res;
+    res.x = x * f;
+    res.y = y * f;
+    return res;
+}
+
+void vec2::operator*=(double f) {
     x *= f;
     y *= f;
+}
+
+void vec2::operator/=(double f) {
+    x /= f;
+    y /= f;
 }

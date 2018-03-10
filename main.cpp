@@ -42,14 +42,14 @@ int main(int argc, char **args)
         fprintf(stderr, "ERROR: No font specified. Use -f flag.\n");
         return -1;
     }
-    
+
     printf("Using font: %s\n", fontpath);
-    
+
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
 
     Renderer r(&window, fontpath);
-    GameLogic logic;
+    GameLogic logic(&state);
 
     while (window.isOpen())
     {
@@ -63,7 +63,7 @@ int main(int argc, char **args)
         window.clear(sf::Color::Black);
 
         r.render();
-        logic.run(&state);
+        logic.run();
 
         window.display();
     }

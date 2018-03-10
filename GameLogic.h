@@ -20,13 +20,18 @@
 #define GAME_LOGIC_H
 
 #include <GameState.h>
+#include <SFML/System/Time.hpp>
 
 class GameLogic {
 public:
-    GameLogic() = default;
+    GameLogic(GameState*);
     virtual ~GameLogic() = default;
 
-    void run(GameState*);
+    void run();
+
+private:
+    GameState* state;
+    Time last;
 };
 
 #endif

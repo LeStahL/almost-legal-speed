@@ -19,8 +19,33 @@
 #include <GameLogic.h>
 #include <GameState.h>
 #include <Player.h>
+#include <SFML/System/Clock.hpp>
 
-void GameLogic::run(GameState* state)
+GameLogic::GameLogic(GameState* s) {
+    state = s;
+    last = Time::Zero;
+}
+
+void GameLogic::run()
 {
-    state->player.pos += state->player.v;
+    if (last == Time::Zero) {
+        last = state->timer.getElapsedTime();
+        return;
+    }
+
+    // Update speed vector.
+    double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
+    switch (state->player.a) {
+    case(LEFT):
+        state->player.v.x -= acc;
+        break;
+    case(RIGHT):
+        state->player.v.x += acc;
+        break;
+    }
+
+    // Apply speed vector.
+    auto current = state->timer.getElapsedTime();
+    double elapsed = (current - last).asSeconds();
+    state->player.pos += state->player.v * elapsed;
 }

@@ -26,7 +26,9 @@ struct vec2 {
 
     vec2 operator+(vec2 const&);
     void operator+=(vec2 const&);
-    void operator*(double);
+    vec2 operator*(double);
+    void operator*=(double);
+    void operator/=(double);
 };
 
 typedef enum { LEFT, NONE, RIGHT } direction;
