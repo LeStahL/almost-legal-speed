@@ -113,6 +113,17 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
     return start_level;
 }
 
+Block::Block(char _name, string &_pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p)
+    : id(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid), powerupType(p), texture()
+{
+    if (!texture.loadFromFile(pathToFile))
+    {
+        // Fail
+        // FIXME throw an exception
+        fprintf(stderr, "could not load texture file from %s", pathToFile.c_str());
+    }
+}
+
 void Level::addLevel(Level &level)
 {
     for (std::vector<const Block*>& row : level.layers) {
@@ -139,4 +150,19 @@ bool Level::collides(vec2 pos)
         return b->solid;
     }
     return false;
+}
+
+Block *GfxManager::loadBlock(char name, string &pathToFile, size_t w, size_t h, bool solid, PowerupType type) {
+    for (size_t i = 0; i < blocks.size(); ++i)
+    {
+        auto& b = blocks[i];
+        if (pathToFile.compare(b.pathToFile) == 0) {
+            // same
+            return &blocks[i];
+        }
+    }
+
+    blocks.emplace_back(name, pathToFile, w, h, solid, type);
+    return &blocks[blocks.size() - 1];
+
 }

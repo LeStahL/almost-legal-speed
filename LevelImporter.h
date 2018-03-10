@@ -36,17 +36,10 @@ public:
     PowerupType powerupType;
     Texture texture;
 
-    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p)
-        : id(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid), powerupType(p), texture()
-    {
-        if (!texture.loadFromFile(pathToFile))
-        {
-            // Fail
-            // FIXME throw an exception
-            throw std::exception();
-        }
-    }
+    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p);
 };
+
+
 
 class Level {
 public:
@@ -75,21 +68,7 @@ public:
 
 class GfxManager {
 public:
-    Block* loadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid, PowerupType type) {
-        for (size_t i = 0; i < blocks.size(); ++i)
-        {
-            auto& b = blocks[i];
-            if (pathToFile.compare(b.pathToFile) == 0) {
-                // same
-                return &blocks[i];
-            }
-        }
-
-        blocks.emplace_back(name, pathToFile, w, h, solid, type);
-        return &blocks[blocks.size() - 1];
-
-    }
-
+    Block* loadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid, PowerupType type);
     std::vector<Block> blocks;
 };
 
