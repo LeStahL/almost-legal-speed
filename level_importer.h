@@ -14,20 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "GameState.h"
-#include <vector>
-#include <SFML/Texture.hpp>
 #ifndef LEVEL_IMPORTER_H
 #define LEVEL_IMPORTER_H
 
+#include <GameState.h>
+#include <vector>
+#include <SFML/Graphics/Texture.hpp>
 
 using namespace sf;
 using namespace std;
-
-class Level {
-    std::vector<const Block*> blocks;
-    std::vector<std::vector<const Block*>> level;
-};
 
 class Block {
 public:
@@ -38,29 +33,34 @@ public:
 
 };
 
+class Level {
+    std::vector<const Block*> blocks;
+    std::vector<std::vector<const Block*>> level;
+};
+
 class GfxManger {
 public:
     const Block& LoadBloack(std::string& pathToFile, size_t w, size_t h, bool solid) {
-        for (size_t i = 0; i < blocks.size(); ++i)
-        {
-            auto& b = blocks[i];
-            if (pathToFile.compare(b.pathToFile) == 0) {
-                // same
-                return &blocks[i];
-            }
-        }
-
-        blocks.emplace_back();
-        auto& b = blocks[blocks.size() - 1];
-        b.pathToFile = pathToFile;
-        b.width = w;
-        b.heigth = h;
-        b.solid = solid;
-        if (!texture.loadFromFile(pathToFile))
-        {
-            assert(0) << "error while loading file";
-        }
-        return b;
+        // for (size_t i = 0; i < blocks.size(); ++i)
+        // {
+        //     auto& b = blocks[i];
+        //     if (pathToFile.compare(b.pathToFile) == 0) {
+        //         // same
+        //         return &blocks[i];
+        //     }
+        // }
+        //
+        // blocks.emplace_back();
+        // auto& b = blocks[blocks.size() - 1];
+        // b.pathToFile = pathToFile;
+        // b.width = w;
+        // b.heigth = h;
+        // b.solid = solid;
+        // if (!texture.loadFromFile(pathToFile))
+        // {
+        //     assert(0) << "error while loading file";
+        // }
+        // return b;
     }
 
     std::vector<Block> blocks;
