@@ -28,8 +28,8 @@ Player::Player()
     a = NONE;
     face = LEFT;
 
-    forwardPower = 1.0;
-    upwardPower = 1.0;
+    forwardPower = 0.0;
+    upwardPower = 0.0;
     speedPower = 0.0;
     money = 0.0;
     brainfreeze = 0.0;
