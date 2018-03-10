@@ -41,6 +41,7 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
+        r.render();
         logic.run(&state);
 
         window.display();
