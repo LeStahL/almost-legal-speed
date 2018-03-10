@@ -1,6 +1,7 @@
 // Almost Legal Speed - platform running game
 // Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
 //                     Daniel Hauck <mail@dhauck.eu>
+//                     Jonas Blahut <darkphoenix@jbtec.eu>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
