@@ -17,15 +17,17 @@
 #include "Renderer.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
-Renderer::Renderer(RenderWindow* w)
-    : window(w)
-    , font(new Font())
+Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
+    : font(new Font)
+    , window(w)
 {
-    if (!font->loadFromFile("/usr/share/fonts/truetype/msttcorefonts/verdana.ttf"))
+    printf("Font: %s\n", font_path);
+    if (!font->loadFromFile(font_path))
     {
-        fprintf(stderr, "ERROR: Could not load font `arial.ttf´.\n");
+        fprintf(stderr, "ERROR: Could not load font %s.\n", font_path);
         exit(0);
     }
 }

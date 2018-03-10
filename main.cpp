@@ -17,17 +17,38 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <SFML/Graphics.hpp>
+
 #include <GameLogic.h>
 #include <GameState.h>
 
 #include "Renderer.h"
 
+#include <string.h>
+
 int main(int argc, char **args)
 {
+    const char *fontpath = 0;
+    for(int i=0; i<argc; ++i)
+    {
+        if(!strcmp(args[i], "--font") || !strcmp(args[i], "-f"))
+        {
+            ++i;
+            fontpath = args[i];
+        }
+    }
+
+    if(0 == fontpath)
+    {
+        fprintf(stderr, "ERROR: No font specified. Use -f flag.\n");
+        return -1;
+    }
+    
+    printf("Using font: %s\n", fontpath);
+    
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
 
-    Renderer r(&window);
+    Renderer r(&window, fontpath);
     GameLogic logic;
 
     while (window.isOpen())
