@@ -16,3 +16,8 @@
 
 project(almost-legal-speed)
 
+set(SPEED_SOURCES
+    main.cpp
+)
+
+add_executable(speed ${SPEED_SOURCES})
