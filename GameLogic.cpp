@@ -20,6 +20,7 @@
 #include <GameState.h>
 #include <Player.h>
 #include <SFML/System/Clock.hpp>
+#include <SFML/Graphics.hpp>
 
 GameLogic::GameLogic(GameState* s) {
     state = s;
@@ -33,13 +34,32 @@ void GameLogic::run()
         return;
     }
 
+    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    if (left)
+    {
+        if (right)
+        {
+            state->player.a = NONE;
+        } else {
+            state->player.a = LEFT;
+        }
+    } else {
+        if (right)
+        {
+            state->player.a = RIGHT;
+        } else {
+            state->player.a = NONE;
+        }
+    }
+
     // Update speed vector.
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
     double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
     double max_speed = acc * 1;
     if (state->player.jumping) {
-        
+
     }
 
     if (state->player.inair) {

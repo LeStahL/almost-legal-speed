@@ -25,8 +25,6 @@
 
 #include <string.h>
 
-#include <iostream>
-
 int main(int argc, char **args)
 {
     const char *fontpath = 0;
@@ -67,27 +65,11 @@ int main(int argc, char **args)
                 switch (event.key.code)
                 {
                 case(sf::Keyboard::Space):
-                    state.player.jumping = true;
+                    if (state.ingame)
+                    {
+                        state.player.jumping = true;
+                    }
                 }
-            }
-        }
-
-        bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-        bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-        if (left)
-        {
-            if (right)
-            {
-                state.player.a = NONE;
-            } else {
-                state.player.a = LEFT;
-            }
-        } else {
-            if (right)
-            {
-                state.player.a = RIGHT;
-            } else {
-                state.player.a = NONE;
             }
         }
 
