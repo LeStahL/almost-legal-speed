@@ -53,7 +53,7 @@ void Renderer::render()
     window->draw(p);
 }
 
-void Renderer::renderMenu()
+void Renderer::renderMenu(int selected)
 {
     sf::Text startgame("Start Game", *font);
     startgame.setPosition(.45*800.,.45*600.);

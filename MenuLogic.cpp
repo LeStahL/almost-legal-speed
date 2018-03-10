@@ -23,6 +23,7 @@
 
 MenuLogic::MenuLogic(GameState* s) {
     state = s;
+    selectedItem = -1;
 }
 
 void MenuLogic::run()
@@ -36,5 +37,12 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
     case(sf::Keyboard::Return):
         state->ingame = true;
         break;
+    case(sf::Keyboard::Down):
+        selectedItem = (selectedItem < 0 || selectedItem > menu_item_count-2) ? 0 : selectedItem+1;
+        break;
+    case(sf::Keyboard::Up):
+        selectedItem = selectedItem < 1 ? menu_item_count-1 : selectedItem-1;
+        break;
     }
+    fprintf(stderr, "%d\n", selectedItem);
 }

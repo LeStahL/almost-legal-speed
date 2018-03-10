@@ -31,8 +31,10 @@ public:
     void run();
     void keyPressed(sf::Keyboard::Key);
 
+    int selectedItem;
 private:
 	GameState* state;
+	const int menu_item_count = 4;
 };
 
 #endif

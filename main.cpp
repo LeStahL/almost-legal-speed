@@ -84,11 +84,11 @@ int main(int argc, char **args)
         window.clear(sf::Color::Black);
 
         if(state.ingame) {
-            r.render();
             gameLogic.run();
+            r.render();
         } else {
-            r.renderMenu();
             menuLogic.run();
+            r.renderMenu(menuLogic.selectedItem);
         }
 
         window.display();
