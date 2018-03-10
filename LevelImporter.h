@@ -21,10 +21,11 @@
 #include <vector>
 #include <map>
 #include <SFML/Graphics/Texture.hpp>
-#include <Player.h>
-
+#include "Player.h"
+#include "Powerup.h"
 using namespace sf;
 using namespace std;
+
 
 class Block {
 public:
@@ -32,10 +33,11 @@ public:
     std::string pathToFile;
     size_t width, heigth;
     bool solid;
+    PowerupType powerupType;
     Texture texture;
 
-    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid)
-        : id(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid), texture()
+    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p)
+        : id(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid), powerupType(p), texture()
     {
         if (!texture.loadFromFile(pathToFile))
         {
@@ -57,7 +59,7 @@ public:
     Level(size_t id, std::vector<std::vector<const Block*>> level);
     Level(size_t id, std::vector<const Level*>& list);
 
-    void AddLevel(Level& level) const;
+    void addLevel(Level& level);
 
     bool collides(vec2);
 };
@@ -65,7 +67,7 @@ public:
 
 class GfxManager {
 public:
-    Block* LoadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid) {
+    Block* loadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid, PowerupType type) {
         for (size_t i = 0; i < blocks.size(); ++i)
         {
             auto& b = blocks[i];
@@ -75,7 +77,7 @@ public:
             }
         }
 
-        blocks.emplace_back(name, pathToFile, w, h, solid);
+        blocks.emplace_back(name, pathToFile, w, h, solid, type);
         return &blocks[blocks.size() - 1];
 
     }
@@ -95,6 +97,6 @@ public:
         blocks[' '] = nullptr;
     }
 
-    const Level* LoadLevel(std::string& pathToFile, GfxManager& gfxManager);
+    const Level* roadLevel(std::string& pathToFile, GfxManager& gfxManager);
 };
 #endif

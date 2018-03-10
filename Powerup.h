@@ -28,7 +28,8 @@ typedef enum {
     Schnitzel, //complete stop for x sec, buff: calories - you speed up a small bit
     Pizza, //stuck with cheese, slow down
     IceCream, //brainfreeze, you almost pass out, level is colored darker
-    Alcohol //Level starts to tilt and blur
+    Alcohol, //Level starts to tilt and blur
+    None
 } PowerupType;
 
 class Player;

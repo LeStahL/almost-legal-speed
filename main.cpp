@@ -63,7 +63,7 @@ int main(int argc, char **args)
     GfxManager m;
     LevelImporter imp;
     std::string fn(levelpath);
-    const Level *level = imp.LoadLevel(fn, m);
+    const Level *level = imp.roadLevel(fn, m);
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
