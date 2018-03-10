@@ -111,7 +111,7 @@ void Renderer::render(GameState *state)
     upwardDopingBar.setPosition(260.,40.);
     window->draw(upwardDopingBar);
     
-    RectangleShape upwardDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
     upwardDopingProgress.setFillColor(Color(0.,0.,255.));
     upwardDopingProgress.setPosition(265.,43.);
     window->draw(upwardDopingProgress);
@@ -127,7 +127,7 @@ void Renderer::render(GameState *state)
     forwardDopingBar.setPosition(260.,70.);
     window->draw(forwardDopingBar);
     
-    RectangleShape forwardDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
     forwardDopingProgress.setFillColor(Color(0.,255.,0.));
     forwardDopingProgress.setPosition(265.,73.);
     window->draw(forwardDopingProgress);
@@ -135,6 +135,9 @@ void Renderer::render(GameState *state)
     Text forwardText("Forward doping", *font);
     forwardText.setPosition(10.,60.);
     window->draw(forwardText);
+    
+    //level
+    
 }
 
 void Renderer::renderMenu(int selected)
