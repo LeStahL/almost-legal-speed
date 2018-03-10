@@ -92,3 +92,12 @@ void GameLogic::run()
     // Check for collision.
     // TODO
 }
+
+void GameLogic::keyPressed(sf::Keyboard::Key key) {
+    switch (key)
+    {
+    case(sf::Keyboard::Space):
+        state->player.jumping = true;
+        break;
+    }
+}
