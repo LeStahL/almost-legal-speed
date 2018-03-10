@@ -34,7 +34,7 @@ public:
     int selectedItem;
 private:
 	GameState* state;
-	const int menu_item_count = 4;
+	const int menu_item_count = 2;
 };
 
 #endif

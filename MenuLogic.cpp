@@ -44,5 +44,4 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
         selectedItem = selectedItem < 1 ? menu_item_count-1 : selectedItem-1;
         break;
     }
-    fprintf(stderr, "%d\n", selectedItem);
 }
