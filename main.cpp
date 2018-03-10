@@ -50,7 +50,7 @@ int main(int argc, char **args)
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
 
-    Renderer r(&window, fontpath);
+    Renderer r(&window, fontpath, &(state.player));
     GameLogic gameLogic(&state);
     MenuLogic menuLogic;
 

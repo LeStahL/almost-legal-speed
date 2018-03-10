@@ -19,12 +19,14 @@
 
 #include <SFML/Graphics.hpp>
 
+class Player;
+
 using namespace sf;
 
 class Renderer
 {
 public:
-    Renderer(RenderWindow *w, const char *font_path);
+    Renderer(RenderWindow *w, const char *font_path, Player *p);
     virtual ~Renderer();
     
     void render();
@@ -33,6 +35,7 @@ public:
     Font *font;
     
     void renderMenu();
+    Player *player;
 };
 
 #endif
