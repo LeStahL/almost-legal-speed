@@ -34,13 +34,12 @@ void GameLogic::run()
     }
 
     // Update speed vector.
-    bool inair = false; // TODO
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
     double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
     double max_speed = acc * 1;
 
-    if (inair) {
+    if (state->player.inair) {
         state->player.v.y -= grav_acc;
     } else {
         state->player.v.y = 0;
@@ -66,4 +65,7 @@ void GameLogic::run()
     if (!state->player.stuck) {
         state->player.pos += state->player.v * elapsed;
     }
+
+    // Check for collision.
+    // TODO
 }

@@ -43,7 +43,7 @@ public:
     direction a;
 
     double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
-    bool stuck;
+    bool stuck, inair;
 };
 
 #endif

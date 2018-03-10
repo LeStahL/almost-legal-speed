@@ -25,6 +25,8 @@
 
 #include <string.h>
 
+#include <iostream>
+
 int main(int argc, char **args)
 {
     const char *fontpath = 0;
@@ -56,8 +58,37 @@ int main(int argc, char **args)
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            switch (event.type)
+            {
+            case (sf::Event::Closed):
                 window.close();
+                break;
+            case (sf::Event::KeyPressed):
+                switch (event.key.code)
+                {
+                case(sf::Keyboard::Space):
+                    state.jumping = true;
+                }
+            }
+        }
+
+        bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+        bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+        if (left)
+        {
+            if (right)
+            {
+                state.player.a = NONE;
+            } else {
+                state.player.a = LEFT;
+            }
+        } else {
+            if (right)
+            {
+                state.player.a = RIGHT;
+            } else {
+                state.player.a = NONE;
+            }
         }
 
         window.clear(sf::Color::Black);
