@@ -28,4 +28,6 @@ void MenuLogic::run()
 
 }
 
-void MenuLogic::keyPressed(sf::Keyboard::Key);
+void MenuLogic::keyPressed(sf::Keyboard::Key) {
+
+}
