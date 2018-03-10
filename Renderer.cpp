@@ -83,7 +83,7 @@ void Renderer::render(GameState *state)
     }
     
     CircleShape p(20.);
-    p.setColor(sf::Color(111.,111.,111.));
+    p.setFillColor(sf::Color(111.,111.,111.));
     p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
     window->draw(p);
 }
