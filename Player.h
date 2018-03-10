@@ -20,7 +20,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-typedef struct { double x; double y; } vec2;
+struct vec2 {
+    double x;
+    double y;
+
+    vec2 operator+(vec2 const&);
+    void operator+=(vec2 const&);
+};
+
 typedef enum { LEFT, NONE, RIGHT } direction;
 
 class Player

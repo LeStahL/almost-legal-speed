@@ -1,6 +1,8 @@
 // Almost Legal Speed - platform running game
 // Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
 //                     Daniel Hauck <mail@dhauck.eu>
+//                     Jonas Blahut <darkphoenix@jbtec.eu>
+//
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,11 +17,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <GameLogic.h>
-#include <GameState.h>
 #include <Player.h>
 
-void run_logic(GameState* state)
-{
-    state->player.pos += state->player.v;
+vec2 vec2::operator+(vec2 const& rhs) {
+    vec2 res;
+    res.x = x + rhs.x;
+    res.y = y + rhs.y;
+    return res;
+}
+
+void vec2::operator+=(vec2 const& rhs) {
+    x += rhs.x;
+    y += rhs.y;
 }
