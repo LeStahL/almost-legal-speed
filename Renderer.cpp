@@ -50,7 +50,7 @@ void Renderer::render()
 void Renderer::renderMenu()
 {
     sf::Text startgame("Start Game", *font);
-    startgame.setOrigin(.5,.5);
+//     startgame.setOrigin(.5*window->,500.);
     
     sf::Text endgame("End Game", *font);
     

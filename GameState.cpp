@@ -16,38 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#include "GameState.h"
 
-#include <vector>
-
-#include <SFML/System/Clock.hpp>
-#include <Player.h>
-#include <level_importer.h>
-
-using namespace sf;
-
-class Renderer;
-
-class Platform;
-class Powerup;
-
-using namespace std;
-
-class GameState
+GameState::GameState()
+    : ingame(false)
 {
-public:
-    GameState();
-    virtual ~GameState() = default;
-
-    bool jumping;
-
-    Player player;
-
-    Level level;
-    Clock timer;
     
-    bool ingame;
-};
-
-#endif
+}
