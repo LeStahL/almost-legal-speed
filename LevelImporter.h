@@ -60,7 +60,7 @@ public:
 };
 
 
-class GfxManger {
+class GfxManager {
 public:
     Block* LoadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid) {
         for (size_t i = 0; i < blocks.size(); ++i)
@@ -92,6 +92,6 @@ public:
         blocks[' '] = nullptr;
     }
 
-    const Level* LoadLevel(std::string& pathToFile, GfxManger& gfxManager);
+    const Level* LoadLevel(std::string& pathToFile, GfxManager& gfxManager);
 };
 #endif
