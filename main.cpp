@@ -27,6 +27,8 @@
 #include "LevelImporter.h"
 
 #include <string.h>
+#include <math.h>
+
 #include <iostream>
 
 int main(int argc, char **args)
@@ -107,6 +109,9 @@ int main(int argc, char **args)
 
         if(state.ingame) {
             state.player.forwardPower = 3.;
+            state.player.speedPower = .5+.5*sin(state.timer.getElapsedTime().asSeconds());
+            state.player.upwardPower = .5+.5*sin(state.timer.getElapsedTime().asSeconds());
+            state.player.forwardPower = .5+.5*sin(state.timer.getElapsedTime().asSeconds());
             gameLogic.run();
             r.render(&state);
         } else
