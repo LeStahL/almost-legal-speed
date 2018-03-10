@@ -24,7 +24,7 @@ using namespace sf;
 class Renderer
 {
 public:
-    Renderer(RenderWindow *w);
+    Renderer(RenderWindow *w, const char *font_path);
     virtual ~Renderer();
     
     void render();
