@@ -28,7 +28,8 @@ int main(int argc, char **args)
     GameState state;
 
     Renderer r(&window);
-    
+    GameLogic logic;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -40,7 +41,8 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
-        run_logic(&state);
+        r.render();
+        logic.run(&state);
 
         window.display();
     }

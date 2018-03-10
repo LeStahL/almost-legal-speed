@@ -14,15 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <vector>
-#include <SFML/Graphics/Texture.hpp>
+
 #ifndef LEVEL_IMPORTER_H
 #define LEVEL_IMPORTER_H
 
 
+#include <vector>
+#include <SFML/Graphics/Texture.hpp>
+
 using namespace sf;
 using namespace std;
-
 
 class Block {
 public:
@@ -64,6 +65,7 @@ public:
 
         blocks.emplace_back(name, pathToFile, w, h, solid);
         return &blocks[blocks.size() - 1];
+
     }
 
     std::vector<Block> blocks;

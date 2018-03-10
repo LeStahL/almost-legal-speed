@@ -24,10 +24,13 @@ using namespace sf;
 class Renderer
 {
 public:
-    Renderer(Window *w);
+    Renderer(RenderWindow *w);
     virtual ~Renderer();
     
+    void render();
     
+    RenderWindow *window;
+    Font *font;
 };
 
 #endif

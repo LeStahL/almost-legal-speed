@@ -3,7 +3,6 @@
 //                     Daniel Hauck <mail@dhauck.eu>
 //                     Jonas Blahut <darkphoenix@jbtec.eu>
 //
-//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -24,25 +23,22 @@
 
 #include <SFML/System/Clock.hpp>
 #include <Player.h>
+#include <level_importer.h>
 
 using namespace sf;
 
 class Renderer;
 
-class Block;
-
 class Platform;
 class Powerup;
-
-class Level;
 
 using namespace std;
 
 class GameState
 {
 public:
-    GameState();
-    virtual ~GameState();
+    GameState() = default;
+    virtual ~GameState() = default;
 
     bool jumping;
 

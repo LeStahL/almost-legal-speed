@@ -19,10 +19,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Renderer::Renderer(sf::Window* w)
+Renderer::Renderer(RenderWindow* w)
+    : window(w)
+    , font(new Font())
 {
-    sf::Font font;
-    if (!font.loadFromFile("/usr/share/fonts/truetype/msttcorefonts/verdana.ttf"))
+    if (!font->loadFromFile("/usr/share/fonts/truetype/msttcorefonts/verdana.ttf"))
     {
         fprintf(stderr, "ERROR: Could not load font `arial.ttf´.\n");
         exit(0);
@@ -31,4 +32,16 @@ Renderer::Renderer(sf::Window* w)
 
 Renderer::~Renderer()
 {
+    delete font;
+}
+
+void Renderer::render()
+{
+    sf::Text text("Hello, World", *font);
+
+    text.setCharacterSize(30);
+    text.setStyle(sf::Text::Bold);
+    text.setColor(sf::Color::Red);
+    
+    window->draw(text);
 }
