@@ -96,8 +96,8 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
             start_level = &levels[id];
         } else if (current_level != nullptr){
             for (size_t i = 0; i < line.size(); ++i) {
-                current_level->level.resize(std::max(current_level->level.size(), line.size()));
-                current_level->level[i].push_back(blocks[line[i]]);
+                current_level->layers.resize(std::max(current_level->layers.size(), line.size()));
+                current_level->layers[i].push_back(blocks[line[i]]);
             }
         }
     }
@@ -105,8 +105,8 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
     for (auto id : added_levels) {
         Level& level = levels[id];
 
-        for (size_t i = 0; i < level.level.size(); ++i) {
-            level.level[i] = std::vector<const Block*>(level.level[i].rbegin(),level.level[i].rend());
+        for (size_t i = 0; i < level.layers.size(); ++i) {
+            level.layers[i] = std::vector<const Block*>(level.layers[i].rbegin(),level.layers[i].rend());
         }
 
     }
@@ -115,8 +115,8 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
 
 void Level::addLevel(Level &level)
 {
-    for (std::vector<const Block*>& row : level.level) {
-        this->level.push_back(row);
+    for (std::vector<const Block*>& row : level.layers) {
+        this->layers.push_back(row);
     }
 }
 
@@ -125,15 +125,15 @@ bool Level::collides(vec2 pos)
     int x = floor(pos.x);
     int y = floor(pos.y);
 
-    if (level.size() <= x)
+    if (layers.size() <= x)
     {
         return false;
     }
-    if (level[x].size() <= y)
+    if (layers[x].size() <= y)
     {
         return false;
     }
-    const Block* b = level[x][y];
+    const Block* b = layers[x][y];
     if (b != nullptr)
     {
         return b->solid;

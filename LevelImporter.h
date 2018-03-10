@@ -53,21 +53,21 @@ public:
     bool definePlayerPosition;
     size_t id;
     std::vector<const Block*> blocks;
-    std::vector<std::vector<const Block*>> level;
+    std::vector<std::vector<const Block*>> layers;
 
     Level() { }
     Level(const Level& other) :
         definePlayerPosition(other.definePlayerPosition),
         id(other.id),
         blocks(other.blocks),
-        level(other.level)
+        layers(other.layers)
     {
     }
 
-    Level(size_t id, std::vector<std::vector<const Block*>> level);
+    Level(size_t id, std::vector<std::vector<const Block*>> layers);
     Level(size_t id, std::vector<const Level*>& list);
 
-    void addLevel(Level& level);
+    void addLevel(Level& layers);
 
     bool collides(vec2);
 };
