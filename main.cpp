@@ -74,6 +74,7 @@ int main(int argc, char **args)
     const Level *level = imp.loadLevel(fn, m);
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
+    state.level = *level;
     Renderer r(&window, fontpath);
     BackgroundMusic music(
         "../matzesmagicmusic/Chilly.ogg",

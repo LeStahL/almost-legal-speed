@@ -39,6 +39,8 @@ public:
     void renderMenu(int);
     std::vector<sf::Text> texts;
     
+    float tile_width, tile_height;
+    
 private:
     std::vector<sf::Texture> t;
     sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup;

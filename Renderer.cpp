@@ -30,6 +30,8 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     : font(new Font)
     , window(w)
     , drogen_counter(0)
+    , tile_width(32.)
+    , tile_height(32.)
 {
     if (!font->loadFromFile(font_path))
     {
@@ -176,9 +178,20 @@ void Renderer::render(GameState *state)
     window->draw(sprite_green_powerup);
     
     //level
-    Level level = state->level;
-    
-    
+    vector<vector<const Block*> > level = state->level.layers;
+    for(int i=0; i<level.size(); ++i)
+    {
+        for(int j=0; j<level.at(i).size(); ++j)
+        {
+            const Block *block = level.at(i).at(j);
+            if(0 == block)continue;
+            sf::Sprite block_sprite;
+            block_sprite.setScale(tile_width/block->texture.getSize().x, tile_height/block->texture.getSize().y);
+            block_sprite.setTexture(block->texture);
+            block_sprite.setPosition(i*tile_width,600.-j*tile_height);
+            window->draw(block_sprite);
+        }
+    }
 }
 
 void Renderer::renderMenu(int selected)
