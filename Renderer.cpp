@@ -83,7 +83,7 @@ void Renderer::render(GameState *state)
     }
     
     CircleShape p(20.);
-    p.setFillColor(sf::Color(111.,111.,111.));
+    p.setColor(sf::Color(111.,111.,111.));
     p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
     window->draw(p);
 }
@@ -91,18 +91,18 @@ void Renderer::render(GameState *state)
 void Renderer::renderMenu(int selected)
 {
     texts[0].setPosition(.45*800.,.45*600.);
-    texts[0].setFillColor(Color(255.,0.,0.));
+    texts[0].setColor(Color(255.,0.,0.));
 
     texts[1].setPosition(.45*800.,.55*600.);
-    texts[1].setFillColor(Color(255.,0.,0.));
+    texts[1].setColor(Color(255.,0.,0.));
 
     for (int i = 0; i < texts.size(); i++) {
     	if (selected == i) {
     		texts[i].setStyle(Text::Bold);
-    		texts[i].setFillColor(Color(255.,255.,0.));
+    		texts[i].setColor(Color(255.,255.,0.));
     	} else {
     		texts[i].setStyle(Text::Regular);
-    		texts[i].setFillColor(Color(255.,0,0));
+    		texts[i].setColor(Color(255.,0,0));
     	}
     }
 
