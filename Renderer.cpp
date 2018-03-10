@@ -187,9 +187,9 @@ void Renderer::render(GameState *state)
             const Block *block = level.at(i).at(j);
             if(0 == block)continue;
             sf::Sprite block_sprite;
-            block_sprite.setScale(tile_width/block->texture.getSize().x, tile_height/block->texture.getSize().y);
-            block_sprite.setTexture(block->texture);
-            block_sprite.setPosition(i*tile_width,600.-j*tile_height);
+            block_sprite.setScale(tile_width/block->texture->getSize().x, tile_height/block->texture->getSize().y);
+            block_sprite.setTexture(*(block->texture));
+            block_sprite.setPosition(i*tile_width,600.-(j+1)*tile_height);
             window->draw(block_sprite);
         }
     }

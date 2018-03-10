@@ -34,9 +34,14 @@ public:
     size_t width, heigth;
     bool solid;
     PowerupType powerupType;
-    Texture texture;
+    shared_ptr<Texture> texture;
 
-    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p);
+    Block(char _name, std::string _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p);
+//     Block() = delete;
+//     Block(const Block &other) = delete;
+//     Block(const Block &&other) = delete;
+    
+    void init();
 };
 
 
@@ -68,8 +73,14 @@ public:
 
 class GfxManager {
 public:
+    GfxManager() { }
+    ~GfxManager() {
+        for(int i=0; i<blocks.size(); ++i)
+            delete blocks[i];
+    }
+
     Block* loadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid, PowerupType type);
-    std::vector<Block> blocks;
+    std::vector<Block*> blocks;
 };
 
 
