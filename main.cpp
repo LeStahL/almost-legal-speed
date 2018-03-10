@@ -70,7 +70,7 @@ int main(int argc, char **args)
     GameState state;
     Renderer r(&window, fontpath);
     GameLogic gameLogic(&state);
-    MenuLogic menuLogic(&state);
+    MenuLogic menuLogic(&state, r.texts);
 
     while (window.isOpen())
     {
@@ -103,7 +103,7 @@ int main(int argc, char **args)
 
         if(state.ingame) {
             gameLogic.run();
-            r.render(&(state.player));
+            r.render(&state);
         } else
             r.renderMenu(menuLogic.selectedItem);
 

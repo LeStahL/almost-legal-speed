@@ -18,22 +18,22 @@
 
 #include <MenuLogic.h>
 #include <GameState.h>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
-MenuLogic::MenuLogic(GameState* s) {
+MenuLogic::MenuLogic(GameState* s, std::vector<sf::Text> txts) {
     state = s;
+    texts = txts;
     selectedItem = -1;
+    menu_item_count = texts.size();
 }
 
 void MenuLogic::keyPressed(sf::Keyboard::Key key) {
     switch (key)
     {
     case(sf::Keyboard::Return):
-        if (selectedItem == 0)
-            state->ingame = true;
-        else if (selectedItem == 1)
-            exit(0);
+        activateMenuItem(selectedItem);
         break;
     case (sf::Keyboard::Down):
         selectedItem = (selectedItem < 0 || selectedItem > menu_item_count-2) ? 0 : selectedItem+1;
@@ -45,9 +45,28 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
 }
 
 void MenuLogic::mouseMoved(int x, int y) {
-
+    for (int i = 0; i < texts.size(); i++) {
+        float txtX = .45*800;
+        float txtY = .45*600 + .1*i*600;
+        float txtWidth = texts[i].getGlobalBounds().width;
+        float txtHeight = texts[i].getGlobalBounds().height;
+        if (x > txtX && y > txtY && x < txtX + txtWidth && y < txtY + txtHeight) {
+            selectedItem = i;
+            return;
+        }
+    }
+    selectedItem = -1;
 }
 
 void MenuLogic::mouseButtonPressed(sf::Mouse::Button btn) {
+    if (btn == sf::Mouse::Left) {
+        activateMenuItem(selectedItem);
+    }
+}
 
+void MenuLogic::activateMenuItem(int index) {
+    if (index == 0)
+            state->ingame = true;
+    else if (index == 1)
+        exit(0);
 }

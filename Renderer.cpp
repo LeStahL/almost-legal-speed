@@ -16,10 +16,12 @@
 
 #include "Renderer.h"
 #include "Player.h"
+#include "GameState.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <vector>
 
 Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     : font(new Font)
@@ -30,6 +32,8 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load font %s.\n", font_path);
         exit(0);
     }
+    texts.push_back(sf::Text("Start Game", *font));
+    texts.push_back(sf::Text("Quit Game", *font));
 }
 
 Renderer::~Renderer()
@@ -37,20 +41,36 @@ Renderer::~Renderer()
     delete font;
 }
 
-void Renderer::render(Player *player)
+void Renderer::render(GameState *state)
 {
+    Player *player = &(state->player);
     //backdrop
-    sf::Texture texture;
-    if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+    if(player->forwardPower + player->upwardPower + player->speedPower > 1.5)
     {
-        fprintf(stderr, "ERROR: Could not load BG.png\n");
-        exit(0);
+        std::vector<sf::Texture> t;
+        t.resize(14);
+        for(int i=0; i<14; ++i)
+        {
+            if (!t.at(i).loadFromFile((std::string("../gfx/backdrop/DrogenBG_")+std::to_string(i)+std::string(".png")).c_str()))
+            {
+                fprintf(stderr, "ERROR: Could not load DrogenBG*.png\n");
+                exit(0);
+            }
+        }
     }
-    
-    
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    window->draw(sprite);
+    else
+    {
+        sf::Texture texture;
+        if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+        {
+            fprintf(stderr, "ERROR: Could not load BG.png\n");
+            exit(0);
+        }
+        
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        window->draw(sprite);
+    }
     
     CircleShape p(20.);
     p.setFillColor(sf::Color(111.,111.,111.));
@@ -60,29 +80,21 @@ void Renderer::render(Player *player)
 
 void Renderer::renderMenu(int selected)
 {
-    sf::Text startgame("Start Game", *font);
-    startgame.setPosition(.45*800.,.45*600.);
-    startgame.setFillColor(Color(255.,0.,0.));
+    texts[0].setPosition(.45*800.,.45*600.);
+    texts[0].setFillColor(Color(255.,0.,0.));
 
-    sf::Text endgame("Quit Game", *font);
-    endgame.setPosition(.45*800.,.55*600.);
-    endgame.setFillColor(Color(255.,0.,0.));
+    texts[1].setPosition(.45*800.,.55*600.);
+    texts[1].setFillColor(Color(255.,0.,0.));
 
-    if(selected == -1);
-    else if(selected == 1)
-    {
-        endgame.setStyle(Text::Bold);
-        endgame.setFillColor(Color(255.,255.,0.));
-        startgame.setFillColor(Color(255.,0.,0.));
-    }
-    else 
-    {
-        startgame.setStyle(Text::Bold);
-        startgame.setFillColor(Color(255.,255.,0.));
-        endgame.setFillColor(Color(255.,0.,0.));
+    for (int i = 0; i < texts.size(); i++) {
+    	if (selected == i) {
+    		texts[i].setStyle(Text::Bold);
+    		texts[i].setFillColor(Color(255.,255.,0.));
+    	} else
+    		texts[i].setFillColor(Color(255.,0,0));
     }
 
-    window->draw(startgame);
-    window->draw(endgame);
+    window->draw(texts[0]);
+    window->draw(texts[1]);
 }
 
