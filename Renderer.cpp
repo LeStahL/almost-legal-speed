@@ -56,10 +56,12 @@ void Renderer::render()
 void Renderer::renderMenu()
 {
     sf::Text startgame("Start Game", *font);
-//     startgame.setOrigin(.5*window->,500.);
+    startgame.setPosition(.45*800.,.45*600.);
     
-    sf::Text endgame("End Game", *font);
+    sf::Text endgame("Quit Game", *font);
+    endgame.setPosition(.45*800.,.55*600.);
     
     window->draw(startgame);
+    window->draw(endgame);
 }
 
