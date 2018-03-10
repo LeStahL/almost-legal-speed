@@ -24,19 +24,25 @@
 #include <MenuLogic.h>
 
 #include "Renderer.h"
+#include "LevelImporter.h"
 
 #include <string.h>
 #include <iostream>
 
 int main(int argc, char **args)
 {
-    const char *fontpath = 0;
+    const char *fontpath = 0, *levelpath = 0;
     for(int i=1; i<argc; ++i)
     {
         if(!strcmp(args[i], "--font") || !strcmp(args[i], "-f"))
         {
             ++i;
             fontpath = args[i];
+        }
+        else if(!strcmp(args[i], "--level") || !strcmp(args[i], "-l"))
+        {
+            ++i;
+            levelpath = args[i];
         }
     }
 
@@ -45,9 +51,17 @@ int main(int argc, char **args)
         fprintf(stderr, "ERROR: No font specified. Use -f flag.\n");
         return -1;
     }
-
     printf("Using font: %s\n", fontpath);
-
+    
+    if(0 == levelpath)
+    {
+        fprintf(stderr, "ERROR: No level specified. Use -l flag.\n");
+        return -1;
+    }
+    printf("Rendering level: %s\n", levelpath);
+    
+    LevelImporter imp();
+    
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
 
