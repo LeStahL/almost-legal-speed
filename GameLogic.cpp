@@ -57,7 +57,7 @@ void GameLogic::run()
     // Update speed vector.
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
-    double acc = (1. + state->player.speedPower) * state->player.pizzaslow;
+    double acc = acc_scale * (1. + state->player.speedPower) * state->player.pizzaslow;
     double max_speed = acc * 1;
 
     if (state->player.inair)

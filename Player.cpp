@@ -19,6 +19,26 @@
 
 #include <Player.h>
 
+Player::Player()
+{
+    pos.x = 0;
+    pos.y = 0;
+    v.x = 0;
+    v.y = 0;
+    a = NONE;
+
+    forwardPower = 0.0;
+    upwardPower = 0.0;
+    speedPower = 0.0;
+    money = 0.0;
+    brainfreeze = 0.0;
+    pizzaslow = 1.0;
+    stuck = false;
+    inair = false;
+    jumping = false;
+    double_jumped = false;
+}
+
 vec2 vec2::operator+(vec2 const& rhs) {
     vec2 res;
     res.x = x + rhs.x;

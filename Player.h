@@ -36,7 +36,7 @@ typedef enum { LEFT, NONE, RIGHT } direction;
 class Player
 {
 public:
-    Player() = default;
+    Player();
     virtual ~Player() = default;
 
     vec2 pos, v;

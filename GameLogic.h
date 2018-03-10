@@ -36,6 +36,7 @@ private:
     Time last;
     const double grav_acc = 1;
     const double jump_speed = 1;
+    const double acc_scale = 1e-4;
 };
 
 #endif
