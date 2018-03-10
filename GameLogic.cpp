@@ -60,7 +60,22 @@ void GameLogic::run()
     // Update speed vector.
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
-    double acc = acc_scale * (1. + state->player.speedPower) * state->player.pizzaslow;
+    double acc = acc_scale * (1. + state->player.speedPower);
+    if (state->player.pizza)
+    {
+        if (state->player.pizza_start == Time::Zero)
+        {
+            state->player.pizza_start = current;
+        }
+        double pizza_elapsed = (current - state->player.pizza_start).asSeconds();
+        if (pizza_elapsed > pizza_time)
+        {
+            state->player.pizza = false;
+            state->player.pizza_start = Time::Zero;
+        } else {
+            acc *= pizza_speed;
+        }
+    }
     double max_speed = acc * acc_time;
 
     if (state->player.inair)
@@ -188,6 +203,9 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
         case (sf::Keyboard::F):
             state->player.brainfreeze -= 0.1;
             if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
+            break;
+        case (sf::Keyboard::T):
+            state->player.pizza = true;
             break;
         }
     }

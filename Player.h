@@ -20,6 +20,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <SFML/System/Time.hpp>
+
 struct vec2 {
     double x;
     double y;
@@ -42,9 +44,11 @@ public:
     vec2 pos, v;
     direction a, face;
 
-    double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
-    bool stuck, inair, jumping;
+    double forwardPower, upwardPower, speedPower, money, brainfreeze;
+    bool stuck, inair, jumping, pizza;
     int jump_count;
+
+    sf::Time pizza_start;
 };
 
 #endif

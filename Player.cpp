@@ -18,6 +18,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <Player.h>
+#include <SFML/System/Time.hpp>
 
 Player::Player()
 {
@@ -33,11 +34,12 @@ Player::Player()
     speedPower = 0.0;
     money = 0.0;
     brainfreeze = 0.0;
-    pizzaslow = 1.0;
+    pizza = false;
     stuck = false;
     inair = false;
     jumping = false;
     jump_count = 0;
+    pizza_start = sf::Time::Zero;
 }
 
 vec2 vec2::operator+(vec2 const& rhs) {

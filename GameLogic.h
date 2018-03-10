@@ -39,7 +39,9 @@ private:
     const double jump_speed = 0.8;
     const double acc_scale = 1.5;
     const double acc_time = 0.2;
-    const int max_jumps = 10;
+    const int max_jumps = 4;
+    const double pizza_speed = 0.2;
+    const double pizza_time = 3;
 };
 
 #endif
