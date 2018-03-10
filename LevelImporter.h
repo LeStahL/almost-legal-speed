@@ -20,7 +20,7 @@
 #include <memory>
 #include <vector>
 #include <map>
-#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Powerup.h"
 using namespace sf;
@@ -62,7 +62,7 @@ public:
 
     void addLevel(Level& layers);
 
-    bool collides(vec2);
+    bool collides(double, double);
 };
 
 

@@ -28,6 +28,8 @@
 #include <Player.h>
 #include <iostream>
 
+#include <SFML/Graphics.hpp>
+
 template<typename Out>
 void split(const std::string &s, char delim, Out result) {
     std::stringstream ss(s);
@@ -131,10 +133,10 @@ void Level::addLevel(Level &level)
     }
 }
 
-bool Level::collides(vec2 pos)
+bool Level::collides(double xf, double yf)
 {
-    int x = floor(pos.x);
-    int y = floor(pos.y);
+    int x = floor(xf);
+    int y = floor(yf);
 
     if (layers.size() <= x)
     {

@@ -44,9 +44,9 @@ private:
     GameState* state;
     Time last;
     bool cheat;
-    const double grav_acc = 3;
-    const double jump_speed = 0.8;
-    const double acc_scale = 1.5;
+    const double grav_acc = 20;
+    const double jump_speed = 8;
+    const double acc_scale = 30;
     const double acc_time = 0.2;
     const int max_jumps = 4;
     const double pizza_speed = 0.2;

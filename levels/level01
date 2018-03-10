@@ -6,12 +6,12 @@ block # ../gfx/full_block.png 32 32 1 8
 block 0 ../gfx/p_red.png 32 32 0 0
 block 1 ../gfx/p_blue.png 32 32 0 1
 block 2 ../gfx/p_green.png 32 32 0 2
-block 3 ../gfx/item_pizza.png 32 32 1 8 
-block 4 ../gfx/item_schnitzel.png 32 32 1 8
-block 5 ../gfx/item_icecream.png 32 32 1 8
+block 3 ../gfx/item_pizza.png 32 32 0 8
+block 4 ../gfx/item_schnitzel.png 32 32 0 8
+block 5 ../gfx/item_icecream.png 32 32 0 8
 level 0
    (===)                              #
-                (=======)             #
+    --          (=======)             #
                                       #
  0 1 2 3 4 5                          #
 ______________________________________#

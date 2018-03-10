@@ -160,20 +160,33 @@ void GameLogic::run()
 
 
     // Check for collisions.
-    // TODO get powerups
-    vec2 pos_foot_1 = state->player.pos;
-    pos_foot_1.x -= 0.25;
-    pos_foot_1.y -= 0.5;
-    vec2 pos_foot_2 = state->player.pos;
-    pos_foot_2.x += 0.25;
-    pos_foot_2.y -= 0.5;
-
-    if ((state->level.collides(pos_foot_1)) || (state->level.collides(pos_foot_1)))
+    double x = state->player.pos.x;
+    double y = state->player.pos.y;
+    bool col_left = state->level.collides(x, y + 0.5)
+        || state->level.collides(x, y + 0.9)
+        || state->level.collides(x, y + 0.1);
+    bool col_right = state->level.collides(x + 1, y + 0.5)
+        || state->level.collides(x + 1, y + 0.1)
+        || state->level.collides(x + 1, y + 0.9);
+    bool col_top = state->level.collides(x + 0.5, y + 1)
+        || state->level.collides(x + 0.1, y + 1)
+        || state->level.collides(x + 0.9, y + 1);
+    bool col_bottom = state->level.collides(x + 0.5, y)
+        || state->level.collides(x + 0.1, y)
+        || state->level.collides(x + 0.9, y);
+    if (col_left)
     {
-        state->player.pos.y = 0;
+        state->player.v.x = 0;
+    } else if (col_right) {
+        state->player.v.x = 0;
+    } else if (col_top) {
+        state->player.v.y = 0;
+    } else if (col_bottom) {
         state->player.v.y = 0;
         state->player.inair = false;
         state->player.jump_count = 0;
+    } else {
+        state->player.inair = true;
     }
 
     // DEBUG
