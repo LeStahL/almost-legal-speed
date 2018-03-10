@@ -69,6 +69,7 @@ int main(int argc, char **args)
                     gameLogic.keyPressed(event.key.code);
                 else
                     menuLogic.keyPressed(event.key.code);
+                break;
             }
         }
 
