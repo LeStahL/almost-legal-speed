@@ -65,14 +65,10 @@ int main(int argc, char **args)
                 window.close();
                 break;
             case (sf::Event::KeyPressed):
-                switch (event.key.code)
-                {
-                case(sf::Keyboard::Space):
-                    if (state.ingame)
-                    {
-                        state.player.jumping = true;
-                    }
-                }
+                if (state.ingame)
+                    gameLogic.keyPressed(event.key.code);
+                else
+                    menuLogic.keyPressed(event.key.code);
             }
         }
 
