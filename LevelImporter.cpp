@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "level_importer.h"
+#include "LevelImporter.h"
 
 #include <fstream>
 #include <map>
@@ -39,36 +39,61 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-
-enum ImporterState {
-    BlockDescriptor,
-    LevelDescriptor
-};
-
-void level_importer::LoadLevel(std::string& pathToFile, GfxManger& gfxManager) const
+const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManger& gfxManager)
 {
     std::ifstream infile(pathToFile);
-
-    std::vector<Level> level;
-
-    std::map<string, const Block*> blocks;
-    ImporterState state;
+    Level* current_level = nullptr;
+    Level* start_level = nullptr;
     for(std::string line; getline( infile, line ); )
     {
-        if (state == BlockDescriptor) {
+        if (line.find("block"))
+        {
             // name, path, w, h, solid
             // not efficient but maybe works
             std::vector<std::string> split_line = split(line, ' ');
 
             if (split_line.size() == 5) {
-                auto& name = split_line[0];
+                char name = split_line[1][0];
 
                 size_t w, h;
                 bool solid;
-                auto* block = gfxManager.LoadBlock(name, split_line[1], w, h, solid);
-                blocks[name] = block;
+                Block* block = gfxManager.LoadBlock(name, split_line[1], w, h, solid);
+                blocks.insert ( std::pair<char, Block*>(name,block) );
+            }
+        } else if (line.find("level"))
+        {
+            size_t id = stoull(line.substr(line.find_first_of(" "), line.size()));
+            current_level = &levels[id];
+        } else if (line.find("clevel"))
+        {
+            // clevel id <ids>
+            std::vector<std::string> split_line = split(line, ' ');
+            if (split_line.size() < 4)
+                continue;
+
+            size_t id = stoull(split_line[1]);
+            Level& level = levels[id];
+            level.id = id;
+            for (size_t i = 2; i < split_line.size(); ++i) {
+                size_t cid = stoull(split_line[i]);
+                level.AddLevel(levels[cid]);
+            }
+        } else if (line.find("slevel"))
+        {
+            size_t id = stoull(line.substr(7, line.size()));
+            start_level = &levels[id];
+        } else if (current_level != nullptr){
+            for (size_t i = 0; i < line.size(); ++i) {
+                current_level->level[i].push_back(blocks[line[i]]);
             }
         }
+
     }
+    return start_level;
+
+}
+
+void Level::AddLevel(Level &level) const
+{
 
 }

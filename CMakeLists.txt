@@ -26,7 +26,7 @@ message("SFML LIBS" ${SFML_LIBRARIES})
 
 set(SPEED_SOURCES
     main.cpp
-    # level_importer.cpp
+    LevelImporter.cpp
     GameLogic.cpp
     Renderer.cpp
     Player.cpp

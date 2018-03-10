@@ -1,6 +1,7 @@
-a path_to_file width heigth solid
-b path_to_file width heigth solid
-levelnmame=blablub
+
+block a path_to_file width heigth solid
+block b path_to_file width heigth solid
+level blablub
 _________________________________________
 |                                        |
 |                                        |
@@ -8,5 +9,13 @@ _________________________________________
 |                 234  56   1    _    ___|
 |F             #  ###  ##  ## # _        |
 |_________________ ______ __ ___         |
+level [name]
+_________________________________________________
+| 
+|
+|
+____________________________
+clevel concat [blablub blablub]
+slevel [level]
 
 

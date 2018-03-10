@@ -18,8 +18,9 @@
 #ifndef LEVEL_IMPORTER_H
 #define LEVEL_IMPORTER_H
 
-
+#include <memory>
 #include <vector>
+#include <map>
 #include <SFML/Graphics/Texture.hpp>
 
 using namespace sf;
@@ -27,13 +28,14 @@ using namespace std;
 
 class Block {
 public:
-    std::string name, pathToFile;
+    char id;
+    std::string pathToFile;
     size_t width, heigth;
     bool solid;
     Texture texture;
 
-    Block(std::string& _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid)
-        : name(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid)
+    Block(char _name, std::string& _pathToFile, size_t _width, size_t _heigth, bool _solid)
+        : id(_name), pathToFile(_pathToFile), width(_width), heigth(_heigth), solid(_solid), texture()
     {
         if (!texture.loadFromFile(pathToFile))
         {
@@ -46,14 +48,22 @@ public:
 
 class Level {
 public:
+    bool definePlayerPosition;
+    size_t id;
     std::vector<const Block*> blocks;
     std::vector<std::vector<const Block*>> level;
+
+    Level() { }
+    Level(size_t id, std::vector<std::vector<const Block*>> level);
+    Level(size_t id, std::vector<const Level*>& list);
+
+    void AddLevel(Level& level) const;
 };
 
 
 class GfxManger {
 public:
-    const Block* LoadBlock(std::string& name, std::string& pathToFile, size_t w, size_t h, bool solid) {
+    Block* LoadBlock(char name, std::string& pathToFile, size_t w, size_t h, bool solid) {
         for (size_t i = 0; i < blocks.size(); ++i)
         {
             auto& b = blocks[i];
@@ -72,11 +82,17 @@ public:
 };
 
 
-class level_importer
+class LevelImporter
 {
 public:
-    level_importer() {}
+    std::map<size_t, Level> levels;
+    std::map<char, Block*> blocks;
 
-    void LoadLevel(std::string& pathToFile, GfxManger& gfxManager) const;
+    LevelImporter() {
+        // constraint
+        blocks[' '] = nullptr;
+    }
+
+    const Level* LoadLevel(std::string& pathToFile, GfxManger& gfxManager);
 };
 #endif

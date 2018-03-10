@@ -23,8 +23,7 @@
 
 #include <SFML/System/Clock.hpp>
 #include <Player.h>
-#include <level_importer.h>
-
+#include "LevelImporter.h"
 using namespace sf;
 
 class Renderer;
