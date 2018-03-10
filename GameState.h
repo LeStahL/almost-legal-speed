@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include <SFML/Clock.hpp>
+#include <SFML/System/Clock.hpp>
 
 using namespace sf;
 
