@@ -127,10 +127,10 @@ void GameLogic::run()
 void GameLogic::keyPressed(sf::Keyboard::Key key) {
     switch (key)
     {
-    case(sf::Keyboard::Space):
+    case (sf::Keyboard::Space):
         state->player.jumping = true;
         break;
-    case(sf::Keyboard::Escape):
+    case (sf::Keyboard::Escape):
         state->ingame = false;
         break;
     }

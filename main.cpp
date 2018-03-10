@@ -85,6 +85,14 @@ int main(int argc, char **args)
                 else
                     menuLogic.keyPressed(event.key.code);
                 break;
+            case (sf::Event::MouseMoved):
+                if (!state.ingame)
+                    menuLogic.mouseMoved(event.mouseMove.x, event.mouseMove.y);
+                break;
+            case (sf::Event::MouseButtonPressed):
+                if (!state.ingame)
+                    menuLogic.mouseButtonPressed(event.mouseButton.button);
+                break;
             }
         }
 
@@ -93,10 +101,8 @@ int main(int argc, char **args)
         if(state.ingame) {
             gameLogic.run();
             r.render();
-        } else {
-            menuLogic.run();
+        } else
             r.renderMenu(menuLogic.selectedItem);
-        }
 
         window.display();
     }
