@@ -20,13 +20,23 @@
 #define GAME_LOGIC_H
 
 #include <GameState.h>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics.hpp>
 
 class GameLogic {
 public:
-    GameLogic() = default;
+    GameLogic(GameState*);
     virtual ~GameLogic() = default;
 
-    void run(GameState*);
+    void run();
+    void keyPressed(sf::Keyboard::Key);
+
+private:
+    GameState* state;
+    Time last;
+    const double grav_acc = 1;
+    const double jump_speed = 1;
+    const double acc_scale = 1e-4;
 };
 
 #endif

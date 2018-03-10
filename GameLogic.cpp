@@ -19,8 +19,102 @@
 #include <GameLogic.h>
 #include <GameState.h>
 #include <Player.h>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Graphics.hpp>
 
-void GameLogic::run(GameState* state)
+GameLogic::GameLogic(GameState* s) {
+    state = s;
+    last = Time::Zero;
+}
+
+void GameLogic::run()
 {
-    state->player.pos += state->player.v;
+    if (last == Time::Zero) {
+        last = state->timer.getElapsedTime();
+        return;
+    }
+
+    // Check direction keystate.
+    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    if (left)
+    {
+        if (right)
+        {
+            state->player.a = NONE;
+        } else {
+            state->player.a = LEFT;
+        }
+    } else {
+        if (right)
+        {
+            state->player.a = RIGHT;
+        } else {
+            state->player.a = NONE;
+        }
+    }
+
+    // Update speed vector.
+    auto current = state->timer.getElapsedTime();
+    double elapsed = (current - last).asSeconds();
+    double acc = acc_scale * (1. + state->player.speedPower) * state->player.pizzaslow;
+    double max_speed = acc * 1;
+
+    if (state->player.inair)
+    {
+        if (state->player.jumping)
+        {
+            if (!state->player.double_jumped)
+            {
+                state->player.double_jumped = true;
+                state->player.v.y = jump_speed * (1 + state->player.upwardPower);
+            }
+            state->player.jumping = false;
+        } else {
+            state->player.v.y -= grav_acc;
+        }
+    } else {
+        if (state->player.jumping)
+        {
+            state->player.inair = true;
+            state->player.v.x = jump_speed * (1 + state->player.forwardPower);
+            state->player.v.y = jump_speed * (1 + state->player.upwardPower);
+        } else {
+            state->player.v.y = 0;
+            switch (state->player.a) {
+            case(LEFT):
+                state->player.v.x -= acc;
+                break;
+            case(RIGHT):
+                state->player.v.x += acc;
+                break;
+            case(NONE):
+                state->player.v.x = 0;
+                break;
+            }
+            if (state->player.v.x > max_speed) {
+                state->player.v.x = max_speed;
+            } else if (state->player.v.x < -max_speed) {
+                state->player.v.x = -max_speed;
+            }
+        }
+    }
+
+    // Apply speed vector.
+    if (!state->player.stuck) {
+        state->player.pos += state->player.v * elapsed;
+    }
+
+    // Check for collision.
+    // TODO
+    // TODO reset double_jumped
+}
+
+void GameLogic::keyPressed(sf::Keyboard::Key key) {
+    switch (key)
+    {
+    case(sf::Keyboard::Space):
+        state->player.jumping = true;
+        break;
+    }
 }

@@ -3,7 +3,6 @@
 //                     Daniel Hauck <mail@dhauck.eu>
 //                     Jonas Blahut <darkphoenix@jbtec.eu>
 //
-//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -17,33 +16,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef PLAYER_H
-#define PLAYER_H
+#include <MenuLogic.h>
+#include <GameState.h>
 
-struct vec2 {
-    double x;
-    double y;
+#include <SFML/Graphics.hpp>
 
-    vec2 operator+(vec2 const&);
-    void operator+=(vec2 const&);
-    vec2 operator*(double);
-    void operator*=(double);
-    void operator/=(double);
-};
+MenuLogic::MenuLogic(GameState* s) {
+    state = s;
+}
 
-typedef enum { LEFT, NONE, RIGHT } direction;
-
-class Player
+void MenuLogic::run()
 {
-public:
-    Player();
-    virtual ~Player() = default;
 
-    vec2 pos, v;
-    direction a;
+}
 
-    double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
-    bool stuck, inair, jumping, double_jumped;
-};
-
-#endif
+void MenuLogic::keyPressed(sf::Keyboard::Key key) {
+    switch (key)
+    {
+    case(sf::Keyboard::Return):
+        state->ingame = true;
+        break;
+    }
+}

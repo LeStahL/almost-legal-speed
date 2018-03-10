@@ -21,6 +21,8 @@
 #include <GameLogic.h>
 #include <GameState.h>
 
+#include <MenuLogic.h>
+
 #include "Renderer.h"
 
 #include <string.h>
@@ -28,7 +30,7 @@
 int main(int argc, char **args)
 {
     const char *fontpath = 0;
-    for(int i=0; i<argc; ++i)
+    for(int i=1; i<argc; ++i)
     {
         if(!strcmp(args[i], "--font") || !strcmp(args[i], "-f"))
         {
@@ -42,28 +44,44 @@ int main(int argc, char **args)
         fprintf(stderr, "ERROR: No font specified. Use -f flag.\n");
         return -1;
     }
-    
+
     printf("Using font: %s\n", fontpath);
-    
+
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
 
-    Renderer r(&window, fontpath);
-    GameLogic logic;
+    Renderer r(&window, fontpath, &(state.player));
+    GameLogic gameLogic(&state);
+    MenuLogic menuLogic(&state);
 
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            switch (event.type)
+            {
+            case (sf::Event::Closed):
                 window.close();
+                break;
+            case (sf::Event::KeyPressed):
+                if (state.ingame)
+                    gameLogic.keyPressed(event.key.code);
+                else
+                    menuLogic.keyPressed(event.key.code);
+                break;
+            }
         }
 
         window.clear(sf::Color::Black);
 
-        r.render();
-        logic.run(&state);
+        if(state.ingame) {
+            r.render();
+            gameLogic.run();
+        } else {
+            r.renderMenu();
+            menuLogic.run();
+        }
 
         window.display();
     }

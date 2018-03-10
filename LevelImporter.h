@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #ifndef LEVEL_IMPORTER_H
 #define LEVEL_IMPORTER_H
 

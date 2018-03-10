@@ -15,16 +15,17 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "Renderer.h"
+#include "Player.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
+Renderer::Renderer(sf::RenderWindow* w, const char* font_path, Player *p)
     : font(new Font)
     , window(w)
+    , player(p)
 {
-    printf("Font: %s\n", font_path);
     if (!font->loadFromFile(font_path))
     {
         fprintf(stderr, "ERROR: Could not load font %s.\n", font_path);
@@ -39,11 +40,28 @@ Renderer::~Renderer()
 
 void Renderer::render()
 {
-    sf::Text text("Hello, World", *font);
+//     sf::Text text("Hello, World", *font);
 
-    text.setCharacterSize(30);
-    text.setStyle(sf::Text::Bold);
-    text.setColor(sf::Color::Red);
+//     text.setCharacterSize(30);
+//     text.setStyle(sf::Text::Bold);
+    //text.setColor(sf::Color::Red);
     
-    window->draw(text);
+//     window->draw(/*text*/);
+    CircleShape p(20.);
+    p.setFillColor(sf::Color(111.,111.,111.));
+    p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
+    window->draw(p);
 }
+
+void Renderer::renderMenu()
+{
+    sf::Text startgame("Start Game", *font);
+    startgame.setPosition(.45*800.,.45*600.);
+    
+    sf::Text endgame("Quit Game", *font);
+    endgame.setPosition(.45*800.,.55*600.);
+    
+    window->draw(startgame);
+    window->draw(endgame);
+}
+

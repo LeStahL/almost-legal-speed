@@ -36,15 +36,15 @@ using namespace std;
 class GameState
 {
 public:
-    GameState() = default;
+    GameState();
     virtual ~GameState() = default;
-
-    bool jumping;
 
     Player player;
 
     Level level;
     Clock timer;
+
+    bool ingame;
 };
 
 #endif

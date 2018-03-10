@@ -3,7 +3,6 @@
 //                     Daniel Hauck <mail@dhauck.eu>
 //                     Jonas Blahut <darkphoenix@jbtec.eu>
 //
-//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -17,33 +16,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef MENU_LOGIC_H
+#define MENU_LOGIC_H
 
-struct vec2 {
-    double x;
-    double y;
+#include <SFML/Graphics.hpp>
 
-    vec2 operator+(vec2 const&);
-    void operator+=(vec2 const&);
-    vec2 operator*(double);
-    void operator*=(double);
-    void operator/=(double);
-};
+#include <GameState.h>
 
-typedef enum { LEFT, NONE, RIGHT } direction;
-
-class Player
-{
+class MenuLogic {
 public:
-    Player();
-    virtual ~Player() = default;
+    MenuLogic(GameState*);
+    virtual ~MenuLogic() = default;
 
-    vec2 pos, v;
-    direction a;
+    void run();
+    void keyPressed(sf::Keyboard::Key);
 
-    double forwardPower, upwardPower, speedPower, money, brainfreeze, pizzaslow;
-    bool stuck, inair, jumping, double_jumped;
+private:
+	GameState* state;
 };
 
 #endif
