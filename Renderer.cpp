@@ -21,6 +21,7 @@
 
 Renderer::Renderer(RenderWindow* w)
     : window(w)
+    , font(new Font())
 {
     if (!font->loadFromFile("/usr/share/fonts/truetype/msttcorefonts/verdana.ttf"))
     {
@@ -30,6 +31,11 @@ Renderer::Renderer(RenderWindow* w)
 }
 
 Renderer::~Renderer()
+{
+    delete font;
+}
+
+void Renderer::render()
 {
     sf::Text text("Hello, World", *font);
 
