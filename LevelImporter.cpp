@@ -89,6 +89,7 @@ const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxMa
             start_level = &levels[id];
         } else if (current_level != nullptr){
             for (size_t i = 0; i < line.size(); ++i) {
+                current_level->level.resize(std::max(current_level->level.size(), line.size()));
                 current_level->level[i].push_back(blocks[line[i]]);
             }
         }
