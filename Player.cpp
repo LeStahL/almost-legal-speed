@@ -35,11 +35,12 @@ Player::Player()
     money = 0.0;
     brainfreeze = 0.0;
     pizza = false;
-    stuck = false;
+    schnitzel = false;
     inair = false;
     jumping = false;
     jump_count = 0;
     pizza_start = sf::Time::Zero;
+    schnitzel_start = sf::Time::Zero;
 }
 
 vec2 vec2::operator+(vec2 const& rhs) {

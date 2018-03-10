@@ -42,6 +42,7 @@ private:
     const int max_jumps = 4;
     const double pizza_speed = 0.2;
     const double pizza_time = 3;
+    const double schnitzel_time = 1;
 };
 
 #endif

@@ -45,10 +45,11 @@ public:
     direction a, face;
 
     double forwardPower, upwardPower, speedPower, money, brainfreeze;
-    bool stuck, inair, jumping, pizza;
+    bool schnitzel, inair, jumping, pizza;
     int jump_count;
 
     sf::Time pizza_start;
+    sf::Time schnitzel_start;
 };
 
 #endif

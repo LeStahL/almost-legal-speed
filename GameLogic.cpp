@@ -124,9 +124,21 @@ void GameLogic::run()
     }
 
     // Apply speed vector.
-    if (!state->player.stuck) {
-        state->player.pos += state->player.v * elapsed;
+    if (state->player.schnitzel) {
+        if (state->player.schnitzel_start == Time::Zero)
+        {
+            state->player.schnitzel_start = current;
+        }
+        double schnitzel_elapsed = (current - state->player.schnitzel_start).asSeconds();
+        if (schnitzel_elapsed > schnitzel_time)
+        {
+            state->player.schnitzel = false;
+            state->player.schnitzel_start = Time::Zero;
+        } else {
+            state->player.v.x = 0;
+        }
     }
+    state->player.pos += state->player.v * elapsed;
 
 
     // Check for collisions.
@@ -206,6 +218,9 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
             break;
         case (sf::Keyboard::T):
             state->player.pizza = true;
+            break;
+        case (sf::Keyboard::G):
+            state->player.schnitzel = true;
             break;
         }
     }
