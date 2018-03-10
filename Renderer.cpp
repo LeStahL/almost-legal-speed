@@ -86,6 +86,55 @@ void Renderer::render(GameState *state)
     p.setFillColor(sf::Color(111.,111.,111.));
     p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
     window->draw(p);
+    
+    //ui overlay
+    RectangleShape speedDopingBar(Vector2f(150.,20.));
+    speedDopingBar.setOutlineColor(Color(255.,255.,255.));
+    speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    speedDopingBar.setOutlineThickness(2.);
+    speedDopingBar.setPosition(260.,10.);
+    window->draw(speedDopingBar);
+    
+    RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    speedDopingProgress.setFillColor(Color(255.,0.,0.));
+    speedDopingProgress.setPosition(265.,13.);
+    window->draw(speedDopingProgress);
+    
+    Text speedText("Speed doping", *font);
+    speedText.setPosition(10.,0.);
+    window->draw(speedText);
+    
+    RectangleShape upwardDopingBar(Vector2f(150.,20.));
+    upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    upwardDopingBar.setOutlineThickness(2.);
+    upwardDopingBar.setPosition(260.,40.);
+    window->draw(upwardDopingBar);
+    
+    RectangleShape upwardDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    upwardDopingProgress.setFillColor(Color(0.,0.,255.));
+    upwardDopingProgress.setPosition(265.,43.);
+    window->draw(upwardDopingProgress);
+    
+    Text upwardText("Upward doping", *font);
+    upwardText.setPosition(10.,30.);
+    window->draw(upwardText);
+    
+    RectangleShape forwardDopingBar(Vector2f(150.,20.));
+    forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    forwardDopingBar.setOutlineThickness(2.);
+    forwardDopingBar.setPosition(260.,70.);
+    window->draw(forwardDopingBar);
+    
+    RectangleShape forwardDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    forwardDopingProgress.setFillColor(Color(0.,255.,0.));
+    forwardDopingProgress.setPosition(265.,73.);
+    window->draw(forwardDopingProgress);
+    
+    Text forwardText("Forward doping", *font);
+    forwardText.setPosition(10.,60.);
+    window->draw(forwardText);
 }
 
 void Renderer::renderMenu(int selected)
