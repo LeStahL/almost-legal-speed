@@ -16,6 +16,7 @@
 
 #include "Renderer.h"
 #include "Player.h"
+#include "GameState.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -37,20 +38,36 @@ Renderer::~Renderer()
     delete font;
 }
 
-void Renderer::render(Player *player)
+void Renderer::render(GameState *state)
 {
+    Player *player = &(state->player);
     //backdrop
-    sf::Texture texture;
-    if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+    if(player->forwardPower + player->upwardPower + player->speedPower > 1.5)
     {
-        fprintf(stderr, "ERROR: Could not load BG.png\n");
-        exit(0);
+        std::vector<sf::Texture> t;
+        t.resize(14);
+        for(int i=0; i<14; ++i)
+        {
+            if (!t.at(i).loadFromFile((std::string("../gfx/backdrop/DrogenBG_")+std::to_string(i)+std::string(".png")).c_str()))
+            {
+                fprintf(stderr, "ERROR: Could not load DrogenBG*.png\n");
+                exit(0);
+            }
+        }
     }
-    
-    
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    window->draw(sprite);
+    else
+    {
+        sf::Texture texture;
+        if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+        {
+            fprintf(stderr, "ERROR: Could not load BG.png\n");
+            exit(0);
+        }
+        
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        window->draw(sprite);
+    }
     
     CircleShape p(20.);
     p.setFillColor(sf::Color(111.,111.,111.));

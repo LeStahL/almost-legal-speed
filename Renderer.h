@@ -20,6 +20,7 @@
 #include <SFML/Graphics.hpp>
 
 class Player;
+class GameState;
 
 using namespace sf;
 
@@ -29,7 +30,7 @@ public:
     Renderer(RenderWindow *w, const char *font_path);
     virtual ~Renderer();
     
-    void render(Player *player);
+    void render(GameState *state);
     
     RenderWindow *window;
     Font *font;

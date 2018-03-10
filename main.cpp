@@ -103,7 +103,7 @@ int main(int argc, char **args)
 
         if(state.ingame) {
             gameLogic.run();
-            r.render(&(state.player));
+            r.render(&state);
         } else
             r.renderMenu(menuLogic.selectedItem);
 
