@@ -19,7 +19,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-typedef struct { double x; double y } vec2;
+typedef struct { double x; double y; } vec2;
 typedef enum { LEFT, NONE, RIGHT } direction;
 
 class Player

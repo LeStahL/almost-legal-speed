@@ -22,12 +22,11 @@
 #include <vector>
 
 #include <SFML/System/Clock.hpp>
+#include <Player.h>
 
 using namespace sf;
 
 class Renderer;
-
-class Player;
 
 class Block;
 
