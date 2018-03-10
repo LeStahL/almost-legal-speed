@@ -108,9 +108,9 @@ void Renderer::render(GameState *state)
         window->draw(sprite);
     }
     
-    CircleShape p(20.);
+    CircleShape p(.5*tile_width);
     p.setFillColor(sf::Color(111.,111.,111.));
-    p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
+    p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
     window->draw(p);
     
     //ui overlay
