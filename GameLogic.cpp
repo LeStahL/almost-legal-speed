@@ -114,6 +114,7 @@ void GameLogic::run()
         state->player.pos.y = 0;
         state->player.v.y = 0;
         state->player.inair = false;
+        state->player.double_jumped = false;
     }
 
     // Check for collision.
@@ -128,6 +129,9 @@ void GameLogic::keyPressed(sf::Keyboard::Key key) {
     {
     case(sf::Keyboard::Space):
         state->player.jumping = true;
+        break;
+    case(sf::Keyboard::Escape):
+        state->ingame = false;
         break;
     }
 }
