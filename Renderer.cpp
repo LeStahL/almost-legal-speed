@@ -57,10 +57,26 @@ void Renderer::renderMenu(int selected)
 {
     sf::Text startgame("Start Game", *font);
     startgame.setPosition(.45*800.,.45*600.);
-    
+    startgame.setFillColor(Color(255.,0.,0.));
+
     sf::Text endgame("Quit Game", *font);
     endgame.setPosition(.45*800.,.55*600.);
-    
+    endgame.setFillColor(Color(255.,0.,0.));
+
+    if(selected == -1);
+    else if(selected == 1)
+    {
+        endgame.setStyle(Text::Bold);
+        endgame.setFillColor(Color(255.,255.,0.));
+        startgame.setFillColor(Color(255.,0.,0.));
+    }
+    else 
+    {
+        startgame.setStyle(Text::Bold);
+        startgame.setFillColor(Color(255.,255.,0.));
+        endgame.setFillColor(Color(255.,0.,0.));
+    }
+
     window->draw(startgame);
     window->draw(endgame);
 }
