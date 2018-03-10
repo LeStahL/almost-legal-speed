@@ -26,16 +26,15 @@ using namespace sf;
 class Renderer
 {
 public:
-    Renderer(RenderWindow *w, const char *font_path, Player *p);
+    Renderer(RenderWindow *w, const char *font_path);
     virtual ~Renderer();
     
-    void render();
+    void render(Player *player);
     
     RenderWindow *window;
     Font *font;
     
     void renderMenu(int);
-    Player *player;
 };
 
 #endif

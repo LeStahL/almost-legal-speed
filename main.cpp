@@ -68,7 +68,7 @@ int main(int argc, char **args)
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
-    Renderer r(&window, fontpath, &(state.player));
+    Renderer r(&window, fontpath);
     GameLogic gameLogic(&state);
     MenuLogic menuLogic(&state);
 
@@ -103,7 +103,7 @@ int main(int argc, char **args)
 
         if(state.ingame) {
             gameLogic.run();
-            r.render();
+            r.render(&(state.player));
         } else
             r.renderMenu(menuLogic.selectedItem);
 
