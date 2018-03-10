@@ -30,6 +30,8 @@ public:
 
     void run();
     void keyPressed(sf::Keyboard::Key);
+    void mouseMoved(int, int);
+    void mouseButtonPressed(sf::Mouse::Button);
 
     int selectedItem;
 private:

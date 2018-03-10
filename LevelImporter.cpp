@@ -39,7 +39,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManger& gfxManager)
+const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxManager)
 {
     std::ifstream infile(pathToFile);
     Level* current_level = nullptr;

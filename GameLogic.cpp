@@ -60,7 +60,7 @@ void GameLogic::run()
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
     double acc = acc_scale * (1. + state->player.speedPower) * state->player.pizzaslow;
-    double max_speed = acc * 5;
+    double max_speed = acc * acc_time;
 
     if (state->player.inair)
     {
@@ -73,7 +73,7 @@ void GameLogic::run()
             }
             state->player.jumping = false;
         } else {
-            state->player.v.y -= grav_acc;
+            state->player.v.y -= grav_acc * elapsed;
         }
         max_speed *= 1 + state->player.forwardPower;
     } else {
@@ -88,10 +88,10 @@ void GameLogic::run()
     }
     switch (state->player.a) {
     case(LEFT):
-        state->player.v.x -= acc;
+        state->player.v.x -= acc * elapsed;
         break;
     case(RIGHT):
-        state->player.v.x += acc;
+        state->player.v.x += acc * elapsed;
         break;
     case(NONE):
         state->player.v.x = 0;
@@ -127,10 +127,10 @@ void GameLogic::run()
 void GameLogic::keyPressed(sf::Keyboard::Key key) {
     switch (key)
     {
-    case(sf::Keyboard::Space):
+    case (sf::Keyboard::Space):
         state->player.jumping = true;
         break;
-    case(sf::Keyboard::Escape):
+    case (sf::Keyboard::Escape):
         state->ingame = false;
         break;
     }

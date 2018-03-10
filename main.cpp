@@ -60,12 +60,15 @@ int main(int argc, char **args)
     }
     printf("Rendering level: %s\n", levelpath);
     
-    LevelImporter imp();
+    /*GfxManager m    ;
+    LevelImporter imp;
+    std::string fn(levelpath);
+    const Level *level = imp.LoadLevel(fn, m);
+    */
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
-
-    Renderer r(&window, fontpath, &(state.player));
+    Renderer r(&window, fontpath);
     GameLogic gameLogic(&state);
     MenuLogic menuLogic(&state);
 
@@ -85,6 +88,14 @@ int main(int argc, char **args)
                 else
                     menuLogic.keyPressed(event.key.code);
                 break;
+            case (sf::Event::MouseMoved):
+                if (!state.ingame)
+                    menuLogic.mouseMoved(event.mouseMove.x, event.mouseMove.y);
+                break;
+            case (sf::Event::MouseButtonPressed):
+                if (!state.ingame)
+                    menuLogic.mouseButtonPressed(event.mouseButton.button);
+                break;
             }
         }
 
@@ -92,11 +103,9 @@ int main(int argc, char **args)
 
         if(state.ingame) {
             gameLogic.run();
-            r.render();
-        } else {
-            menuLogic.run();
+            r.render(&(state.player));
+        } else
             r.renderMenu(menuLogic.selectedItem);
-        }
 
         window.display();
     }

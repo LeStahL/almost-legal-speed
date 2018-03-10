@@ -21,10 +21,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-Renderer::Renderer(sf::RenderWindow* w, const char* font_path, Player *p)
+Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     : font(new Font)
     , window(w)
-    , player(p)
 {
     if (!font->loadFromFile(font_path))
     {
@@ -38,15 +37,21 @@ Renderer::~Renderer()
     delete font;
 }
 
-void Renderer::render()
+void Renderer::render(Player *player)
 {
-//     sf::Text text("Hello, World", *font);
-
-//     text.setCharacterSize(30);
-//     text.setStyle(sf::Text::Bold);
-    //text.setColor(sf::Color::Red);
+    //backdrop
+    sf::Texture texture;
+    if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load BG.png\n");
+        exit(0);
+    }
     
-//     window->draw(/*text*/);
+    
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    window->draw(sprite);
+    
     CircleShape p(20.);
     p.setFillColor(sf::Color(111.,111.,111.));
     p.setPosition(player->pos.x*800., 560.-player->pos.y*600.);
