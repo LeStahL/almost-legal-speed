@@ -21,6 +21,12 @@
 
 #include <GameState.h>
 
-void run_logic(GameState*);
+class GameLogic {
+public:
+    GameLogic() = default;
+    virtual ~GameLogic() = default;
+
+    void run(GameState*);
+};
 
 #endif

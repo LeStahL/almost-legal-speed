@@ -20,7 +20,7 @@
 #include <GameState.h>
 #include <Player.h>
 
-void run_logic(GameState* state)
+void GameLogic::run(GameState* state)
 {
     state->player.pos += state->player.v;
 }
