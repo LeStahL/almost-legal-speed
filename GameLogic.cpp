@@ -112,6 +112,25 @@ void GameLogic::run()
         state->player.pos += state->player.v * elapsed;
     }
 
+
+    // Check for collision.
+    // TODO
+    // TODO reset double_jumped
+    vec2 pos_foot_1 = state->player.pos;
+    pos_foot_1.x -= 0.25;
+    pos_foot_1.y -= 0.5;
+    vec2 pos_foot_2 = state->player.pos;
+    pos_foot_2.x += 0.25;
+    pos_foot_2.y -= 0.5;
+
+    if ((state->level.collides(pos_foot_1)) || (state->level.collides(pos_foot_1)))
+    {
+        state->player.pos.y = 0;
+        state->player.v.y = 0;
+        state->player.inair = false;
+        state->player.jump_count = 0;
+    }
+
     // DEBUG
     if (state->player.pos.y < 0)
     {
@@ -120,10 +139,6 @@ void GameLogic::run()
         state->player.inair = false;
         state->player.jump_count = 0;
     }
-
-    // Check for collision.
-    // TODO
-    // TODO reset double_jumped
 
     last = current;
 }

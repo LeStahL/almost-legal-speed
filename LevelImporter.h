@@ -21,6 +21,7 @@
 #include <vector>
 #include <map>
 #include <SFML/Graphics/Texture.hpp>
+#include <Player.h>
 
 using namespace sf;
 using namespace std;
@@ -57,6 +58,8 @@ public:
     Level(size_t id, std::vector<const Level*>& list);
 
     void AddLevel(Level& level) const;
+
+    bool collides(vec2);
 };
 
 

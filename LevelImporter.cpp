@@ -23,6 +23,9 @@
 #include <sstream>
 #include <vector>
 #include <iterator>
+#include <math.h>
+
+#include <Player.h>
 
 template<typename Out>
 void split(const std::string &s, char delim, Out result) {
@@ -96,4 +99,25 @@ const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxMa
 void Level::AddLevel(Level &level) const
 {
 
+}
+
+bool Level::collides(vec2 pos)
+{
+    int x = floor(pos.x);
+    int y = floor(pos.y);
+
+    if (level.size() <= x)
+    {
+        return false;
+    }
+    if (level[x].size() <= y)
+    {
+        return false;
+    }
+    const Block* b = level[x][y];
+    if (b != nullptr)
+    {
+        return b->solid;
+    }
+    return false;
 }
