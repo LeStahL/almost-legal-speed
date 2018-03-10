@@ -31,6 +31,8 @@ public:
     
     RenderWindow *window;
     Font *font;
+    
+    void renderMenu();
 };
 
 #endif

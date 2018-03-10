@@ -46,6 +46,8 @@ public:
 
     Level level;
     Clock timer;
+    
+    bool ingame;
 };
 
 #endif

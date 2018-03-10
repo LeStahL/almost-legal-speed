@@ -28,7 +28,7 @@
 int main(int argc, char **args)
 {
     const char *fontpath = 0;
-    for(int i=0; i<argc; ++i)
+    for(int i=1; i<argc; ++i)
     {
         if(!strcmp(args[i], "--font") || !strcmp(args[i], "-f"))
         {
@@ -62,7 +62,10 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
-        r.render();
+        if(state.ingame)
+            r.render();
+        else 
+            r.renderMenu();
         logic.run();
 
         window.display();

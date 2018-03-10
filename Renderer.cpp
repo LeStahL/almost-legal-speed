@@ -24,7 +24,6 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     : font(new Font)
     , window(w)
 {
-    printf("Font: %s\n", font_path);
     if (!font->loadFromFile(font_path))
     {
         fprintf(stderr, "ERROR: Could not load font %s.\n", font_path);
@@ -43,7 +42,18 @@ void Renderer::render()
 
     text.setCharacterSize(30);
     text.setStyle(sf::Text::Bold);
-    text.setColor(sf::Color::Red);
+    //text.setColor(sf::Color::Red);
     
     window->draw(text);
 }
+
+void Renderer::renderMenu()
+{
+    sf::Text startgame("Start Game", *font);
+    startgame.setOrigin(.5,.5);
+    
+    sf::Text endgame("End Game", *font);
+    
+    window->draw(startgame);
+}
+
