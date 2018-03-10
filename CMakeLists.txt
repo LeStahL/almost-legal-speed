@@ -29,6 +29,7 @@ set(SPEED_SOURCES
     # level_importer.cpp
     GameState.cpp
     GameLogic.cpp
+    MenuLogic.cpp
     Renderer.cpp
     Player.cpp
 )

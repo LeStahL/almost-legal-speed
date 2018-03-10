@@ -21,6 +21,8 @@
 #include <GameLogic.h>
 #include <GameState.h>
 
+#include <MenuLogic.h>
+
 #include "Renderer.h"
 
 #include <string.h>
@@ -49,7 +51,8 @@ int main(int argc, char **args)
     GameState state;
 
     Renderer r(&window, fontpath);
-    GameLogic logic(&state);
+    GameLogic gameLogic(&state);
+    MenuLogic menuLogic;
 
     while (window.isOpen())
     {
@@ -75,11 +78,13 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
-        if (state.ingame)
+        if(state.ingame) {
             r.render();
-        else
+            gameLogic.run();
+        } else {
             r.renderMenu();
-        logic.run();
+            menuLogic.run();
+        }
 
         window.display();
     }
