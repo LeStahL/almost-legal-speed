@@ -36,7 +36,7 @@ int main(int argc, char **args)
 
         window.clear(sf::Color::Black);
 
-        run_logic(*state);
+        run_logic(&state);
 
         window.display();
     }
