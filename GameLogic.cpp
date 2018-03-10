@@ -21,11 +21,29 @@
 #include <Player.h>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <string>
+#include <iostream>
 
-GameLogic::GameLogic(GameState* s, bool c) {
+using namespace std;
+using namespace sf;
+
+BackgroundMusic::BackgroundMusic(string fn_menu, string fn_normal, string fn_dope, string fn_slow) {
+    menu.openFromFile(fn_menu);
+    menu.setLoop(true);
+    normal.openFromFile(fn_normal);
+    normal.setLoop(true);
+    dope.openFromFile(fn_dope);
+    dope.setLoop(true);
+    slow.openFromFile(fn_slow);
+    slow.setLoop(true);
+}
+
+GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m) {
     state = s;
     last = Time::Zero;
     cheat = c;
+    music = m;
 }
 
 void GameLogic::run()
@@ -36,8 +54,8 @@ void GameLogic::run()
     }
 
     // Check direction keystate.
-    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    bool left = Keyboard::isKeyPressed(Keyboard::Left);
+    bool right = Keyboard::isKeyPressed(Keyboard::Right);
     if (left)
     {
         if (right)
@@ -167,6 +185,7 @@ void GameLogic::run()
         state->player.jump_count = 0;
     }
 
+    // Decrease powerups.
     state->player.speedPower -= power_decrease * elapsed;
     if (state->player.speedPower < 0) state->player.speedPower = 0;
     state->player.forwardPower -= power_decrease * elapsed;
@@ -174,59 +193,99 @@ void GameLogic::run()
     state->player.upwardPower -= power_decrease * elapsed;
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
 
+    // Update music.
+    if (music->menu.getStatus() == Music::Status::Playing) {
+        music->menu.stop();
+    }
+    if (state->player.pizza || state->player.schnitzel) {
+        if (music->normal.getStatus() == Music::Status::Playing) {
+            music->normal.pause();
+        }
+        if (music->dope.getStatus() == Music::Status::Playing) {
+            music->dope.pause();
+        }
+        if (music->slow.getStatus() != Music::Status::Playing) {
+            music->slow.play();
+        }
+    } else if ((state->player.speedPower + state->player.forwardPower + state->player.upwardPower) > 1.5) {
+        if (music->normal.getStatus() == Music::Status::Playing) {
+            music->normal.pause();
+        }
+        if (music->dope.getStatus() != Music::Status::Playing) {
+            music->dope.play();
+        }
+        if (music->slow.getStatus() == Music::Status::Playing) {
+            music->slow.pause();
+        }
+    } else {
+        if (music->normal.getStatus() != Music::Status::Playing) {
+            music->normal.play();
+        }
+        if (music->dope.getStatus() == Music::Status::Playing) {
+            music->dope.pause();
+        }
+        if (music->slow.getStatus() == Music::Status::Playing) {
+            music->slow.pause();
+        }
+    }
+
     last = current;
 }
 
-void GameLogic::keyPressed(sf::Keyboard::Key key) {
+void GameLogic::keyPressed(Keyboard::Key key) {
     switch (key)
     {
-    case (sf::Keyboard::Space):
+    case (Keyboard::Space):
         state->player.jumping = true;
         break;
-    case (sf::Keyboard::Escape):
+    case (Keyboard::Escape):
         state->ingame = false;
+        music->normal.stop();
+        music->dope.stop();
+        music->slow.stop();
+        music->menu.play();
         break;
     }
     if (cheat)
     {
         switch (key)
         {
-        case (sf::Keyboard::Q):
+        case (Keyboard::Q):
             state->player.speedPower += 0.1;
             if (state->player.speedPower > 1) state->player.speedPower = 1;
             break;
-        case (sf::Keyboard::A):
+        case (Keyboard::A):
             state->player.speedPower -= 0.1;
             if (state->player.speedPower < 0) state->player.speedPower = 0;
             break;
-        case (sf::Keyboard::W):
+        case (Keyboard::W):
             state->player.forwardPower += 0.1;
             if (state->player.forwardPower > 1) state->player.forwardPower = 1;
             break;
-        case (sf::Keyboard::S):
+        case (Keyboard::S):
             state->player.forwardPower -= 0.1;
             if (state->player.forwardPower < 0) state->player.forwardPower = 0;
             break;
-        case (sf::Keyboard::E):
+        case (Keyboard::E):
             state->player.upwardPower += 0.1;
             if (state->player.upwardPower > 1) state->player.upwardPower = 1;
             break;
-        case (sf::Keyboard::D):
+        case (Keyboard::D):
             state->player.upwardPower -= 0.1;
             if (state->player.upwardPower < 0) state->player.upwardPower = 0;
             break;
-        case (sf::Keyboard::R):
+        case (Keyboard::R):
             state->player.brainfreeze += 0.1;
             if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
             break;
-        case (sf::Keyboard::F):
+        case (Keyboard::F):
             state->player.brainfreeze -= 0.1;
             if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
             break;
-        case (sf::Keyboard::T):
+        case (Keyboard::T):
             state->player.pizza = true;
             break;
-        case (sf::Keyboard::G):
+        case (Keyboard::G):
             state->player.schnitzel = true;
             break;
         }

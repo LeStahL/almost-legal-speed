@@ -22,10 +22,19 @@
 #include <GameState.h>
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <string>
+
+class BackgroundMusic {
+public:
+    BackgroundMusic(std::string, std::string, std::string, std::string);
+    virtual ~BackgroundMusic() = default;
+    sf::Music menu, normal, slow, dope;
+};
 
 class GameLogic {
 public:
-    GameLogic(GameState*, bool);
+    GameLogic(GameState*, bool, BackgroundMusic*);
     virtual ~GameLogic() = default;
 
     void run();
@@ -44,6 +53,7 @@ private:
     const double pizza_time = 3;
     const double schnitzel_time = 1;
     const double power_decrease = 0.05;
+    BackgroundMusic* music;
 };
 
 #endif

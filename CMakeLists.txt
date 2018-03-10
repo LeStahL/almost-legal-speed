@@ -21,7 +21,7 @@ project(almost-legal-speed)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/modules" ${CMAKE_MODULE_PATH})
 
-find_package(SFML COMPONENTS graphics window system REQUIRED)
+find_package(SFML COMPONENTS graphics window system audio REQUIRED)
 message("SFML LIBS" ${SFML_LIBRARIES})
 
 set(SPEED_SOURCES

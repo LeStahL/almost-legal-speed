@@ -22,8 +22,8 @@
 
 Player::Player()
 {
-    pos.x = 0;
-    pos.y = 0;
+    pos.x = 0.5;
+    pos.y = 0.2;
     v.x = 0;
     v.y = 0;
     a = NONE;
@@ -36,7 +36,7 @@ Player::Player()
     brainfreeze = 0.0;
     pizza = false;
     schnitzel = false;
-    inair = false;
+    inair = true;
     jumping = false;
     jump_count = 0;
     pizza_start = sf::Time::Zero;

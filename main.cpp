@@ -75,7 +75,14 @@ int main(int argc, char **args)
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
     Renderer r(&window, fontpath);
-    GameLogic gameLogic(&state, cheat);
+    BackgroundMusic music(
+        "../matzesmagicmusic/Chilly.ogg",
+        "../matzesmagicmusic/Chilly.ogg",
+        "../matzesmagicmusic/MoreDopeThanHope.ogg",
+        "../matzesmagicmusic/TooMuchFood.ogg"
+    );
+    music.menu.play();
+    GameLogic gameLogic(&state, cheat, &music);
     MenuLogic menuLogic(&state, r.texts);
 
     while (window.isOpen())
