@@ -97,6 +97,6 @@ public:
         blocks[' '] = nullptr;
     }
 
-    const Level* roadLevel(std::string& pathToFile, GfxManager& gfxManager);
+    const Level* loadLevel(std::string& pathToFile, GfxManager& gfxManager);
 };
 #endif
