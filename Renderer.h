@@ -41,7 +41,7 @@ public:
     
 private:
     std::vector<sf::Texture> t;
-    sf::Texture texture;
+    sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup;
     int drogen_counter;
 };
 

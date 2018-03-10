@@ -56,6 +56,24 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load BG.png\n");
         exit(0);
     }
+    
+    if (!t_red_powerup.loadFromFile("../gfx/p_red.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load p_red.png\n");
+        exit(0);
+    }
+
+    if (!t_green_powerup.loadFromFile("../gfx/p_green.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load p_red.png\n");
+        exit(0);
+    }
+    
+    if (!t_blue_powerup.loadFromFile("../gfx/p_blue.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load p_red.png\n");
+        exit(0);
+    }
 }
 
 Renderer::~Renderer()
@@ -136,7 +154,24 @@ void Renderer::render(GameState *state)
     forwardText.setPosition(10.,60.);
     window->draw(forwardText);
     
+    sf::Sprite sprite_red_powerup;
+    sprite_red_powerup.setTexture(t_red_powerup);
+    sprite_red_powerup.setPosition(425, 0.);
+    window->draw(sprite_red_powerup);
+    
+    sf::Sprite sprite_blue_powerup;
+    sprite_blue_powerup.setTexture(t_blue_powerup);
+    sprite_blue_powerup.setPosition(425, 30.);
+    window->draw(sprite_blue_powerup);
+    
+    sf::Sprite sprite_green_powerup;
+    sprite_green_powerup.setTexture(t_green_powerup);
+    sprite_green_powerup.setPosition(425, 60.);
+    window->draw(sprite_green_powerup);
+    
     //level
+    Level level = state->level;
+    
     
 }
 
