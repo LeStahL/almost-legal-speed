@@ -90,8 +90,10 @@ void Renderer::renderMenu(int selected)
     	if (selected == i) {
     		texts[i].setStyle(Text::Bold);
     		texts[i].setFillColor(Color(255.,255.,0.));
-    	} else
+    	} else {
+    		texts[i].setStyle(Text::Regular);
     		texts[i].setFillColor(Color(255.,0,0));
+    	}
     }
 
     window->draw(texts[0]);
