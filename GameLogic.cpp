@@ -2,7 +2,6 @@
 // Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
 //                     Daniel Hauck <mail@dhauck.eu>
 //
-//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -16,40 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#include <GameLogic.h>
+#include <GameState.h>
 
-#include <vector>
-
-#include <SFML/System/Clock.hpp>
-
-using namespace sf;
-
-class Renderer;
-
-class Player;
-
-class Block;
-
-class Platform;
-class Powerup;
-
-class Level;
-
-using namespace std;
-
-class GameState
-{
-public:
-    GameState();
-    virtual ~GameState();
-
-    bool jumping;
-
-    Player player;
-
-    Level level;
-    Clock timer;
-};
-
-#endif
+void run_logic(GameState* state) {
+    
+}

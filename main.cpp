@@ -16,10 +16,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <SFML/Graphics.hpp>
+#include <GameLogic.h>
+#include <GameState.h>
 
 int main(int argc, char **args)
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
+    GameState state;
 
     while (window.isOpen())
     {
@@ -31,6 +34,8 @@ int main(int argc, char **args)
         }
 
         window.clear(sf::Color::Black);
+
+        run_logic(*state);
 
         window.display();
     }
