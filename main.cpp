@@ -14,7 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include <SFML/Graphics.hpp>
+
 int main(int argc, char **args)
 {
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear(sf::Color::Black);
+
+        window.display();
+    }
+    
     return 0;
 }

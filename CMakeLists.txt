@@ -14,10 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+cmake_minimum_required(VERSION 2.8)
+
 project(almost-legal-speed)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/modules" ${CMAKE_MODULE_PATH})
+
+find_package(SFML COMPONENTS graphics window system REQUIRED)
+message("SFML LIBS" ${SFML_LIBRARIES})
 
 set(SPEED_SOURCES
     main.cpp
 )
 
+include_directories(${SFML_INCLUDE_DIR})
 add_executable(speed ${SPEED_SOURCES})
+target_link_libraries(speed ${SFML_LIBRARIES})
+
