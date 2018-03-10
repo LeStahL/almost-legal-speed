@@ -35,7 +35,10 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
     switch (key)
     {
     case(sf::Keyboard::Return):
-        state->ingame = true;
+        if (selectedItem == 0)
+            state->ingame = true;
+        else if (selectedItem == 1)
+            exit(0);
         break;
     case(sf::Keyboard::Down):
         selectedItem = (selectedItem < 0 || selectedItem > menu_item_count-2) ? 0 : selectedItem+1;
