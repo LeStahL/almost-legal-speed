@@ -38,6 +38,8 @@ public:
     
     void renderMenu(int);
     std::vector<sf::Text> texts;
+
+    void renderHighscore(GameState *state);
     
     float tile_width, tile_height;
     

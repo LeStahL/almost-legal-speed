@@ -37,4 +37,4 @@ set(SPEED_SOURCES
 include_directories(${SFML_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(speed ${SPEED_SOURCES})
-target_link_libraries(speed ${SFML_LIBRARIES})
+target_link_libraries(speed ${SFML_LIBRARIES} curl)

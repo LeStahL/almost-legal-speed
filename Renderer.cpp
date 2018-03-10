@@ -39,6 +39,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         exit(0);
     }
     texts.push_back(sf::Text("Start Game", *font));
+    texts.push_back(sf::Text("Show highscores", *font));
     texts.push_back(sf::Text("Quit Game", *font));
     
     t.resize(14);
@@ -196,11 +197,10 @@ void Renderer::render(GameState *state)
 
 void Renderer::renderMenu(int selected)
 {
-    texts[0].setPosition(.45*800.,.45*600.);
-    texts[0].setColor(Color(255.,0.,0.));
-
-    texts[1].setPosition(.45*800.,.55*600.);
-    texts[1].setColor(Color(255.,0.,0.));
+	for (int i = 0; i < texts.size(); i++) {
+	    texts[i].setPosition(.45*800.,.45*600. + i*60.);
+	    texts[i].setColor(Color(255.,0.,0.));
+	}
 
     for (int i = 0; i < texts.size(); i++) {
     	if (selected == i) {
@@ -212,7 +212,13 @@ void Renderer::renderMenu(int selected)
     	}
     }
 
-    window->draw(texts[0]);
-    window->draw(texts[1]);
+    for (int i = 0; i < texts.size(); i++)
+    	window->draw(texts[i]);
 }
+
+void Renderer::renderHighscore(GameState *state)
+{
+	Text scores(state->highscores, *font);
+	scores.setPosition(0, 0);
+	window->draw(scores);}
 

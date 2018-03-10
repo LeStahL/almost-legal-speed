@@ -19,14 +19,20 @@
 #include <MenuLogic.h>
 #include <GameState.h>
 #include <vector>
+#include <iostream>
+#include <string>
 
 #include <SFML/Graphics.hpp>
+#include <stdio.h>
+#include <curl/curl.h>
 
 MenuLogic::MenuLogic(GameState* s, std::vector<sf::Text> txts) {
     state = s;
     texts = txts;
     selectedItem = -1;
     menu_item_count = texts.size();
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
 void MenuLogic::keyPressed(sf::Keyboard::Key key) {
@@ -40,6 +46,9 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
         break;
     case (sf::Keyboard::Up):
         selectedItem = selectedItem < 1 ? menu_item_count-1 : selectedItem-1;
+        break;
+    case (sf::Keyboard::Escape):
+        state->onscores = false;
         break;
     }
 }
@@ -64,9 +73,26 @@ void MenuLogic::mouseButtonPressed(sf::Mouse::Button btn) {
     }
 }
 
+size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string* data) {
+    data->append((char*) ptr, size * nmemb);
+    return size * nmemb;
+}
+
 void MenuLogic::activateMenuItem(int index) {
     if (index == 0)
-            state->ingame = true;
-    else if (index == 1)
+        state->ingame = true;
+    else if (index == 1) {
+        state->onscores = true;
+        curl = curl_easy_init();
+        if (curl) {
+            CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_URL, "https://speed.jbtec.eu/score");
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &(state->highscores));
+            curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
+        }
+    }
+    else if (index == 2)
         exit(0);
 }

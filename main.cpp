@@ -118,8 +118,12 @@ int main(int argc, char **args)
         if(state.ingame) {
             gameLogic.run();
             r.render(&state);
-        } else
-            r.renderMenu(menuLogic.selectedItem);
+        } else {
+            if (state.onscores)
+                r.renderHighscore(&state);
+            else
+                r.renderMenu(menuLogic.selectedItem);
+        }
 
         window.display();
     }

@@ -20,6 +20,7 @@
 #define GAMESTATE_H
 
 #include <vector>
+#include <string>
 
 #include <SFML/System/Clock.hpp>
 #include <Player.h>
@@ -45,6 +46,8 @@ public:
     Clock timer;
 
     bool ingame;
+    bool onscores;
+    string highscores;
 };
 
 #endif

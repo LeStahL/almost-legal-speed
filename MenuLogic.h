@@ -21,6 +21,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <curl/curl.h>
 
 #include <GameState.h>
 
@@ -40,6 +41,7 @@ private:
 	GameState* state;
 	std::vector<sf::Text> texts;
 	int menu_item_count;
+    CURL *curl;
 };
 
 #endif
