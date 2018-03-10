@@ -56,6 +56,14 @@ public:
     std::vector<std::vector<const Block*>> level;
 
     Level() { }
+    Level(const Level& other) :
+        definePlayerPosition(other.definePlayerPosition),
+        id(other.id),
+        blocks(other.blocks),
+        level(other.level)
+    {
+    }
+
     Level(size_t id, std::vector<std::vector<const Block*>> level);
     Level(size_t id, std::vector<const Level*>& list);
 

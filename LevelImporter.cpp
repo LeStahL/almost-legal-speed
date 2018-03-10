@@ -108,6 +108,7 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
         for (size_t i = 0; i < level.level.size(); ++i) {
             level.level[i] = std::vector<const Block*>(level.level[i].rbegin(),level.level[i].rend());
         }
+
     }
     return start_level;
 }
