@@ -46,11 +46,11 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
 
 void MenuLogic::mouseMoved(int x, int y) {
     for (int i = 0; i < texts.size(); i++) {
-        float txtX = .45*800;
-        float txtY = .45*600 + .1*i*600;
+        float txtX = .45*800.;
+        float txtY = .45*600. + i*60.;
         float txtWidth = texts[i].getGlobalBounds().width;
         float txtHeight = texts[i].getGlobalBounds().height;
-        if (x > txtX && y > txtY && x < txtX + txtWidth && y < txtY + txtHeight) {
+        if (x > txtX && y > txtY + .5*txtHeight && x < txtX + txtWidth && y < txtY + 1.5*txtHeight) {
             selectedItem = i;
             return;
         }
