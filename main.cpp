@@ -26,6 +26,7 @@
 #include "Renderer.h"
 
 #include <string.h>
+#include <iostream>
 
 int main(int argc, char **args)
 {
@@ -56,6 +57,7 @@ int main(int argc, char **args)
 
     while (window.isOpen())
     {
+        state.ingame = true;
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -72,6 +74,12 @@ int main(int argc, char **args)
                 break;
             }
         }
+        cout << "p: " << state.player.pos.x << " / " << state.player.pos.y << "    "
+            << "v: " << state.player.v.x << " / " << state.player.v.y << "    "
+            << "a: " << state.player.a << "    "
+            << "air: " << state.player.inair << "    "
+            << "face: " << state.player.face << "    "
+            << "j: " << state.player.jumping << endl;
 
         window.clear(sf::Color::Black);
 

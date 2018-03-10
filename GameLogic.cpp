@@ -44,11 +44,13 @@ void GameLogic::run()
             state->player.a = NONE;
         } else {
             state->player.a = LEFT;
+            state->player.face = LEFT;
         }
     } else {
         if (right)
         {
             state->player.a = RIGHT;
+            state->player.face = RIGHT;
         } else {
             state->player.a = NONE;
         }
@@ -58,7 +60,7 @@ void GameLogic::run()
     auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
     double acc = acc_scale * (1. + state->player.speedPower) * state->player.pizzaslow;
-    double max_speed = acc * 1;
+    double max_speed = acc * 5;
 
     if (state->player.inair)
     {
@@ -67,7 +69,7 @@ void GameLogic::run()
             if (!state->player.double_jumped)
             {
                 state->player.double_jumped = true;
-                state->player.v.y = jump_speed * (1 + state->player.upwardPower);
+                state->player.v.y = jump_speed_y * (1 + state->player.upwardPower);
             }
             state->player.jumping = false;
         } else {
@@ -77,8 +79,9 @@ void GameLogic::run()
         if (state->player.jumping)
         {
             state->player.inair = true;
-            state->player.v.x = jump_speed * (1 + state->player.forwardPower);
-            state->player.v.y = jump_speed * (1 + state->player.upwardPower);
+            state->player.v.x = state->player.face * jump_speed_x * (1 + state->player.forwardPower);
+            state->player.v.y = jump_speed_y * (1 + state->player.upwardPower);
+            state->player.jumping = false;
         } else {
             state->player.v.y = 0;
             switch (state->player.a) {
@@ -105,9 +108,19 @@ void GameLogic::run()
         state->player.pos += state->player.v * elapsed;
     }
 
+    // DEBUG
+    if (state->player.pos.y < 0)
+    {
+        state->player.pos.y = 0;
+        state->player.v.y = 0;
+        state->player.inair = false;
+    }
+
     // Check for collision.
     // TODO
     // TODO reset double_jumped
+
+    last = current;
 }
 
 void GameLogic::keyPressed(sf::Keyboard::Key key) {
