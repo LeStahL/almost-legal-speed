@@ -26,6 +26,7 @@ struct vec2 {
 
     vec2 operator+(vec2 const&);
     void operator+=(vec2 const&);
+    void operator*(double);
 };
 
 typedef enum { LEFT, NONE, RIGHT } direction;
@@ -33,8 +34,8 @@ typedef enum { LEFT, NONE, RIGHT } direction;
 class Player
 {
 public:
-    Player();
-    virtual ~Player();
+    Player() = default;
+    virtual ~Player() = default;
 
     vec2 pos, v;
     direction a;

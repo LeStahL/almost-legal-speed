@@ -24,25 +24,22 @@
 
 #include <SFML/System/Clock.hpp>
 #include <Player.h>
+#include <level_importer.h>
 
 using namespace sf;
 
 class Renderer;
 
-class Block;
-
 class Platform;
 class Powerup;
-
-class Level;
 
 using namespace std;
 
 class GameState
 {
 public:
-    GameState();
-    virtual ~GameState();
+    GameState() = default;
+    virtual ~GameState() = default;
 
     bool jumping;
 
