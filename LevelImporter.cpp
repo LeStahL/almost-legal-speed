@@ -53,7 +53,6 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
 
     for(std::string line; getline( infile, line ); )
     {
-        cout << line << endl;
         if (line.find("block") == 0)
         {
             // name, path, w, h, solid
@@ -101,7 +100,6 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
                 current_level->level[i].push_back(blocks[line[i]]);
             }
         }
-
     }
 
     for (auto id : added_levels) {
@@ -111,10 +109,7 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
             level.level[i] = std::vector<const Block*>(level.level[i].rbegin(),level.level[i].rend());
         }
     }
-
-
     return start_level;
-
 }
 
 void Level::addLevel(Level &level)
