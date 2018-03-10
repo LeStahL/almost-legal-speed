@@ -23,9 +23,13 @@
 #include <stdlib.h>
 #include <vector>
 
+#include <string>
+#include <iostream>
+
 Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     : font(new Font)
     , window(w)
+    , drogen_counter(0)
 {
     if (!font->loadFromFile(font_path))
     {
@@ -34,6 +38,24 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     }
     texts.push_back(sf::Text("Start Game", *font));
     texts.push_back(sf::Text("Quit Game", *font));
+    
+    t.resize(14);
+    for(int i=0; i<14; ++i)
+    {
+        std::string s = (std::string("../gfx/backdrop/DrogenBG_")+std::to_string(i)+std::string(".png")).c_str();
+        const char *s2 = s.c_str();
+        if (!t.at(i).loadFromFile(s2))
+        {
+            fprintf(stderr, "ERROR: Could not load DrogenBG*.png\n");
+            exit(0);
+        }
+    }
+    
+    if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load BG.png\n");
+        exit(0);
+    }
 }
 
 Renderer::~Renderer()
@@ -47,26 +69,14 @@ void Renderer::render(GameState *state)
     //backdrop
     if(player->forwardPower + player->upwardPower + player->speedPower > 1.5)
     {
-        std::vector<sf::Texture> t;
-        t.resize(14);
-        for(int i=0; i<14; ++i)
-        {
-            if (!t.at(i).loadFromFile((std::string("../gfx/backdrop/DrogenBG_")+std::to_string(i)+std::string(".png")).c_str()))
-            {
-                fprintf(stderr, "ERROR: Could not load DrogenBG*.png\n");
-                exit(0);
-            }
-        }
+        if(state->timer.getElapsedTime().asMilliseconds() % 70 == 0)++drogen_counter;
+        if(drogen_counter == 14) drogen_counter = 0;
+        sf::Sprite sprite;
+        sprite.setTexture(t.at(drogen_counter));
+        window->draw(sprite);
     }
     else
     {
-        sf::Texture texture;
-        if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
-        {
-            fprintf(stderr, "ERROR: Could not load BG.png\n");
-            exit(0);
-        }
-        
         sf::Sprite sprite;
         sprite.setTexture(texture);
         window->draw(sprite);

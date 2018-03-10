@@ -64,7 +64,6 @@ int main(int argc, char **args)
     LevelImporter imp;
     std::string fn(levelpath);
     const Level *level = imp.LoadLevel(fn, m);
-
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
@@ -102,6 +101,7 @@ int main(int argc, char **args)
         window.clear(sf::Color::Black);
 
         if(state.ingame) {
+            state.player.forwardPower = 3.;
             gameLogic.run();
             r.render(&state);
         } else

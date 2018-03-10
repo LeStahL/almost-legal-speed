@@ -37,8 +37,12 @@ public:
     Font *font;
     
     void renderMenu(int);
-    Player *player;
     std::vector<sf::Text> texts;
+    
+private:
+    std::vector<sf::Texture> t;
+    sf::Texture texture;
+    int drogen_counter;
 };
 
 #endif
