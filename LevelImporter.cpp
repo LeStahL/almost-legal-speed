@@ -26,6 +26,7 @@
 #include <math.h>
 
 #include <Player.h>
+#include <iostream>
 
 template<typename Out>
 void split(const std::string &s, char delim, Out result) {
@@ -49,7 +50,8 @@ const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxMa
     Level* start_level = nullptr;
     for(std::string line; getline( infile, line ); )
     {
-        if (line.find("block"))
+        cout << line << endl;
+        if (line.find("block") == 0)
         {
             // name, path, w, h, solid
             // not efficient but maybe works
@@ -60,14 +62,14 @@ const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxMa
 
                 size_t w, h;
                 bool solid;
-                Block* block = gfxManager.LoadBlock(name, split_line[1], w, h, solid);
+                Block* block = gfxManager.LoadBlock(name, split_line[2], w, h, solid);
                 blocks.insert ( std::pair<char, Block*>(name,block) );
             }
-        } else if (line.find("level"))
+        } else if (line.find("level") == 0)
         {
             size_t id = stoull(line.substr(line.find_first_of(" "), line.size()));
             current_level = &levels[id];
-        } else if (line.find("clevel"))
+        } else if (line.find("clevel") == 0)
         {
             // clevel id <ids>
             std::vector<std::string> split_line = split(line, ' ');
@@ -81,7 +83,7 @@ const Level* LevelImporter::LoadLevel(std::string& pathToFile, GfxManager& gfxMa
                 size_t cid = stoull(split_line[i]);
                 level.AddLevel(levels[cid]);
             }
-        } else if (line.find("slevel"))
+        } else if (line.find("slevel") == 0)
         {
             size_t id = stoull(line.substr(7, line.size()));
             start_level = &levels[id];
