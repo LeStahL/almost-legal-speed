@@ -18,6 +18,7 @@
 #define RENDERER_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class Player;
 class GameState;
@@ -36,6 +37,8 @@ public:
     Font *font;
     
     void renderMenu(int);
+    Player *player;
+    std::vector<sf::Text> texts;
 };
 
 #endif

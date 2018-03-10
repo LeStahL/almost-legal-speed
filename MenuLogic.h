@@ -20,12 +20,13 @@
 #define MENU_LOGIC_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 #include <GameState.h>
 
 class MenuLogic {
 public:
-    MenuLogic(GameState*);
+    MenuLogic(GameState*, std::vector<sf::Text>);
     virtual ~MenuLogic() = default;
 
     void run();
@@ -35,8 +36,10 @@ public:
 
     int selectedItem;
 private:
+	void activateMenuItem(int);
 	GameState* state;
-	const int menu_item_count = 2;
+	std::vector<sf::Text> texts;
+	int menu_item_count;
 };
 
 #endif

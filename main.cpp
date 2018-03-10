@@ -70,7 +70,7 @@ int main(int argc, char **args)
     GameState state;
     Renderer r(&window, fontpath);
     GameLogic gameLogic(&state);
-    MenuLogic menuLogic(&state);
+    MenuLogic menuLogic(&state, r.texts);
 
     while (window.isOpen())
     {
