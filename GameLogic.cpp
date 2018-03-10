@@ -167,6 +167,13 @@ void GameLogic::run()
         state->player.jump_count = 0;
     }
 
+    state->player.speedPower -= power_decrease * elapsed;
+    if (state->player.speedPower < 0) state->player.speedPower = 0;
+    state->player.forwardPower -= power_decrease * elapsed;
+    if (state->player.forwardPower < 0) state->player.forwardPower = 0;
+    state->player.upwardPower -= power_decrease * elapsed;
+    if (state->player.upwardPower < 0) state->player.upwardPower = 0;
+
     last = current;
 }
 

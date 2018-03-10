@@ -43,6 +43,7 @@ private:
     const double pizza_speed = 0.2;
     const double pizza_time = 3;
     const double schnitzel_time = 1;
+    const double power_decrease = 0.05;
 };
 
 #endif
