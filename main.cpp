@@ -109,6 +109,10 @@ int main(int argc, char **args)
                 if (!state.ingame)
                     menuLogic.mouseButtonPressed(event.mouseButton.button);
                 break;
+            case (sf::Event::TextEntered):
+                if (state.ingame && state.finished)
+                    gameLogic.textEntered(event.key.code, event.text.unicode);
+                break;
             }
         }
 

@@ -323,7 +323,6 @@ void GameLogic::run()
             state->player.forwardPower = 0;
             music->music_index = 4;
             music->play(4);
-            pushScore("Nobody", state->time);
             break;
         case (Doping):
             if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
@@ -357,7 +356,25 @@ void GameLogic::run()
     last = current;
 }
 
+void GameLogic::textEntered(Keyboard::Key key, Uint32 c) {
+    if ((c >= 48) && (c < 176)) {
+        state->name.push_back((char) c);
+    }
+}
+
 void GameLogic::keyPressed(Keyboard::Key key) {
+    if (state->finished)
+    {
+        if (key == Keyboard::BackSpace && state->name.size() != 0)
+        {
+            state->name.pop_back();
+        } else if (key == Keyboard::Return) {
+            pushScore(state->name, state->time);
+            state->ingame = false;
+            music->play(0);
+        }
+        return;
+    }
     switch (key)
     {
     case (Keyboard::Space):

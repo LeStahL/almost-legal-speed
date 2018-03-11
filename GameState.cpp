@@ -36,6 +36,7 @@ void GameState::reload()
     }
     player.reset();
     finished = false;
+    name = "";
     time = 0;
 }
 

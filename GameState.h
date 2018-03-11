@@ -54,6 +54,7 @@ public:
     string highscores, levelpath;
     double time;
     bool finished;
+    string name;
 };
 
 #endif

@@ -334,20 +334,30 @@ void Renderer::render(GameState *state)
 
 
 
-    sf::Sprite sprite_red_powerup;
-    sprite_red_powerup.setTexture(t_red_powerup);
-    sprite_red_powerup.setPosition(225, 0.);
-    window->draw(sprite_red_powerup);
+    if (state->finished)
+    {
+        Text name = Text("Name: " + state->name, *font);
+        name.setCharacterSize(40);
+        float name_w = time.getGlobalBounds().width;
+        float name_h = time.getGlobalBounds().height;
+        name.setPosition(350, 60);
+        window->draw(name);
+    } else {
+        sf::Sprite sprite_red_powerup;
+        sprite_red_powerup.setTexture(t_red_powerup);
+        sprite_red_powerup.setPosition(225, 0.);
+        window->draw(sprite_red_powerup);
 
-    sf::Sprite sprite_blue_powerup;
-    sprite_blue_powerup.setTexture(t_blue_powerup);
-    sprite_blue_powerup.setPosition(225, 30.);
-    window->draw(sprite_blue_powerup);
+        sf::Sprite sprite_blue_powerup;
+        sprite_blue_powerup.setTexture(t_blue_powerup);
+        sprite_blue_powerup.setPosition(225, 30.);
+        window->draw(sprite_blue_powerup);
 
-    sf::Sprite sprite_green_powerup;
-    sprite_green_powerup.setTexture(t_green_powerup);
-    sprite_green_powerup.setPosition(225, 60.);
-    window->draw(sprite_green_powerup);
+        sf::Sprite sprite_green_powerup;
+        sprite_green_powerup.setTexture(t_green_powerup);
+        sprite_green_powerup.setPosition(225, 60.);
+        window->draw(sprite_green_powerup);
+    }
 
     char time_str[100];
     sprintf(time_str, "%.1f", state->time);
@@ -357,7 +367,7 @@ void Renderer::render(GameState *state)
     // time.setPosition(400 - 0.5*time_w, 30 - 0.5*time_h);
     time.setPosition(550, 20);
     window->draw(time);
-    
+
     //brain freeze
     int n = 80, m=60;
     double wx = 800./double(n), wy = 600./double(m), rmax = sqrt((800.-400.)*(800.-400.)+(600.-300.)*(600.-300.));

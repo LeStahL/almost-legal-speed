@@ -50,6 +50,7 @@ public:
 
     void run();
     void keyPressed(sf::Keyboard::Key);
+    void textEntered(sf::Keyboard::Key, Uint32);
 
 private:
     GameState* state;
