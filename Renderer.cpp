@@ -177,9 +177,6 @@ Renderer::~Renderer()
 
 void Renderer::render(GameState *state)
 {
-
-
-
     Player *player = &(state->player);
     sf::Time current = state->timer.getElapsedTime();
 

@@ -18,7 +18,8 @@
 #define RENDERER_H
 
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include <SFML/OpenGL.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 
 class Player;
 class GameState;
