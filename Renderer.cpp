@@ -111,7 +111,8 @@ void Renderer::render(GameState *state)
     
     CircleShape p(.5*tile_width);
     p.setFillColor(sf::Color(111.,111.,111.));
-    p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
+//     p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
+    p.setPosition(400., 300.);
     window->draw(p);
     
     //ui overlay
@@ -189,7 +190,7 @@ void Renderer::render(GameState *state)
             sf::Sprite block_sprite;
             block_sprite.setScale(tile_width/block->texture->getSize().x, tile_height/block->texture->getSize().y);
             block_sprite.setTexture(*(block->texture));
-            block_sprite.setPosition(i*tile_width,600.-(j+1)*tile_height);
+            block_sprite.setPosition((i-player->pos.x)*tile_width+400.,600.-(j-player->pos.y)*tile_height-300.);
             window->draw(block_sprite);
         }
     }
