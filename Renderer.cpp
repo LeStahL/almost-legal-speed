@@ -32,6 +32,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     , drogen_counter(0)
     , tile_width(32.)
     , tile_height(32.)
+    , player_counter(0)
 {
     if (!font->loadFromFile(font_path))
     {
@@ -68,17 +69,75 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
 
     if (!t_green_powerup.loadFromFile("../gfx/p_green.png"))
     {
-        fprintf(stderr, "ERROR: Could not load p_red.png\n");
+        fprintf(stderr, "ERROR: Could not load p_green.png\n");
         exit(0);
     }
 
     if (!t_blue_powerup.loadFromFile("../gfx/p_blue.png"))
     {
-        fprintf(stderr, "ERROR: Could not load p_red.png\n");
+        fprintf(stderr, "ERROR: Could not load p_blue.png\n");
         exit(0);
     }
 
+    if(!p_jump_left.loadFromFile("../gfx/Matzario_jump_left.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load Matzario_jump_left.png\n");
+        exit(0);
+    }
+    
+    if(!p_jump_right.loadFromFile("../gfx/Matzario_jump_right.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load Matzario_jump_right.png\n");
+        exit(0);
+    }
+    
+    if(!p_jump_left.loadFromFile("../gfx/Matzario_jump_left.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load Matzario_jump_left.png\n");
+        exit(0);
+    }
+    
+    if(!p_stand_left.loadFromFile("../gfx/matzario_left.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_left.png\n");
+        exit(0);
+    }
+    
+    if(!p_stand_right.loadFromFile("../gfx/matzario_right.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_right.png\n");
+        exit(0);
+    }
+    
+    p_run_left.resize(2);
+    p_run_right.resize(2);
+    
+    if(!p_run_left.at(0).loadFromFile("../gfx/matzario_run_left.png", sf::IntRect(0.,0.,32.,32.)))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_run_left.png\n");
+        exit(0);
+    }
+    
+    if(!p_run_left.at(1).loadFromFile("../gfx/matzario_run_left.png", sf::IntRect(0.,32.,32.,32.)))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_run_left.png\n");
+        exit(0);
+    }
+    
+    if(!p_run_right.at(0).loadFromFile("../gfx/matzario_run_right.png", sf::IntRect(0.,0.,32.,32.)))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_run_right.png\n");
+        exit(0);
+    }
+    
+    if(!p_run_right.at(1).loadFromFile("../gfx/matzario_run_right.png", sf::IntRect(0.,32.,32.,32.)))
+    {
+        fprintf(stderr, "ERROR: Could not load matzario_run_right.png\n");
+        exit(0);
+    }
+    
     last_bg_change = sf::Time::Zero;
+    last_player_change = sf::Time::Zero;
 }
 
 Renderer::~Renderer()
@@ -89,10 +148,11 @@ Renderer::~Renderer()
 void Renderer::render(GameState *state)
 {
     Player *player = &(state->player);
+    sf::Time current = state->timer.getElapsedTime();
+    
     //backdrop
     if(player->forwardPower + player->upwardPower + player->speedPower > 1.5)
     {
-        sf::Time current = state->timer.getElapsedTime();
         if ((current - last_bg_change).asMilliseconds() > 70) {
             ++drogen_counter;
             last_bg_change = current;
@@ -109,11 +169,11 @@ void Renderer::render(GameState *state)
         window->draw(sprite);
     }
 
-    CircleShape p(.5*tile_width);
-    p.setFillColor(sf::Color(111.,111.,111.));
+//     CircleShape p(.5*tile_width);
+//     p.setFillColor(sf::Color(111.,111.,111.));
 //     p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
-    p.setPosition(400., 300.);
-    window->draw(p);
+//     p.setPosition(400., 300.);
+//     window->draw(p);
 
     //ui overlay
     RectangleShape speedDopingBar(Vector2f(150.,20.));
@@ -193,6 +253,69 @@ void Renderer::render(GameState *state)
             block_sprite.setTexture(*(block->texture));
             block_sprite.setPosition((i-player->pos.x)*tile_width+400.,600.-(j-player->pos.y)*tile_height-300.);
             window->draw(block_sprite);
+        }
+    }
+    
+    //matze
+    if((current - last_player_change).asMilliseconds() > 100)
+    {
+        ++player_counter;
+        player_counter %= 2;
+        last_player_change = current;
+    }
+    
+    if(player->inair && player->face == RIGHT) //jump right
+    {
+        sf::Sprite sprite_p_right_jumping;
+        sprite_p_right_jumping.setTexture(p_jump_right);
+        sprite_p_right_jumping.setPosition(400, 300.);
+        sprite_p_right_jumping.setScale(tile_width/32., tile_height/32.);
+        window->draw(sprite_p_right_jumping);
+    }
+    else if(player->inair && player->face == LEFT) //jump left
+    {
+        sf::Sprite sprite_p_left_jumping;
+        sprite_p_left_jumping.setTexture(p_jump_left);
+        sprite_p_left_jumping.setPosition(400, 300.);
+        sprite_p_left_jumping.setScale(tile_width/32., tile_height/32.);
+        window->draw(sprite_p_left_jumping);
+    }
+    else if(!player->inair && player->face == LEFT) 
+    {
+        if(player->v.x < 0.) //run left
+        {
+            sf::Sprite sprite_p_left_running;
+            sprite_p_left_running.setTexture(p_run_left.at(player_counter));
+            sprite_p_left_running.setPosition(400, 300.);
+            sprite_p_left_running.setScale(tile_width/32., tile_height/32.);
+            window->draw(sprite_p_left_running);
+        }
+        else if(player->v.x == 0.) //stand left
+        {
+            sf::Sprite sprite_p_left_standing;
+            sprite_p_left_standing.setTexture(p_stand_left);
+            sprite_p_left_standing.setPosition(400, 300.);
+            sprite_p_left_standing.setScale(tile_width/32., tile_height/32.);
+            window->draw(sprite_p_left_standing);
+        }
+    }
+    else if(!player->inair && player->face == RIGHT)
+    {
+        if(player->v.x > 0.) //run right
+        {
+            sf::Sprite sprite_p_right_running;
+            sprite_p_right_running.setTexture(p_run_right.at(player_counter));
+            sprite_p_right_running.setPosition(400, 300.);
+            sprite_p_right_running.setScale(tile_width/32., tile_height/32.);
+            window->draw(sprite_p_right_running);
+        }
+        else if(player->v.x == 0.) //stand right
+        {
+            sf::Sprite sprite_p_right_standing;
+            sprite_p_right_standing.setTexture(p_stand_right);
+            sprite_p_right_standing.setPosition(400, 300.);
+            sprite_p_right_standing.setScale(tile_width/32., tile_height/32.);
+            window->draw(sprite_p_right_standing);
         }
     }
 }

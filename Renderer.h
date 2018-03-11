@@ -44,10 +44,10 @@ public:
     float tile_width, tile_height;
     
 private:
-    std::vector<sf::Texture> t;
-    sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup;
-    int drogen_counter;
-    sf::Time last_bg_change;
+    std::vector<sf::Texture> t, p_run_left, p_run_right;
+    sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup, p_stand_left, p_stand_right, p_jump_left, p_jump_right;
+    int drogen_counter, player_counter;
+    sf::Time last_bg_change, last_player_change;
 };
 
 #endif
