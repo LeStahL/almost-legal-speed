@@ -39,14 +39,14 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load font %s.\n", font_path);
         exit(0);
     }
-    texts.push_back(sf::Text("Start Game", *font));
-    texts.push_back(sf::Text("Show highscores", *font));
-    texts.push_back(sf::Text("Quit Game", *font));
+    texts.push_back(new sf::Text("Start Game", *font));
+    texts.push_back(new sf::Text("Show Highscores", *font));
+    texts.push_back(new sf::Text("Quit Game", *font));
     title = sf::Text("Almost Legal Speed", *font);
-    title.setScale(2., 2.);
+    title.setCharacterSize(60);
     float title_w = title.getGlobalBounds().width;
     float title_h = title.getGlobalBounds().height;
-    title.setPosition(0.5*(800. - title_w), 50. + 0.5*title_h);
+    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
 
     t.resize(14);
     for(int i=0; i<14; ++i)
@@ -143,13 +143,13 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
 
     last_bg_change = sf::Time::Zero;
     last_player_change = sf::Time::Zero;
-    
+
     if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up2.png"))
     {
         fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
         exit(0);
     }
-    
+
     //brainfreeze
     if (!brainfreeze.loadFromFile("../shaders/brainfreeze.frag", sf::Shader::Fragment))
     {
@@ -165,9 +165,9 @@ Renderer::~Renderer()
 
 void Renderer::render(GameState *state)
 {
-    
-    
-    
+
+
+
     Player *player = &(state->player);
     sf::Time current = state->timer.getElapsedTime();
 
@@ -341,25 +341,29 @@ void Renderer::render(GameState *state)
 
 void Renderer::renderMenu(int selected)
 {
+    sf::Sprite sprite;
+    sprite.setTexture(t.at(0));
+    window->draw(sprite);
+
 	for (int i = 0; i < texts.size(); i++) {
-        float txtWidth = texts[i].getGlobalBounds().width;
-        float txtHeight = texts[i].getGlobalBounds().height;
-	    texts[i].setPosition(.5*(800. - txtWidth),.5*600. + (i - texts.size()/2.)*60.);
-	    texts[i].setColor(Color(255.,0.,0.));
+        float txtWidth = texts[i]->getGlobalBounds().width;
+        float txtHeight = texts[i]->getGlobalBounds().height;
+	    texts[i]->setPosition(.5*(800. - txtWidth),.5*600. + 100. + (i - texts.size()/2.)*60.);
+	    texts[i]->setColor(Color(255.,0.,0.));
 	}
 
     for (int i = 0; i < texts.size(); i++) {
     	if (selected == i) {
-    		texts[i].setStyle(Text::Bold);
-    		texts[i].setColor(Color(255.,255.,0.));
+    		texts[i]->setStyle(Text::Bold);
+    		texts[i]->setColor(Color(50., 0., 0.));
     	} else {
-    		texts[i].setStyle(Text::Regular);
-    		texts[i].setColor(Color(255.,0,0));
+    		texts[i]->setStyle(Text::Regular);
+    		texts[i]->setColor(Color(50., 0., 0));
     	}
     }
 
     for (int i = 0; i < texts.size(); i++)
-    	window->draw(texts[i]);
+    	window->draw(*texts[i]);
 
     window->draw(title);
 }

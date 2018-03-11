@@ -27,7 +27,7 @@
 
 class MenuLogic {
 public:
-    MenuLogic(GameState*, std::vector<sf::Text>);
+    MenuLogic(GameState*, std::vector<sf::Text*>);
     virtual ~MenuLogic() = default;
 
     void run();
@@ -39,7 +39,7 @@ public:
 private:
 	void activateMenuItem(int);
 	GameState* state;
-	std::vector<sf::Text> texts;
+	std::vector<sf::Text*> texts;
 	int menu_item_count;
     CURL *curl;
 };
