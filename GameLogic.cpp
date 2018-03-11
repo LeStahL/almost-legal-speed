@@ -98,6 +98,9 @@ void GameLogic::run()
 {
     auto current = state->timer.getElapsedTime();
     music->update(current);
+    if (state->finished) {
+        return;
+    }
     if (!state->player.initialized)
     {
         for (int i = 0; i < state->level.layers.size(); i++)
@@ -313,7 +316,10 @@ void GameLogic::run()
             // TODO
             break;
         case (Finish):
-            state->ingame = false;
+            state->finished = true;
+            state->player.v.x = 0;
+            state->player.v.y = 0;
+            music->play(4);
             break;
         }
     }

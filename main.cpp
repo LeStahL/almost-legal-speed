@@ -86,7 +86,8 @@ int main(int argc, char **args)
         make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
         make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
         make_pair("../matzesmagicmusic/MoreDopeThanHope.ogg", 4 * 60./157.0),
-        make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.)
+        make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.),
+        make_pair("../matzesmagicmusic/MoreDopeThanHope.ogg", 0.)
     };
     BackgroundMusic music(music_data);
     music.play(1);

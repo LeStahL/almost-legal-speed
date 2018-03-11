@@ -20,7 +20,7 @@
 #include <Powerup.h>
 
 GameState::GameState()
-: ingame(false), onscores(false)
+: ingame(false), onscores(false), finished(false)
 {
 
 }

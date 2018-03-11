@@ -52,6 +52,7 @@ public:
     bool onscores;
     string highscores;
     double time;
+    bool finished;
 };
 
 #endif
