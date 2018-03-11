@@ -272,67 +272,8 @@ void GameLogic::run()
         }
     }
     state->player.pos += state->player.v * elapsed;
-
-    double x_center = x_i + 0.5;
-    double y_center = y_i + 0.5;
-    if ((x_center >= x + 0.5) && (x_center <= x + 1.5) && (y_center >= y - 1) && (y_center <= y + 1))
-    {
-        switch (state->getBlockType(x_i, y_i))
-        {
-        case (SpeedPowerup):
-            state->player.speedPower += powerup_value;
-            if (state->player.speedPower > 1) state->player.speedPower = 1;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (JumpForwardPowerup):
-            state->player.forwardPower += powerup_value;
-            if (state->player.forwardPower > 1) state->player.forwardPower = 1;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (JumpUpwardPowerup):
-            state->player.upwardPower += powerup_value;
-            if (state->player.upwardPower > 1) state->player.upwardPower = 1;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (Schnitzel):
-            state->player.schnitzel = true;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (Pizza):
-            state->player.pizza = true;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (IceCream):
-            state->player.brainfreeze += powerup_value;
-            if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        case (Money):
-            // TODO
-            break;
-        case (Alcohol):
-            // TODO
-            break;
-        case (Finish):
-            state->finished = true;
-            state->player.v.x = 0;
-            state->player.v.y = 0;
-            state->player.brainfreeze = 0;
-            state->player.speedPower = 0;
-            state->player.upwardPower = 0;
-            state->player.forwardPower = 0;
-            music->music_index = 4;
-            music->play(4);
-            break;
-        case (Doping):
-            if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
-            {
-                state->time += 10;
-            }
-            state->level->layers[x_i][y_i] = nullptr;
-            break;
-        }
-    }
+    collectBlock(x + 1, y - 0.9);
+    collectBlock(x + 1, y + 0.9);
 
     // Decrease powerups.
     state->player.speedPower -= power_decrease * elapsed;
@@ -354,6 +295,67 @@ void GameLogic::run()
     }
 
     last = current;
+}
+
+void GameLogic::collectBlock(double x, double y)
+{
+    int x_i = floor(x);
+    int y_i = floor(y);
+    switch (state->getBlockType(x_i, y_i))
+    {
+    case (SpeedPowerup):
+        state->player.speedPower += powerup_value;
+        if (state->player.speedPower > 1) state->player.speedPower = 1;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (JumpForwardPowerup):
+        state->player.forwardPower += powerup_value;
+        if (state->player.forwardPower > 1) state->player.forwardPower = 1;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (JumpUpwardPowerup):
+        state->player.upwardPower += powerup_value;
+        if (state->player.upwardPower > 1) state->player.upwardPower = 1;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (Schnitzel):
+        state->player.schnitzel = true;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (Pizza):
+        state->player.pizza = true;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (IceCream):
+        state->player.brainfreeze += powerup_value;
+        if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    case (Money):
+        // TODO
+        break;
+    case (Alcohol):
+        // TODO
+        break;
+    case (Finish):
+        state->finished = true;
+        state->player.v.x = 0;
+        state->player.v.y = 0;
+        state->player.brainfreeze = 0;
+        state->player.speedPower = 0;
+        state->player.upwardPower = 0;
+        state->player.forwardPower = 0;
+        music->music_index = 4;
+        music->play(4);
+        break;
+    case (Doping):
+        if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
+        {
+            state->time += 10;
+        }
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
+    }
 }
 
 void GameLogic::textEntered(Keyboard::Key key, Uint32 c) {

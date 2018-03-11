@@ -69,6 +69,7 @@ private:
     const double powerup_value = 0.2;
     BackgroundMusic* music;
     void pushScore(string, double);
+    void collectBlock(double, double);
 };
 
 #endif
