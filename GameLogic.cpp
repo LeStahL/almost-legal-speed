@@ -99,6 +99,7 @@ void GameLogic::run()
     auto current = state->timer.getElapsedTime();
     music->update(current);
     if (state->finished) {
+        music->music_index = 4;
         return;
     }
     if (!state->player.initialized)
@@ -319,6 +320,7 @@ void GameLogic::run()
             state->player.speedPower = 0;
             state->player.upwardPower = 0;
             state->player.forwardPower = 0;
+            music->music_index = 4;
             music->play(4);
             break;
         }
@@ -354,7 +356,7 @@ void GameLogic::keyPressed(Keyboard::Key key) {
         break;
     case (Keyboard::Escape):
         state->ingame = false;
-        music->music_index = 0;
+        music->play(0);
         break;
     }
     if (cheat)
