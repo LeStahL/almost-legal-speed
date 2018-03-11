@@ -149,7 +149,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     if (!brainfreeze.loadFromFile("../shaders/brainfreeze.frag", sf::Shader::Fragment))
     {
         fprintf(stderr, "ERROR: Could not load brainfreeze fragment shader\n");
-        exit(0);
+//         exit(0);
     }
 }
 
