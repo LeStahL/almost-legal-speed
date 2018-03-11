@@ -49,6 +49,8 @@ void Player::reset()
     drunken = 0;
     pizza_start = sf::Time::Zero;
     schnitzel_start = sf::Time::Zero;
+    game_start = sf::Time::Zero;
+    time_penalty = 0;
 }
 
 vec2 vec2::operator+(vec2 const& rhs) {

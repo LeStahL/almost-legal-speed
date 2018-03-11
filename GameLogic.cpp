@@ -128,11 +128,11 @@ void GameLogic::run()
         }
     }
     if (last == Time::Zero) {
+        state->player.game_start = current;
         last = current;
         state->time = 0;
         return;
     }
-    state->time += (current - last).asSeconds();
 
     // Check direction keystate.
     bool left = Keyboard::isKeyPressed(Keyboard::Left);
@@ -310,6 +310,7 @@ void GameLogic::run()
         music->music_index = 1;
     }
 
+    state->time = (current - state->player.game_start).asSeconds() + state->player.time_penalty;
     last = current;
 }
 
@@ -380,7 +381,7 @@ void GameLogic::collectBlock(double x, double y)
         if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
         {
             sounds[12].play();
-            state->time += 10;
+            state->player.time_penalty += 10;
         } else {
             sounds[11].play();
         }

@@ -46,12 +46,13 @@ public:
     vec2 pos, v;
     direction a, face;
 
-    double forwardPower, upwardPower, speedPower, money, brainfreeze, drunken;
+    double forwardPower, upwardPower, speedPower, money, brainfreeze, drunken, time_penalty;
     bool schnitzel, inair, jumping, pizza, initialized;
     int jump_count;
 
     sf::Time pizza_start;
     sf::Time schnitzel_start;
+    sf::Time game_start;
 };
 
 #endif
