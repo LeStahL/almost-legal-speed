@@ -183,18 +183,18 @@ void GameLogic::run()
     // Check for collisions.
     double x = state->player.pos.x;
     double y = state->player.pos.y;
-    bool col_left = state->level.collides(x, y + 0.5)
-        || state->level.collides(x, y + 0.9)
-        || state->level.collides(x, y + 0.1);
-    bool col_right = state->level.collides(x + 1, y + 0.5)
-        || state->level.collides(x + 1, y + 0.1)
-        || state->level.collides(x + 1, y + 0.9);
-    bool col_top = state->level.collides(x + 0.5, y + 1)
-        || state->level.collides(x + 0.1, y + 1)
-        || state->level.collides(x + 0.9, y + 1);
+    bool col_left = state->level.collides(x + 0.25, y + 0.5)
+        || state->level.collides(x + 0.25, y + 0.9)
+        || state->level.collides(x + 0.25, y + 0.1);
+    bool col_right = state->level.collides(x + 0.75, y + 0.5)
+        || state->level.collides(x + 0.75, y + 0.1)
+        || state->level.collides(x + 0.75, y + 0.9);
+    bool col_top = state->level.collides(x + 0.5, y + 0.9)
+        || state->level.collides(x + 0.3, y + 0.9)
+        || state->level.collides(x + 0.6, y + 0.9);
     bool col_bottom = state->level.collides(x + 0.5, y - 0.01)
-        || state->level.collides(x + 0.1, y - 0.01)
-        || state->level.collides(x + 0.9, y - 0.01);
+        || state->level.collides(x + 0.3, y - 0.01)
+        || state->level.collides(x + 0.6, y - 0.01);
     int x_i = floor(x + 0.5);
     int y_i = floor(y + 0.5);
     if (col_left && (state->player.v.x < 0))
