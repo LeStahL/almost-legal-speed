@@ -113,6 +113,7 @@ void GameLogic::run()
     }
     if (!state->player.initialized)
     {
+        sounds[13].play();
         for (int i = 0; i < state->level->layers.size(); i++)
         {
             for (int j = 0; j < state->level->layers[i].size(); j++) {
@@ -127,7 +128,6 @@ void GameLogic::run()
         }
     }
     if (last == Time::Zero) {
-        sounds[13].play();
         last = current;
         state->time = 0;
         return;
@@ -295,6 +295,8 @@ void GameLogic::run()
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
     state->player.brainfreeze -= freeze_decrease * elapsed;
     if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
+    state->player.drunken -= freeze_decrease * elapsed;
+    if (state->player.drunken < 0) state->player.drunken = 0;
 
     // Update music.
     if (state->player.pizza || state->player.schnitzel) {
@@ -352,13 +354,18 @@ void GameLogic::collectBlock(double x, double y)
         // TODO
         break;
     case (Alcohol):
-        // TODO
+        state->player.drunken += powerup_value;
+        sounds[18].play();
+        if (state->player.drunken > 1) state->player.drunken = 1;
+        state->level->layers[x_i][y_i] = nullptr;
+        break;
         break;
     case (Finish):
         state->finished = true;
         state->player.v.x = 0;
         state->player.v.y = 0;
         state->player.brainfreeze = 0;
+        state->player.drunken = 0;
         state->player.speedPower = 0;
         state->player.upwardPower = 0;
         state->player.forwardPower = 0;

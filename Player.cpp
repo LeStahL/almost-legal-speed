@@ -45,6 +45,7 @@ void Player::reset()
     inair = true;
     jumping = false;
     jump_count = 0;
+    drunken = 0;
     pizza_start = sf::Time::Zero;
     schnitzel_start = sf::Time::Zero;
 }

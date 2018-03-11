@@ -45,7 +45,7 @@ public:
     vec2 pos, v;
     direction a, face;
 
-    double forwardPower, upwardPower, speedPower, money, brainfreeze;
+    double forwardPower, upwardPower, speedPower, money, brainfreeze, drunken;
     bool schnitzel, inair, jumping, pizza, initialized;
     int jump_count;
 

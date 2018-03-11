@@ -10,6 +10,7 @@ block 2 ../gfx/p_green.png 32 32 0 1
 block 3 ../gfx/item_pizza.png 32 32 0 5
 block 4 ../gfx/item_schnitzel.png 32 32 0 4
 block 5 ../gfx/item_icecream.png 32 32 0 6
+block 6 ../gfx/schnaps.png 32 32 0 7
 block F ../gfx/flag.png 32 32 0 9
 block D ../gfx/doping.png 32 32 0 10
 block P - 32 32 0 8
@@ -37,10 +38,10 @@ level 1
 #       
 #       
 #       
-#       
+#   6666
 #   ====
 #      #
-#     4#
+#6    4#
 ####  4#
       3#
      4 #
