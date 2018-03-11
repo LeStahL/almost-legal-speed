@@ -44,9 +44,8 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     texts.push_back(new sf::Text("Quit Game", *font));
     title = sf::Text("Almost Legal Speed", *font);
     title.setCharacterSize(60);
-    float title_w = title.getGlobalBounds().width;
-    float title_h = title.getGlobalBounds().height;
-    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
+    time = sf::Text("0.0", *font);
+    time.setCharacterSize(40);
 
     t.resize(14);
     for(int i=0; i<14; ++i)
@@ -143,7 +142,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
 
     last_bg_change = sf::Time::Zero;
     last_player_change = sf::Time::Zero;
-    
+
     if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up.png"))
     {
         fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
@@ -177,9 +176,6 @@ Renderer::~Renderer()
 
 void Renderer::render(GameState *state)
 {
-
-
-
     Player *player = &(state->player);
     sf::Time current = state->timer.getElapsedTime();
 
@@ -201,84 +197,6 @@ void Renderer::render(GameState *state)
         sprite.setTexture(texture);
         window->draw(sprite);
     }
-
-    //ui overlay
-    RectangleShape speedDopingBar(Vector2f(150.,20.));
-    speedDopingBar.setOutlineColor(Color(255.,255.,255.));
-    speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    speedDopingBar.setOutlineThickness(2.);
-    speedDopingBar.setPosition(60.,10.);
-    window->draw(speedDopingBar);
-
-    RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
-    speedDopingProgress.setFillColor(Color(255.,0.,0.));
-    speedDopingProgress.setPosition(65.,13.);
-    window->draw(speedDopingProgress);
-
-    /*Text speedText("Speed doping", *font);
-    speedText.setPosition(10.,0.);
-    window->draw(speedText);*/
-    sf::Sprite sprite_pictogram_speed;
-    sprite_pictogram_speed.setTexture(run_pictogram);
-    sprite_pictogram_speed.setPosition(10., 0.);
-    window->draw(sprite_pictogram_speed);
-
-    RectangleShape upwardDopingBar(Vector2f(150.,20.));
-    upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
-    upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    upwardDopingBar.setOutlineThickness(2.);
-    upwardDopingBar.setPosition(60.,40.);
-    window->draw(upwardDopingBar);
-
-    RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
-    upwardDopingProgress.setFillColor(Color(0.,0.,255.));
-    upwardDopingProgress.setPosition(65.,43.);
-    window->draw(upwardDopingProgress);
-
-    /*Text upwardText("Upward doping", *font);
-    upwardText.setPosition(10.,30.);
-    window->draw(upwardText);*/
-    sf::Sprite sprite_pictogram_up;
-    sprite_pictogram_up.setTexture(up_pictogram);
-    sprite_pictogram_up.setPosition(10., 30.);
-    window->draw(sprite_pictogram_up);
-
-    RectangleShape forwardDopingBar(Vector2f(150.,20.));
-    forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
-    forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    forwardDopingBar.setOutlineThickness(2.);
-    forwardDopingBar.setPosition(60.,70.);
-    window->draw(forwardDopingBar);
-
-    RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
-    forwardDopingProgress.setFillColor(Color(0.,255.,0.));
-    forwardDopingProgress.setPosition(65.,73.);
-    window->draw(forwardDopingProgress);
-
-/*    Text forwardText("Forward doping", *font);
-    forwardText.setPosition(10.,60.);
-    window->draw(forwardText);*/
-    sf::Sprite sprite_pictogram_jump;
-    sprite_pictogram_jump.setTexture(jump_pictogram);
-    sprite_pictogram_jump.setPosition(10., 60.);
-    window->draw(sprite_pictogram_jump);
-
-
-
-    sf::Sprite sprite_red_powerup;
-    sprite_red_powerup.setTexture(t_red_powerup);
-    sprite_red_powerup.setPosition(225, 0.);
-    window->draw(sprite_red_powerup);
-
-    sf::Sprite sprite_blue_powerup;
-    sprite_blue_powerup.setTexture(t_blue_powerup);
-    sprite_blue_powerup.setPosition(225, 30.);
-    window->draw(sprite_blue_powerup);
-
-    sf::Sprite sprite_green_powerup;
-    sprite_green_powerup.setTexture(t_green_powerup);
-    sprite_green_powerup.setPosition(225, 60.);
-    window->draw(sprite_green_powerup);
 
     //level
     vector<vector<const Block*> > level = state->level.layers;
@@ -359,6 +277,84 @@ void Renderer::render(GameState *state)
             window->draw(sprite_p_right_standing);
         }
     }
+
+    //ui overlay
+    RectangleShape speedDopingBar(Vector2f(150.,20.));
+    speedDopingBar.setOutlineColor(Color(255.,255.,255.));
+    speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    speedDopingBar.setOutlineThickness(2.);
+    speedDopingBar.setPosition(60.,10.);
+    window->draw(speedDopingBar);
+
+    RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    speedDopingProgress.setFillColor(Color(255.,0.,0.));
+    speedDopingProgress.setPosition(65.,13.);
+    window->draw(speedDopingProgress);
+
+    sf::Sprite sprite_pictogram_speed;
+    sprite_pictogram_speed.setTexture(run_pictogram);
+    sprite_pictogram_speed.setPosition(10., 0.);
+    window->draw(sprite_pictogram_speed);
+
+    RectangleShape upwardDopingBar(Vector2f(150.,20.));
+    upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    upwardDopingBar.setOutlineThickness(2.);
+    upwardDopingBar.setPosition(60.,40.);
+    window->draw(upwardDopingBar);
+
+    RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
+    upwardDopingProgress.setFillColor(Color(0.,0.,255.));
+    upwardDopingProgress.setPosition(65.,43.);
+    window->draw(upwardDopingProgress);
+
+    sf::Sprite sprite_pictogram_up;
+    sprite_pictogram_up.setTexture(up_pictogram);
+    sprite_pictogram_up.setPosition(10., 30.);
+    window->draw(sprite_pictogram_up);
+
+    RectangleShape forwardDopingBar(Vector2f(150.,20.));
+    forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    forwardDopingBar.setOutlineThickness(2.);
+    forwardDopingBar.setPosition(60.,70.);
+    window->draw(forwardDopingBar);
+
+    RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
+    forwardDopingProgress.setFillColor(Color(0.,255.,0.));
+    forwardDopingProgress.setPosition(65.,73.);
+    window->draw(forwardDopingProgress);
+
+    sf::Sprite sprite_pictogram_jump;
+    sprite_pictogram_jump.setTexture(jump_pictogram);
+    sprite_pictogram_jump.setPosition(10., 60.);
+    window->draw(sprite_pictogram_jump);
+
+
+
+    sf::Sprite sprite_red_powerup;
+    sprite_red_powerup.setTexture(t_red_powerup);
+    sprite_red_powerup.setPosition(225, 0.);
+    window->draw(sprite_red_powerup);
+
+    sf::Sprite sprite_blue_powerup;
+    sprite_blue_powerup.setTexture(t_blue_powerup);
+    sprite_blue_powerup.setPosition(225, 30.);
+    window->draw(sprite_blue_powerup);
+
+    sf::Sprite sprite_green_powerup;
+    sprite_green_powerup.setTexture(t_green_powerup);
+    sprite_green_powerup.setPosition(225, 60.);
+    window->draw(sprite_green_powerup);
+
+    char time_str[100];
+    sprintf(time_str, "%.1f", state->time);
+    time.setString(time_str);
+    float time_w = time.getGlobalBounds().width;
+    float time_h = time.getGlobalBounds().height;
+    // time.setPosition(400 - 0.5*time_w, 30 - 0.5*time_h);
+    time.setPosition(550, 20);
+    window->draw(time);
 }
 
 void Renderer::renderMenu(int selected)
@@ -387,11 +383,29 @@ void Renderer::renderMenu(int selected)
     for (int i = 0; i < texts.size(); i++)
     	window->draw(*texts[i]);
 
+    title.setString("Almost Legal Speed");
+    float title_w = title.getGlobalBounds().width;
+    float title_h = title.getGlobalBounds().height;
+    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
     window->draw(title);
 }
 
 void Renderer::renderHighscore(GameState *state)
 {
+    sf::Sprite sprite;
+    sprite.setTexture(t.at(0));
+    window->draw(sprite);
+
 	Text scores(state->highscores, *font);
-	scores.setPosition(0, 0);
-	window->draw(scores);}
+    float txtWidth = scores.getGlobalBounds().width;
+    float txtHeight = scores.getGlobalBounds().height;
+    scores.setColor(Color(0, 0, 0));
+	scores.setPosition(400. - 0.5*txtWidth, 400 - 0.5*txtHeight);
+	window->draw(scores);
+
+    title.setString("Highscore");
+    float title_w = title.getGlobalBounds().width;
+    float title_h = title.getGlobalBounds().height;
+    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
+    window->draw(title);
+}

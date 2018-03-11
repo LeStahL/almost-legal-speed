@@ -119,8 +119,10 @@ void GameLogic::run()
     }
     if (last == Time::Zero) {
         last = current;
+        state->time = 0;
         return;
     }
+    state->time += (current - last).asSeconds();
 
     // Check direction keystate.
     bool left = Keyboard::isKeyPressed(Keyboard::Left);
