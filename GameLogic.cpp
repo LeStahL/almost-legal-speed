@@ -325,6 +325,13 @@ void GameLogic::run()
             music->play(4);
             pushScore("Nobody", state->time);
             break;
+        case (Doping):
+            if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
+            {
+                state->time += 10;
+            }
+            state->level->layers[x_i][y_i] = nullptr;
+            break;
         }
     }
 

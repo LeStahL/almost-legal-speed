@@ -11,7 +11,7 @@ block 3 ../gfx/item_pizza.png 32 32 0 5
 block 4 ../gfx/item_schnitzel.png 32 32 0 4
 block 5 ../gfx/item_icecream.png 32 32 0 6
 block F ../gfx/flag.png 32 32 0 9
-block D ../gfx/doping.png 32 32 0 -1
+block D ../gfx/doping.png 32 32 0 10
 block P - 32 32 0 8
 level 0
 #######################################
@@ -51,16 +51,33 @@ level 2
 #                     #                
 # #                   #                
 # ##                  #                
-# #  #                # #========      
-# #                   # #        =     
+# #  #                # #              
+# #                   # #              
 # #    #              # #         =    
 # #               #   # #              
 # #      #        #   # #          =   
 # #      #        #   # #              
 # #        ####   # ### #           =  
 # #               #     #              
-#F#555555344444   #     #            22
+#F#555555344444   #     #11          11
 ---------------------------------------
+level 3
+########
+#       
+#       
+#       
+#       
+#       
+#       
+#       
+#       
+#       
+#       
+#       
+        
+D012012 
+--------
 
-clevel 3 2 1 0
-slevel 3
+
+clevel 4 2 3 1 0
+slevel 4
