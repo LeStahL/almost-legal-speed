@@ -414,7 +414,7 @@ void GameLogic::keyPressed(Keyboard::Key key) {
     }
 }
 
-void GameLogic::pushScore(string name, int time) {
+void GameLogic::pushScore(string name, double time) {
 	CURL *curl = curl_easy_init();
     if (curl) {
         struct curl_slist *headers = nullptr;
@@ -425,7 +425,7 @@ void GameLogic::pushScore(string name, int time) {
 		headers = curl_slist_append(headers, "Content-Type: application/json");
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		char body[100];
-		sprintf(body, "{\"name\":\"%s\",\"score\":%d}", name.c_str(), time);
+		sprintf(body, "{\"name\":\"%s\",\"score\":%f}", name.c_str(), time);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
         curl_easy_perform(curl);

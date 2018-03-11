@@ -67,7 +67,7 @@ private:
     const double freeze_decrease = 0.1;
     const double powerup_value = 0.2;
     BackgroundMusic* music;
-    void pushScore(string, int);
+    void pushScore(string, double);
 };
 
 #endif
