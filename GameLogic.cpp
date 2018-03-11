@@ -50,6 +50,25 @@ GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m) {
 
 void GameLogic::run()
 {
+    if (!state->player.initialized)
+    {
+        for (int i = 0; i < state->level.layers.size(); i++)
+        {
+            for (int j = 0; j < state->level.layers[i].size(); j++) {
+                const Block* b = state->level.layers[i][j];
+                if (b != nullptr)
+                {
+                    if (b->powerupType == PowerupType::PlayerStart)
+                    {
+                        state->level.layers[i][j] = nullptr;
+                        state->player.initialized = true;
+                        state->player.pos.x = i;
+                        state->player.pos.y = j;
+                    }
+                }
+            }
+        }
+    }
     if (last == Time::Zero) {
         last = state->timer.getElapsedTime();
         return;

@@ -37,10 +37,11 @@ public:
     shared_ptr<Texture> texture;
 
     Block(char _name, std::string _pathToFile, size_t _width, size_t _heigth, bool _solid, PowerupType p);
+    Block(PowerupType p);
 //     Block() = delete;
 //     Block(const Block &other) = delete;
 //     Block(const Block &&other) = delete;
-    
+
     void init();
 };
 

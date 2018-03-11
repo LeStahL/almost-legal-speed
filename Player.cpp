@@ -22,8 +22,9 @@
 
 Player::Player()
 {
-    pos.x = 10;
-    pos.y = 10;
+    pos.x = -10;
+    pos.y = -10;
+    initialized = false;
     v.x = 0;
     v.y = 0;
     a = NONE;

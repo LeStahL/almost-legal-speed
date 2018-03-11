@@ -45,7 +45,7 @@ private:
     Time last;
     bool cheat;
     const double grav_acc = 20;
-    const double jump_speed = 8;
+    const double jump_speed = 10;
     const double acc_scale = 30;
     const double acc_time = 0.2;
     const int max_jumps = 4;

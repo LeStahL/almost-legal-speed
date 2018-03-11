@@ -45,7 +45,7 @@ public:
     direction a, face;
 
     double forwardPower, upwardPower, speedPower, money, brainfreeze;
-    bool schnitzel, inair, jumping, pizza;
+    bool schnitzel, inair, jumping, pizza, initialized;
     int jump_count;
 
     sf::Time pizza_start;

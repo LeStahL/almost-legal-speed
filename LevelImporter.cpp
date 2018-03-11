@@ -52,6 +52,8 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
     Level* start_level = nullptr;
 
     std::vector<size_t> added_levels;
+    int x_p = 0;
+    int y_p = 0;
 
     for(std::string line; getline( infile, line ); )
     {
@@ -68,7 +70,13 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
                 bool solid = (bool)stoi(split_line[5]);
 
                 PowerupType type = static_cast<PowerupType>(stoul(split_line[6]));
-                Block* block = gfxManager.loadBlock(name, split_line[2], w, h, solid, type);
+                Block* block;
+                if (type == PowerupType::PlayerStart)
+                {
+                    block = new Block(type);
+                } else {
+                    block = gfxManager.loadBlock(name, split_line[2], w, h, solid, type);
+                }
 
                 blocks.insert ( std::pair<char, Block*>(name,block) );
             } else {
@@ -124,6 +132,11 @@ Block::Block(char _name, string _pathToFile, size_t _width, size_t _heigth, bool
     , solid(_solid)
     , powerupType(p)
     , texture(make_shared<Texture>())
+{
+}
+
+Block::Block(PowerupType p)
+    : powerupType(p)
 {
 }
 

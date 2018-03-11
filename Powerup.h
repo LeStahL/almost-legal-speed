@@ -29,6 +29,7 @@ typedef enum {
     Pizza, //stuck with cheese, slow down
     IceCream, //brainfreeze, you almost pass out, level is colored darker
     Alcohol, //Level starts to tilt and blur
+    PlayerStart,
     None
 } PowerupType;
 

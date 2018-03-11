@@ -1,16 +1,16 @@
 // Almost Legal Speed - platform running game
 // Copyright (C) 2018  Alexander Kraus <nr4@z10.info>
-//                     
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -41,7 +41,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     texts.push_back(sf::Text("Start Game", *font));
     texts.push_back(sf::Text("Show highscores", *font));
     texts.push_back(sf::Text("Quit Game", *font));
-    
+
     t.resize(14);
     for(int i=0; i<14; ++i)
     {
@@ -53,13 +53,13 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
             exit(0);
         }
     }
-    
+
     if (!texture.loadFromFile("../gfx/backdrop/BG.png"))
     {
         fprintf(stderr, "ERROR: Could not load BG.png\n");
         exit(0);
     }
-    
+
     if (!t_red_powerup.loadFromFile("../gfx/p_red.png"))
     {
         fprintf(stderr, "ERROR: Could not load p_red.png\n");
@@ -71,7 +71,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load p_red.png\n");
         exit(0);
     }
-    
+
     if (!t_blue_powerup.loadFromFile("../gfx/p_blue.png"))
     {
         fprintf(stderr, "ERROR: Could not load p_red.png\n");
@@ -108,13 +108,13 @@ void Renderer::render(GameState *state)
         sprite.setTexture(texture);
         window->draw(sprite);
     }
-    
+
     CircleShape p(.5*tile_width);
     p.setFillColor(sf::Color(111.,111.,111.));
 //     p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
     p.setPosition(400., 300.);
     window->draw(p);
-    
+
     //ui overlay
     RectangleShape speedDopingBar(Vector2f(150.,20.));
     speedDopingBar.setOutlineColor(Color(255.,255.,255.));
@@ -122,63 +122,63 @@ void Renderer::render(GameState *state)
     speedDopingBar.setOutlineThickness(2.);
     speedDopingBar.setPosition(260.,10.);
     window->draw(speedDopingBar);
-    
+
     RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
     speedDopingProgress.setFillColor(Color(255.,0.,0.));
     speedDopingProgress.setPosition(265.,13.);
     window->draw(speedDopingProgress);
-    
+
     Text speedText("Speed doping", *font);
     speedText.setPosition(10.,0.);
     window->draw(speedText);
-    
+
     RectangleShape upwardDopingBar(Vector2f(150.,20.));
     upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
     upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
     upwardDopingBar.setOutlineThickness(2.);
     upwardDopingBar.setPosition(260.,40.);
     window->draw(upwardDopingBar);
-    
+
     RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
     upwardDopingProgress.setFillColor(Color(0.,0.,255.));
     upwardDopingProgress.setPosition(265.,43.);
     window->draw(upwardDopingProgress);
-    
+
     Text upwardText("Upward doping", *font);
     upwardText.setPosition(10.,30.);
     window->draw(upwardText);
-    
+
     RectangleShape forwardDopingBar(Vector2f(150.,20.));
     forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
     forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
     forwardDopingBar.setOutlineThickness(2.);
     forwardDopingBar.setPosition(260.,70.);
     window->draw(forwardDopingBar);
-    
+
     RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
     forwardDopingProgress.setFillColor(Color(0.,255.,0.));
     forwardDopingProgress.setPosition(265.,73.);
     window->draw(forwardDopingProgress);
-    
+
     Text forwardText("Forward doping", *font);
     forwardText.setPosition(10.,60.);
     window->draw(forwardText);
-    
+
     sf::Sprite sprite_red_powerup;
     sprite_red_powerup.setTexture(t_red_powerup);
     sprite_red_powerup.setPosition(425, 0.);
     window->draw(sprite_red_powerup);
-    
+
     sf::Sprite sprite_blue_powerup;
     sprite_blue_powerup.setTexture(t_blue_powerup);
     sprite_blue_powerup.setPosition(425, 30.);
     window->draw(sprite_blue_powerup);
-    
+
     sf::Sprite sprite_green_powerup;
     sprite_green_powerup.setTexture(t_green_powerup);
     sprite_green_powerup.setPosition(425, 60.);
     window->draw(sprite_green_powerup);
-    
+
     //level
     vector<vector<const Block*> > level = state->level.layers;
     for(int i=0; i<level.size(); ++i)
@@ -186,7 +186,8 @@ void Renderer::render(GameState *state)
         for(int j=0; j<level.at(i).size(); ++j)
         {
             const Block *block = level.at(i).at(j);
-            if(0 == block)continue;
+            if (0 == block) continue;
+            if (block->powerupType == PowerupType::PlayerStart) continue;
             sf::Sprite block_sprite;
             block_sprite.setScale(tile_width/block->texture->getSize().x, tile_height/block->texture->getSize().y);
             block_sprite.setTexture(*(block->texture));
@@ -222,4 +223,3 @@ void Renderer::renderHighscore(GameState *state)
 	Text scores(state->highscores, *font);
 	scores.setPosition(0, 0);
 	window->draw(scores);}
-

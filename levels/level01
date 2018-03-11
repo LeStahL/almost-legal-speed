@@ -1,18 +1,19 @@
-block _ ../gfx/g0.png 32 32 1 8
-block ( ../gfx/left_block.png 32 32 1 8
-block ) ../gfx/right_block.png 32 32 1 8
-block = ../gfx/middle_block.png 32 32 1 8
-block # ../gfx/full_block.png 32 32 1 8
+block _ ../gfx/g0.png 32 32 1 9
+block ( ../gfx/left_block.png 32 32 1 9
+block ) ../gfx/right_block.png 32 32 1 9
+block = ../gfx/middle_block.png 32 32 1 9
+block # ../gfx/full_block.png 32 32 1 9
 block 0 ../gfx/p_red.png 32 32 0 0
 block 1 ../gfx/p_blue.png 32 32 0 1
 block 2 ../gfx/p_green.png 32 32 0 2
 block 3 ../gfx/item_pizza.png 32 32 0 5
 block 4 ../gfx/item_schnitzel.png 32 32 0 4
 block 5 ../gfx/item_icecream.png 32 32 0 6
+block P - 32 32 0 8
 level 0
    (===)                              #
                 (=======)             #
-  (===(=)=)=)=                                    #
+  (===(=)=)=)=                     P  #
  0 1 2 3 4 5                          #
 ______________________________________#
 
