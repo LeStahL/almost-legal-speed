@@ -173,23 +173,35 @@ void GameLogic::run()
     bool col_top = state->level.collides(x + 0.5, y + 1)
         || state->level.collides(x + 0.1, y + 1)
         || state->level.collides(x + 0.9, y + 1);
-    bool col_bottom = state->level.collides(x + 0.5, y)
-        || state->level.collides(x + 0.1, y)
-        || state->level.collides(x + 0.9, y);
-    if (col_left)
+    bool col_bottom = state->level.collides(x + 0.5, y - 0.01)
+        || state->level.collides(x + 0.1, y - 0.01)
+        || state->level.collides(x + 0.9, y - 0.01);
+    int x_i = floor(x + 0.5);
+    int y_i = floor(y + 0.5);
+    if (col_left && (state->player.v.x < 0))
     {
         state->player.v.x = 0;
-    } else if (col_right) {
+    }
+    if (col_right && (state->player.v.x > 0))
+    {
         state->player.v.x = 0;
-    } else if (col_top) {
+    }
+    if (col_top && (state->player.v.y > 0))
+    {
         state->player.v.y = 0;
-    } else if (col_bottom) {
+    }
+    if (col_bottom && (state->player.v.y < 0))
+    {
         state->player.v.y = 0;
         state->player.inair = false;
         state->player.jump_count = 0;
-    } else {
+        state->player.pos.y = y_i;
+    }
+    if (!(col_left || col_right || col_top || col_bottom))
+    {
         state->player.inair = true;
     }
+    cout << state->player.inair << endl;
 
     if (state->player.pos.y < 0)
     {
@@ -198,8 +210,6 @@ void GameLogic::run()
         state->player.pos.y = 10;
     }
 
-    int x_i = floor(x + 0.5);
-    int y_i = floor(y + 0.5);
     double x_center = x_i + 0.5;
     double y_center = y_i + 0.5;
     if ((x_center >= x) && (x_center <= x + 1) && (y_center >= y) && (y_center <= y + 1))

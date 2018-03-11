@@ -69,8 +69,7 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
 
                 PowerupType type = static_cast<PowerupType>(stoul(split_line[6]));
                 Block* block = gfxManager.loadBlock(name, split_line[2], w, h, solid, type);
-                
-                cout << name << "\"" << split_line[2] << "\"" << endl;
+
                 blocks.insert ( std::pair<char, Block*>(name,block) );
             } else {
                 cout<< "wrong count of parameters in " << line << endl;
@@ -165,7 +164,7 @@ Block *GfxManager::loadBlock(char name, string &pathToFile, size_t w, size_t h, 
 //             return &blocks[i];
 //         }
 //     }
-    
+
     Block* result = new Block(name, pathToFile, w, h, solid, type);
     result->init();
     blocks.push_back(result);
@@ -175,7 +174,7 @@ Block *GfxManager::loadBlock(char name, string &pathToFile, size_t w, size_t h, 
 
 void Block::init()
 {
-    
+
     if (!texture->loadFromFile(pathToFile))
     {
         // Fail
@@ -184,4 +183,3 @@ void Block::init()
         exit(0);
     }
 }
-
