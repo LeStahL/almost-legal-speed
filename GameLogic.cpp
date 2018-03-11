@@ -306,7 +306,7 @@ void GameLogic::run()
             break;
         case (IceCream):
             state->player.brainfreeze += powerup_value;
-            if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
+            if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
             state->level.layers[x_i][y_i] = nullptr;
             break;
         case (Money):
@@ -331,6 +331,8 @@ void GameLogic::run()
     if (state->player.forwardPower < 0) state->player.forwardPower = 0;
     state->player.upwardPower -= power_decrease * elapsed;
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
+    state->player.brainfreeze -= power_decrease * elapsed;
+    if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
 
     // Update music.
     if (state->player.pizza || state->player.schnitzel) {
