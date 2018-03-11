@@ -199,84 +199,6 @@ void Renderer::render(GameState *state)
         window->draw(sprite);
     }
 
-    //ui overlay
-    RectangleShape speedDopingBar(Vector2f(150.,20.));
-    speedDopingBar.setOutlineColor(Color(255.,255.,255.));
-    speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    speedDopingBar.setOutlineThickness(2.);
-    speedDopingBar.setPosition(60.,10.);
-    window->draw(speedDopingBar);
-
-    RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
-    speedDopingProgress.setFillColor(Color(255.,0.,0.));
-    speedDopingProgress.setPosition(65.,13.);
-    window->draw(speedDopingProgress);
-
-    /*Text speedText("Speed doping", *font);
-    speedText.setPosition(10.,0.);
-    window->draw(speedText);*/
-    sf::Sprite sprite_pictogram_speed;
-    sprite_pictogram_speed.setTexture(run_pictogram);
-    sprite_pictogram_speed.setPosition(10., 0.);
-    window->draw(sprite_pictogram_speed);
-
-    RectangleShape upwardDopingBar(Vector2f(150.,20.));
-    upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
-    upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    upwardDopingBar.setOutlineThickness(2.);
-    upwardDopingBar.setPosition(60.,40.);
-    window->draw(upwardDopingBar);
-
-    RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
-    upwardDopingProgress.setFillColor(Color(0.,0.,255.));
-    upwardDopingProgress.setPosition(65.,43.);
-    window->draw(upwardDopingProgress);
-
-    /*Text upwardText("Upward doping", *font);
-    upwardText.setPosition(10.,30.);
-    window->draw(upwardText);*/
-    sf::Sprite sprite_pictogram_up;
-    sprite_pictogram_up.setTexture(up_pictogram);
-    sprite_pictogram_up.setPosition(10., 30.);
-    window->draw(sprite_pictogram_up);
-
-    RectangleShape forwardDopingBar(Vector2f(150.,20.));
-    forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
-    forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
-    forwardDopingBar.setOutlineThickness(2.);
-    forwardDopingBar.setPosition(60.,70.);
-    window->draw(forwardDopingBar);
-
-    RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
-    forwardDopingProgress.setFillColor(Color(0.,255.,0.));
-    forwardDopingProgress.setPosition(65.,73.);
-    window->draw(forwardDopingProgress);
-
-/*    Text forwardText("Forward doping", *font);
-    forwardText.setPosition(10.,60.);
-    window->draw(forwardText);*/
-    sf::Sprite sprite_pictogram_jump;
-    sprite_pictogram_jump.setTexture(jump_pictogram);
-    sprite_pictogram_jump.setPosition(10., 60.);
-    window->draw(sprite_pictogram_jump);
-
-
-
-    sf::Sprite sprite_red_powerup;
-    sprite_red_powerup.setTexture(t_red_powerup);
-    sprite_red_powerup.setPosition(225, 0.);
-    window->draw(sprite_red_powerup);
-
-    sf::Sprite sprite_blue_powerup;
-    sprite_blue_powerup.setTexture(t_blue_powerup);
-    sprite_blue_powerup.setPosition(225, 30.);
-    window->draw(sprite_blue_powerup);
-
-    sf::Sprite sprite_green_powerup;
-    sprite_green_powerup.setTexture(t_green_powerup);
-    sprite_green_powerup.setPosition(225, 60.);
-    window->draw(sprite_green_powerup);
-
     //level
     vector<vector<const Block*> > level = state->level.layers;
     for(int i=0; i<level.size(); ++i)
@@ -356,6 +278,75 @@ void Renderer::render(GameState *state)
             window->draw(sprite_p_right_standing);
         }
     }
+    
+    //ui overlay
+    RectangleShape speedDopingBar(Vector2f(150.,20.));
+    speedDopingBar.setOutlineColor(Color(255.,255.,255.));
+    speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    speedDopingBar.setOutlineThickness(2.);
+    speedDopingBar.setPosition(60.,10.);
+    window->draw(speedDopingBar);
+
+    RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
+    speedDopingProgress.setFillColor(Color(255.,0.,0.));
+    speedDopingProgress.setPosition(65.,13.);
+    window->draw(speedDopingProgress);
+
+    sf::Sprite sprite_pictogram_speed;
+    sprite_pictogram_speed.setTexture(run_pictogram);
+    sprite_pictogram_speed.setPosition(10., 0.);
+    window->draw(sprite_pictogram_speed);
+
+    RectangleShape upwardDopingBar(Vector2f(150.,20.));
+    upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    upwardDopingBar.setOutlineThickness(2.);
+    upwardDopingBar.setPosition(60.,40.);
+    window->draw(upwardDopingBar);
+
+    RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
+    upwardDopingProgress.setFillColor(Color(0.,0.,255.));
+    upwardDopingProgress.setPosition(65.,43.);
+    window->draw(upwardDopingProgress);
+
+    sf::Sprite sprite_pictogram_up;
+    sprite_pictogram_up.setTexture(up_pictogram);
+    sprite_pictogram_up.setPosition(10., 30.);
+    window->draw(sprite_pictogram_up);
+
+    RectangleShape forwardDopingBar(Vector2f(150.,20.));
+    forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
+    forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
+    forwardDopingBar.setOutlineThickness(2.);
+    forwardDopingBar.setPosition(60.,70.);
+    window->draw(forwardDopingBar);
+
+    RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
+    forwardDopingProgress.setFillColor(Color(0.,255.,0.));
+    forwardDopingProgress.setPosition(65.,73.);
+    window->draw(forwardDopingProgress);
+
+    sf::Sprite sprite_pictogram_jump;
+    sprite_pictogram_jump.setTexture(jump_pictogram);
+    sprite_pictogram_jump.setPosition(10., 60.);
+    window->draw(sprite_pictogram_jump);
+
+
+
+    sf::Sprite sprite_red_powerup;
+    sprite_red_powerup.setTexture(t_red_powerup);
+    sprite_red_powerup.setPosition(225, 0.);
+    window->draw(sprite_red_powerup);
+
+    sf::Sprite sprite_blue_powerup;
+    sprite_blue_powerup.setTexture(t_blue_powerup);
+    sprite_blue_powerup.setPosition(225, 30.);
+    window->draw(sprite_blue_powerup);
+
+    sf::Sprite sprite_green_powerup;
+    sprite_green_powerup.setTexture(t_green_powerup);
+    sprite_green_powerup.setPosition(225, 60.);
+    window->draw(sprite_green_powerup);
 }
 
 void Renderer::renderMenu(int selected)
