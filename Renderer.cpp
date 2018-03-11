@@ -44,9 +44,6 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     texts.push_back(new sf::Text("Quit Game", *font));
     title = sf::Text("Almost Legal Speed", *font);
     title.setCharacterSize(60);
-    float title_w = title.getGlobalBounds().width;
-    float title_h = title.getGlobalBounds().height;
-    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
 
     t.resize(14);
     for(int i=0; i<14; ++i)
@@ -375,11 +372,29 @@ void Renderer::renderMenu(int selected)
     for (int i = 0; i < texts.size(); i++)
     	window->draw(*texts[i]);
 
+    title.setString("Almost Legal Speed");
+    float title_w = title.getGlobalBounds().width;
+    float title_h = title.getGlobalBounds().height;
+    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
     window->draw(title);
 }
 
 void Renderer::renderHighscore(GameState *state)
 {
+    sf::Sprite sprite;
+    sprite.setTexture(t.at(0));
+    window->draw(sprite);
+
 	Text scores(state->highscores, *font);
-	scores.setPosition(0, 0);
-	window->draw(scores);}
+    float txtWidth = scores.getGlobalBounds().width;
+    float txtHeight = scores.getGlobalBounds().height;
+    scores.setColor(Color(0, 0, 0));
+	scores.setPosition(400. - 0.5*txtWidth, 400 - 0.5*txtHeight);
+	window->draw(scores);
+
+    title.setString("Highscore");
+    float title_w = title.getGlobalBounds().width;
+    float title_h = title.getGlobalBounds().height;
+    title.setPosition(0.5*(800. - title_w), 40. + 0.5*title_h);
+    window->draw(title);
+}
