@@ -352,7 +352,8 @@ void Renderer::render(GameState *state)
     time.setString(time_str);
     float time_w = time.getGlobalBounds().width;
     float time_h = time.getGlobalBounds().height;
-    time.setPosition(400 - 0.5*time_w, 30 - 0.5*time_h);
+    // time.setPosition(400 - 0.5*time_w, 30 - 0.5*time_h);
+    time.setPosition(550, 20);
     window->draw(time);
 }
 
