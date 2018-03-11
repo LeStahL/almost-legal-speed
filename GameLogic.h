@@ -45,7 +45,7 @@ private:
 
 class GameLogic {
 public:
-    GameLogic(GameState*, bool, BackgroundMusic*);
+    GameLogic(GameState*, bool, BackgroundMusic*, vector<string>);
     virtual ~GameLogic() = default;
 
     void run();
@@ -70,6 +70,7 @@ private:
     BackgroundMusic* music;
     void pushScore(string, double);
     void collectBlock(double, double);
+    vector<Sound> sounds;
 };
 
 #endif

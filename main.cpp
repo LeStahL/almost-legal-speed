@@ -80,9 +80,30 @@ int main(int argc, char **args)
         make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.),
         make_pair("../matzesmagicmusic/Winning.ogg", 0.)
     };
+    vector<string> effects = {
+        "../sfx/sfx_andotz.ogg",
+        "../sfx/sfx_aua.ogg",
+        "../sfx/sfx_flupp.ogg",
+        "../sfx/sfx_grunz.ogg",
+        "../sfx/sfx_hnggggg.ogg",
+        "../sfx/sfx_hui.ogg",
+        "../sfx/sfx_jetztwirdgepichelt.ogg",
+        "../sfx/sfx_leckerlecker.ogg",
+        "../sfx/sfx_ngeh.ogg",
+        "../sfx/sfx_nomnom.ogg",
+        "../sfx/sfx_omnomnoah.ogg",
+        "../sfx/sfx_phew.ogg",
+        "../sfx/sfx_SHIT.ogg",
+        "../sfx/sfx_spielstart.ogg",
+        "../sfx/sfx_spring2.ogg",
+        "../sfx/sfx_spring.ogg",
+        "../sfx/sfx_verdau.ogg",
+        "../sfx/sfx_woooop2.ogg",
+        "../sfx/sfx_woooop.ogg"
+    };
     BackgroundMusic music(music_data);
     music.play(1);
-    GameLogic gameLogic(&state, cheat, &music);
+    GameLogic gameLogic(&state, cheat, &music, effects);
     MenuLogic menuLogic(&state, r.texts);
 
     while (window.isOpen())

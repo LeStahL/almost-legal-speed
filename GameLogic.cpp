@@ -80,6 +80,7 @@ void BackgroundMusic::play(int ind)
             double time = m->getPlayingOffset().asSeconds();
             int count = floor(time / measure_time.at(i));
             m->setPlayingOffset(seconds(count * measure_time.at(i)));
+            m->setVolume(4.);
             m->play();
         } else {
             m->pause();
@@ -88,11 +89,18 @@ void BackgroundMusic::play(int ind)
     last_i = ind;
 }
 
-GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m) {
+GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m, vector<string> e) {
     state = s;
     last = Time::Zero;
     cheat = c;
     music = m;
+
+    for (auto s: e)
+    {
+        SoundBuffer* b = new SoundBuffer();
+        b->loadFromFile(s);
+        sounds.push_back(Sound(*b));
+    }
 }
 
 void GameLogic::run()
@@ -119,6 +127,7 @@ void GameLogic::run()
         }
     }
     if (last == Time::Zero) {
+        sounds[13].play();
         last = current;
         state->time = 0;
         return;
@@ -175,6 +184,7 @@ void GameLogic::run()
             {
                 state->player.jump_count++;
                 state->player.v.y = jump_speed;
+                sounds[14].play();
             }
             state->player.jumping = false;
         } else {
@@ -187,6 +197,7 @@ void GameLogic::run()
             state->player.inair = true;
             state->player.v.y = jump_speed;
             state->player.jumping = false;
+            sounds[15].play();
         } else {
             state->player.v.y = 0;
         }
@@ -307,27 +318,33 @@ void GameLogic::collectBlock(double x, double y)
         state->player.speedPower += powerup_value;
         if (state->player.speedPower > 1) state->player.speedPower = 1;
         state->level->layers[x_i][y_i] = nullptr;
+        sounds[5].play();
         break;
     case (JumpForwardPowerup):
         state->player.forwardPower += powerup_value;
         if (state->player.forwardPower > 1) state->player.forwardPower = 1;
         state->level->layers[x_i][y_i] = nullptr;
+        sounds[5].play();
         break;
     case (JumpUpwardPowerup):
         state->player.upwardPower += powerup_value;
         if (state->player.upwardPower > 1) state->player.upwardPower = 1;
         state->level->layers[x_i][y_i] = nullptr;
+        sounds[5].play();
         break;
     case (Schnitzel):
         state->player.schnitzel = true;
         state->level->layers[x_i][y_i] = nullptr;
+        sounds[7].play();
         break;
     case (Pizza):
         state->player.pizza = true;
+        sounds[9].play();
         state->level->layers[x_i][y_i] = nullptr;
         break;
     case (IceCream):
         state->player.brainfreeze += powerup_value;
+        sounds[10].play();
         if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
         state->level->layers[x_i][y_i] = nullptr;
         break;
@@ -351,7 +368,10 @@ void GameLogic::collectBlock(double x, double y)
     case (Doping):
         if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
         {
+            sounds[12].play();
             state->time += 10;
+        } else {
+            sounds[11].play();
         }
         state->level->layers[x_i][y_i] = nullptr;
         break;
