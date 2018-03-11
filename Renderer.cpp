@@ -42,6 +42,11 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     texts.push_back(sf::Text("Start Game", *font));
     texts.push_back(sf::Text("Show highscores", *font));
     texts.push_back(sf::Text("Quit Game", *font));
+    title = sf::Text("Almost Legal Speed", *font);
+    title.setScale(2., 2.);
+    float title_w = title.getGlobalBounds().width;
+    float title_h = title.getGlobalBounds().height;
+    title.setPosition(0.5*(800. - title_w), 50. + 0.5*title_h);
 
     t.resize(14);
     for(int i=0; i<14; ++i)
@@ -337,7 +342,9 @@ void Renderer::render(GameState *state)
 void Renderer::renderMenu(int selected)
 {
 	for (int i = 0; i < texts.size(); i++) {
-	    texts[i].setPosition(.45*800.,.45*600. + i*60.);
+        float txtWidth = texts[i].getGlobalBounds().width;
+        float txtHeight = texts[i].getGlobalBounds().height;
+	    texts[i].setPosition(.5*(800. - txtWidth),.5*600. + (i - texts.size()/2.)*60.);
 	    texts[i].setColor(Color(255.,0.,0.));
 	}
 
@@ -353,6 +360,8 @@ void Renderer::renderMenu(int selected)
 
     for (int i = 0; i < texts.size(); i++)
     	window->draw(texts[i]);
+
+    window->draw(title);
 }
 
 void Renderer::renderHighscore(GameState *state)

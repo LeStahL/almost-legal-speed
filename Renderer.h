@@ -38,6 +38,7 @@ public:
     
     void renderMenu(int);
     std::vector<sf::Text> texts;
+    sf::Text title;
 
     void renderHighscore(GameState *state);
     
