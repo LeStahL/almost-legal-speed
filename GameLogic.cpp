@@ -215,14 +215,14 @@ void GameLogic::run()
     double y = state->player.pos.y;
     bool col_left = state->level.collides(x + 0.5, y)
         || state->level.collides(x + 0.5, y + 0.9)
-        || state->level.collides(x + 0.5, y - 0.0);
+        || state->level.collides(x + 0.5, y - 0.9);
     bool col_right = state->level.collides(x + 1.5, y)
         || state->level.collides(x + 1.5, y - 0.9)
         || state->level.collides(x + 1.5, y + 0.9);
-    bool col_top = state->level.collides(x + 0.5, y + 0.9)
+    bool col_top = state->level.collides(x + 1., y + 0.9)
         || state->level.collides(x + 0.6, y + 0.9)
         || state->level.collides(x + 1.4, y + 0.9);
-    bool col_bottom = state->level.collides(x + 0.5, y - 1.01)
+    bool col_bottom = state->level.collides(x + 1., y - 1.01)
         || state->level.collides(x + 0.6, y - 1.01)
         || state->level.collides(x + 1.4, y - 1.01);
     int x_i = floor(x + 0.5);
