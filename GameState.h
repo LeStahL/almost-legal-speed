@@ -48,6 +48,7 @@ public:
     bool ingame;
     bool onscores;
     string highscores;
+    double time;
 };
 
 #endif

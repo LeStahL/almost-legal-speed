@@ -44,6 +44,8 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     texts.push_back(new sf::Text("Quit Game", *font));
     title = sf::Text("Almost Legal Speed", *font);
     title.setCharacterSize(60);
+    time = sf::Text("0.0", *font);
+    time.setCharacterSize(40);
 
     t.resize(14);
     for(int i=0; i<14; ++i)
@@ -140,7 +142,7 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
 
     last_bg_change = sf::Time::Zero;
     last_player_change = sf::Time::Zero;
-    
+
     if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up.png"))
     {
         fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
@@ -275,7 +277,7 @@ void Renderer::render(GameState *state)
             window->draw(sprite_p_right_standing);
         }
     }
-    
+
     //ui overlay
     RectangleShape speedDopingBar(Vector2f(150.,20.));
     speedDopingBar.setOutlineColor(Color(255.,255.,255.));
@@ -344,6 +346,14 @@ void Renderer::render(GameState *state)
     sprite_green_powerup.setTexture(t_green_powerup);
     sprite_green_powerup.setPosition(225, 60.);
     window->draw(sprite_green_powerup);
+
+    char time_str[100];
+    sprintf(time_str, "%.1f", state->time);
+    time.setString(time_str);
+    float time_w = time.getGlobalBounds().width;
+    float time_h = time.getGlobalBounds().height;
+    time.setPosition(400 - 0.5*time_w, 30 - 0.5*time_h);
+    window->draw(time);
 }
 
 void Renderer::renderMenu(int selected)
