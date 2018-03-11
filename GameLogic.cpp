@@ -209,6 +209,50 @@ void GameLogic::run()
         state->player.v.x = -max_speed;
     }
 
+
+    // Check for collisions.
+    double x = state->player.pos.x;
+    double y = state->player.pos.y;
+    bool col_left = state->level.collides(x + 0.5, y)
+        || state->level.collides(x + 0.5, y + 0.9)
+        || state->level.collides(x + 0.5, y - 0.0);
+    bool col_right = state->level.collides(x + 1.5, y)
+        || state->level.collides(x + 1.5, y - 0.9)
+        || state->level.collides(x + 1.5, y + 0.9);
+    bool col_top = state->level.collides(x + 0.5, y + 0.9)
+        || state->level.collides(x + 0.6, y + 0.9)
+        || state->level.collides(x + 1.4, y + 0.9);
+    bool col_bottom = state->level.collides(x + 0.5, y - 1.01)
+        || state->level.collides(x + 0.6, y - 1.01)
+        || state->level.collides(x + 1.4, y - 1.01);
+    int x_i = floor(x + 0.5);
+    int y_i = floor(y - 0.5);
+    if ((col_left && (state->player.v.x < 0)) || (col_right && (state->player.v.x > 0)))
+    {
+        state->player.v.x = 0;
+    }
+    if (col_top && (state->player.v.y > 0))
+    {
+        state->player.v.y = 0;
+    }
+    if (col_bottom && (state->player.v.y < 0))
+    {
+        state->player.v.y = 0;
+        state->player.inair = false;
+        state->player.jump_count = 0;
+    }
+    if (!(col_left || col_right || col_top || col_bottom))
+    {
+        state->player.inair = true;
+    }
+
+    if (state->player.pos.y < 0)
+    {
+        state->ingame = false;
+        state->player.pos.x = 10;
+        state->player.pos.y = 10;
+    }
+
     // Apply speed vector.
     if (state->player.schnitzel) {
         if (state->player.schnitzel_start == Time::Zero)
@@ -226,58 +270,9 @@ void GameLogic::run()
     }
     state->player.pos += state->player.v * elapsed;
 
-
-    // Check for collisions.
-    double x = state->player.pos.x;
-    double y = state->player.pos.y;
-    bool col_left = state->level.collides(x + 0.25, y + 0.5)
-        || state->level.collides(x + 0.25, y + 0.9)
-        || state->level.collides(x + 0.25, y + 0.1);
-    bool col_right = state->level.collides(x + 0.75, y + 0.5)
-        || state->level.collides(x + 0.75, y + 0.1)
-        || state->level.collides(x + 0.75, y + 0.9);
-    bool col_top = state->level.collides(x + 0.5, y + 0.9)
-        || state->level.collides(x + 0.3, y + 0.9)
-        || state->level.collides(x + 0.6, y + 0.9);
-    bool col_bottom = state->level.collides(x + 0.5, y - 0.01)
-        || state->level.collides(x + 0.3, y - 0.01)
-        || state->level.collides(x + 0.6, y - 0.01);
-    int x_i = floor(x + 0.5);
-    int y_i = floor(y + 0.5);
-    if (col_left && (state->player.v.x < 0))
-    {
-        state->player.v.x = 0;
-    }
-    if (col_right && (state->player.v.x > 0))
-    {
-        state->player.v.x = 0;
-    }
-    if (col_top && (state->player.v.y > 0))
-    {
-        state->player.v.y = 0;
-    }
-    if (col_bottom && (state->player.v.y < 0))
-    {
-        state->player.v.y = 0;
-        state->player.inair = false;
-        state->player.jump_count = 0;
-        state->player.pos.y = y_i;
-    }
-    if (!(col_left || col_right || col_top || col_bottom))
-    {
-        state->player.inair = true;
-    }
-
-    if (state->player.pos.y < 0)
-    {
-        state->ingame = false;
-        state->player.pos.x = 10;
-        state->player.pos.y = 10;
-    }
-
     double x_center = x_i + 0.5;
     double y_center = y_i + 0.5;
-    if ((x_center >= x) && (x_center <= x + 1) && (y_center >= y) && (y_center <= y + 1))
+    if ((x_center >= x + 0.5) && (x_center <= x + 1.5) && (y_center >= y - 1) && (y_center <= y + 1))
     {
         if (state->level.layers.size() > x_i)
         {
