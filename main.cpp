@@ -70,17 +70,8 @@ int main(int argc, char **args)
     }
     printf("Rendering level: %s\n", levelpath);
 
-    GfxManager m;
-    LevelImporter imp;
-    std::string fn(levelpath);
-    const Level *level = imp.loadLevel(fn, m);
-    if (level == nullptr) {
-        fprintf(stderr, "ERROR: Could not load startlevel.\n");
-        return -1;
-    }
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
-    GameState state;
-    state.level = *level;
+    GameState state(levelpath);
     Renderer r(&window, fontpath);
     vector<pair<string, double>> music_data = {
         make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),

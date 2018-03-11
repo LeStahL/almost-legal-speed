@@ -38,19 +38,20 @@ using namespace std;
 class GameState
 {
 public:
-    GameState();
+    GameState(string);
     virtual ~GameState() = default;
+    void reload();
 
     PowerupType getBlockType(int, int);
 
     Player player;
 
-    Level level;
+    Level* level;
     Clock timer;
 
     bool ingame;
     bool onscores;
-    string highscores;
+    string highscores, levelpath;
     double time;
     bool finished;
 };

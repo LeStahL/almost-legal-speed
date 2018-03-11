@@ -103,19 +103,15 @@ void GameLogic::run()
     }
     if (!state->player.initialized)
     {
-        for (int i = 0; i < state->level.layers.size(); i++)
+        for (int i = 0; i < state->level->layers.size(); i++)
         {
-            for (int j = 0; j < state->level.layers[i].size(); j++) {
-                const Block* b = state->level.layers[i][j];
-                if (b != nullptr)
+            for (int j = 0; j < state->level->layers[i].size(); j++) {
+                if (state->getBlockType(i, j) == PowerupType::PlayerStart)
                 {
-                    if (b->powerupType == PowerupType::PlayerStart)
-                    {
-                        state->level.layers[i][j] = nullptr;
-                        state->player.initialized = true;
-                        state->player.pos.x = i;
-                        state->player.pos.y = j;
-                    }
+                    state->level->layers[i][j] = nullptr;
+                    state->player.initialized = true;
+                    state->player.pos.x = i;
+                    state->player.pos.y = j;
                 }
             }
         }
@@ -218,18 +214,18 @@ void GameLogic::run()
     // Check for collisions.
     double x = state->player.pos.x;
     double y = state->player.pos.y;
-    bool col_left = state->level.collides(x + 0.5, y)
-        || state->level.collides(x + 0.5, y + 0.6)
-        || state->level.collides(x + 0.5, y - 0.9);
-    bool col_right = state->level.collides(x + 1.5, y)
-        || state->level.collides(x + 1.5, y - 0.9)
-        || state->level.collides(x + 1.5, y + 0.6);
-    bool col_top = state->level.collides(x + 1., y + 0.7)
-        || state->level.collides(x + 0.6, y + 0.7)
-        || state->level.collides(x + 1.4, y + 0.7);
-    bool col_bottom = state->level.collides(x + 1., y - 1.01)
-        || state->level.collides(x + 0.6, y - 1.01)
-        || state->level.collides(x + 1.4, y - 1.01);
+    bool col_left = state->level->collides(x + 0.5, y)
+        || state->level->collides(x + 0.5, y + 0.6)
+        || state->level->collides(x + 0.5, y - 0.9);
+    bool col_right = state->level->collides(x + 1.5, y)
+        || state->level->collides(x + 1.5, y - 0.9)
+        || state->level->collides(x + 1.5, y + 0.6);
+    bool col_top = state->level->collides(x + 1., y + 0.7)
+        || state->level->collides(x + 0.6, y + 0.7)
+        || state->level->collides(x + 1.4, y + 0.7);
+    bool col_bottom = state->level->collides(x + 1., y - 1.01)
+        || state->level->collides(x + 0.6, y - 1.01)
+        || state->level->collides(x + 1.4, y - 1.01);
     int x_i = floor(x + 0.5);
     int y_i = floor(y - 0.5);
     if ((col_left && (state->player.v.x < 0)) || (col_right && (state->player.v.x > 0)))
@@ -284,25 +280,25 @@ void GameLogic::run()
         case (SpeedPowerup):
             state->player.speedPower += powerup_value;
             if (state->player.speedPower > 1) state->player.speedPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (JumpForwardPowerup):
             state->player.forwardPower += powerup_value;
             if (state->player.forwardPower > 1) state->player.forwardPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (JumpUpwardPowerup):
             state->player.upwardPower += powerup_value;
             if (state->player.upwardPower > 1) state->player.upwardPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Schnitzel):
             state->player.schnitzel = true;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Pizza):
             state->player.pizza = true;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (IceCream):
             state->player.brainfreeze += powerup_value;

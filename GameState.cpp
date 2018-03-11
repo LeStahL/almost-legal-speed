@@ -19,19 +19,32 @@
 #include "GameState.h"
 #include <Powerup.h>
 
-GameState::GameState()
-: ingame(false), onscores(false), finished(false)
+GameState::GameState(string lp)
+: ingame(false), onscores(false), finished(false), levelpath(lp)
 {
 
 }
 
+void GameState::reload()
+{
+    GfxManager* m = new GfxManager();
+    LevelImporter* imp = new LevelImporter();
+    std::string fn(levelpath);
+    level = imp->loadLevel(fn, m);
+    if (level == nullptr) {
+        fprintf(stderr, "ERROR: Could not load startlevel.\n");
+    }
+    player.reset();
+    time = 0;
+}
+
 PowerupType GameState::getBlockType(int x, int y)
 {
-    if (level.layers.size() > x)
+    if (level->layers.size() > x)
     {
-        if (level.layers[x].size() > y)
+        if (level->layers[x].size() > y)
         {
-            const Block* b = level.layers[x][y];
+            const Block* b = level->layers[x][y];
             if (b != nullptr)
             {
                 return b->powerupType;

@@ -66,7 +66,7 @@ public:
     Level(size_t id, std::vector<std::vector<const Block*>> layers);
     Level(size_t id, std::vector<const Level*>& list);
 
-    void addLevel(Level& layers);
+    void addLevel(Level* layers);
 
     bool collides(double, double);
 };
@@ -88,7 +88,7 @@ public:
 class LevelImporter
 {
 public:
-    std::map<size_t, Level> levels;
+    std::map<size_t, Level*> levels;
     std::map<char, Block*> blocks;
 
     LevelImporter() {
@@ -96,6 +96,6 @@ public:
         blocks[' '] = nullptr;
     }
 
-    const Level* loadLevel(std::string& pathToFile, GfxManager& gfxManager);
+    Level* loadLevel(std::string& pathToFile, GfxManager* gfxManager);
 };
 #endif

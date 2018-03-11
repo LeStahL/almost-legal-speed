@@ -40,6 +40,8 @@ public:
     Player();
     virtual ~Player() = default;
 
+    void reset();
+
     vec2 pos, v;
     direction a, face;
 

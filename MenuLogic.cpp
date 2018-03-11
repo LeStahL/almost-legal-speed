@@ -76,7 +76,10 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string* data) {
 
 void MenuLogic::activateMenuItem(int index) {
     if (index == 0)
+    {
         state->ingame = true;
+        state->reload();
+    }
     else if (index == 1) {
         state->onscores = true;
         curl = curl_easy_init();

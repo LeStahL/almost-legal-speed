@@ -201,7 +201,7 @@ void Renderer::render(GameState *state)
     }
 
     //level
-    vector<vector<const Block*> > level = state->level.layers;
+    vector<vector<const Block*> > level = state->level->layers;
     for(int i=0; i<level.size(); ++i)
     {
         for(int j=0; j<level.at(i).size(); ++j)
