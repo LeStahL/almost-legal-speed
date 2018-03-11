@@ -19,6 +19,7 @@
 
 #include <Player.h>
 #include <SFML/System/Time.hpp>
+#include <cmath>
 
 Player::Player()
 {
@@ -77,4 +78,8 @@ void vec2::operator*=(double f) {
 void vec2::operator/=(double f) {
     x /= f;
     y /= f;
+}
+
+double vec2::abs() {
+    return sqrt(x*x + y*y);
 }

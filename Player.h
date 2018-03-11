@@ -30,6 +30,7 @@ struct vec2 {
     vec2 operator*(double);
     void operator*=(double);
     void operator/=(double);
+    double abs();
 };
 
 typedef enum { LEFT = -1, NONE = 0, RIGHT = 1 } direction;

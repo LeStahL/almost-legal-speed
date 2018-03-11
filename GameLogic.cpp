@@ -243,14 +243,17 @@ void GameLogic::run()
     int y_i = floor(y - 0.5);
     if ((col_left && (state->player.v.x < 0)) || (col_right && (state->player.v.x > 0)))
     {
+        sounds[0].play();
         state->player.v.x = 0;
     }
     if (col_top && (state->player.v.y > 0))
     {
+        sounds[1].play();
         state->player.v.y = 0;
     }
     if (col_bottom && (state->player.v.y < 0))
     {
+        sounds[0].play();
         state->player.v.y = 0;
         state->player.inair = false;
         state->player.jump_count = 0;
@@ -370,6 +373,7 @@ void GameLogic::collectBlock(double x, double y)
         state->player.upwardPower = 0;
         state->player.forwardPower = 0;
         music->music_index = 4;
+        sounds[6].play();
         music->play(4);
         break;
     case (Doping):
