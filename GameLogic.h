@@ -64,6 +64,7 @@ private:
     const double pizza_time = 3;
     const double schnitzel_time = 1;
     const double power_decrease = 0.02;
+    const double freeze_decrease = 0.1;
     const double powerup_value = 0.2;
     BackgroundMusic* music;
 };

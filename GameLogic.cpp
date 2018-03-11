@@ -169,7 +169,7 @@ void GameLogic::run()
     {
         if (state->player.jumping)
         {
-            if (state->player.jump_count < max_jumps * state->player.upwardPower)
+            if ((state->player.jump_count < max_jumps * state->player.upwardPower) && !state->player.schnitzel)
             {
                 state->player.jump_count++;
                 state->player.v.y = jump_speed;
@@ -180,7 +180,7 @@ void GameLogic::run()
         }
         max_speed *= 1 + state->player.forwardPower;
     } else {
-        if (state->player.jumping)
+        if (state->player.jumping && !state->player.schnitzel)
         {
             state->player.inair = true;
             state->player.v.y = jump_speed;
@@ -331,7 +331,7 @@ void GameLogic::run()
     if (state->player.forwardPower < 0) state->player.forwardPower = 0;
     state->player.upwardPower -= power_decrease * elapsed;
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
-    state->player.brainfreeze -= power_decrease * elapsed;
+    state->player.brainfreeze -= freeze_decrease * elapsed;
     if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
 
     // Update music.
