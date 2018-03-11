@@ -242,17 +242,17 @@ void GameLogic::run()
                     switch (b->powerupType)
                     {
                     case (SpeedPowerup):
-                        state->player.speedPower += 0.1;
+                        state->player.speedPower += powerup_value;
                         if (state->player.speedPower > 1) state->player.speedPower = 1;
                         state->level.layers[x_i][y_i] = nullptr;
                         break;
                     case (JumpForwardPowerup):
-                        state->player.forwardPower += 0.1;
+                        state->player.forwardPower += powerup_value;
                         if (state->player.forwardPower > 1) state->player.forwardPower = 1;
                         state->level.layers[x_i][y_i] = nullptr;
                         break;
                     case (JumpUpwardPowerup):
-                        state->player.upwardPower += 0.1;
+                        state->player.upwardPower += powerup_value;
                         if (state->player.upwardPower > 1) state->player.upwardPower = 1;
                         state->level.layers[x_i][y_i] = nullptr;
                         break;
@@ -265,7 +265,7 @@ void GameLogic::run()
                         state->level.layers[x_i][y_i] = nullptr;
                         break;
                     case (IceCream):
-                        state->player.brainfreeze += 0.1;
+                        state->player.brainfreeze += powerup_value;
                         if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
                         state->level.layers[x_i][y_i] = nullptr;
                         break;
@@ -347,35 +347,35 @@ void GameLogic::keyPressed(Keyboard::Key key) {
         switch (key)
         {
         case (Keyboard::Q):
-            state->player.speedPower += 0.1;
+            state->player.speedPower += powerup_value;
             if (state->player.speedPower > 1) state->player.speedPower = 1;
             break;
         case (Keyboard::A):
-            state->player.speedPower -= 0.1;
+            state->player.speedPower -= powerup_value;
             if (state->player.speedPower < 0) state->player.speedPower = 0;
             break;
         case (Keyboard::W):
-            state->player.forwardPower += 0.1;
+            state->player.forwardPower += powerup_value;
             if (state->player.forwardPower > 1) state->player.forwardPower = 1;
             break;
         case (Keyboard::S):
-            state->player.forwardPower -= 0.1;
+            state->player.forwardPower -= powerup_value;
             if (state->player.forwardPower < 0) state->player.forwardPower = 0;
             break;
         case (Keyboard::E):
-            state->player.upwardPower += 0.1;
+            state->player.upwardPower += powerup_value;
             if (state->player.upwardPower > 1) state->player.upwardPower = 1;
             break;
         case (Keyboard::D):
-            state->player.upwardPower -= 0.1;
+            state->player.upwardPower -= powerup_value;
             if (state->player.upwardPower < 0) state->player.upwardPower = 0;
             break;
         case (Keyboard::R):
-            state->player.brainfreeze += 0.1;
+            state->player.brainfreeze += powerup_value;
             if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
             break;
         case (Keyboard::F):
-            state->player.brainfreeze -= 0.1;
+            state->player.brainfreeze -= powerup_value;
             if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
             break;
         case (Keyboard::T):
