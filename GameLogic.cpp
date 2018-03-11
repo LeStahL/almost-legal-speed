@@ -127,7 +127,7 @@ void GameLogic::run()
             }
         }
     }
-    if (last == Time::Zero) {
+    if ((last == Time::Zero) || (state->player.game_start == Time::Zero)) {
         state->player.game_start = current;
         last = current;
         state->time = 0;
