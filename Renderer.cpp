@@ -144,6 +144,13 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
         fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
         exit(0);
     }
+    
+    //brainfreeze
+    if (!brainfreeze.loadFromFile("../shaders/brainfreeze.frag", sf::Shader::Fragment))
+    {
+        fprintf(stderr, "ERROR: Could not load brainfreeze fragment shader\n");
+        exit(0);
+    }
 }
 
 Renderer::~Renderer()
@@ -153,6 +160,9 @@ Renderer::~Renderer()
 
 void Renderer::render(GameState *state)
 {
+    
+    
+    
     Player *player = &(state->player);
     sf::Time current = state->timer.getElapsedTime();
     
@@ -174,12 +184,6 @@ void Renderer::render(GameState *state)
         sprite.setTexture(texture);
         window->draw(sprite);
     }
-
-//     CircleShape p(.5*tile_width);
-//     p.setFillColor(sf::Color(111.,111.,111.));
-//     p.setPosition((player->pos.x)*tile_width, 600.-(player->pos.y+1.)*tile_height);
-//     p.setPosition(400., 300.);
-//     window->draw(p);
 
     //ui overlay
     RectangleShape speedDopingBar(Vector2f(150.,20.));
