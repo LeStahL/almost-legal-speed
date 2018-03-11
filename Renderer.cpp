@@ -138,6 +138,12 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     
     last_bg_change = sf::Time::Zero;
     last_player_change = sf::Time::Zero;
+    
+    if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up2.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
+        exit(0);
+    }
 }
 
 Renderer::~Renderer()
@@ -220,9 +226,13 @@ void Renderer::render(GameState *state)
     forwardDopingProgress.setPosition(265.,73.);
     window->draw(forwardDopingProgress);
 
-    Text forwardText("Forward doping", *font);
+/*    Text forwardText("Forward doping", *font);
     forwardText.setPosition(10.,60.);
-    window->draw(forwardText);
+    window->draw(forwardText);*/
+    sf::Sprite sprite_pictogram_speed;
+    sprite_pictogram_speed.setTexture(up_pictogram);
+    sprite_pictogram_speed.setPosition(10., 60.);
+    window->draw(sprite_pictogram_speed);
 
     sf::Sprite sprite_red_powerup;
     sprite_red_powerup.setTexture(t_red_powerup);
