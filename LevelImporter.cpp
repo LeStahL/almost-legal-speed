@@ -89,11 +89,29 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
             }
         } else if (line.find("level") == 0)
         {
+            if (current_level != nullptr) {
+                for (size_t i = 0; i < current_level->layers.size(); ++i) {
+                    current_level->layers[i] = std::vector<const Block*>(
+                                current_level->layers[i].rbegin(),
+                                current_level->layers[i].rend());
+                }
+                current_level = nullptr;
+            }
+
             size_t id = stoull(line.substr(line.find_first_of(" "), line.size()));
             added_levels.push_back(id);
             current_level = &levels[id];
         } else if (line.find("clevel") == 0)
         {
+
+            if (current_level != nullptr) {
+                for (size_t i = 0; i < current_level->layers.size(); ++i) {
+                    current_level->layers[i] = std::vector<const Block*>(
+                                current_level->layers[i].rbegin(),
+                                current_level->layers[i].rend());
+                }
+                current_level = nullptr;
+            }
             // clevel id <ids>
             std::vector<std::string> split_line = split(line, ' ');
             if (split_line.size() < 4)
@@ -108,6 +126,14 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
             }
         } else if (line.find("slevel") == 0)
         {
+            if (current_level != nullptr) {
+                for (size_t i = 0; i < current_level->layers.size(); ++i) {
+                    current_level->layers[i] = std::vector<const Block*>(
+                                current_level->layers[i].rbegin(),
+                                current_level->layers[i].rend());
+                }
+                current_level = nullptr;
+            }
             size_t id = stoull(line.substr(7, line.size()));
             start_level = &levels[id];
         } else if (current_level != nullptr){
@@ -118,13 +144,13 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
         }
     }
 
-    for (auto id : added_levels) {
-        Level& level = levels[id];
-
-        for (size_t i = 0; i < level.layers.size(); ++i) {
-            level.layers[i] = std::vector<const Block*>(level.layers[i].rbegin(),level.layers[i].rend());
+    if (current_level != nullptr) {
+        for (size_t i = 0; i < current_level->layers.size(); ++i) {
+            current_level->layers[i] = std::vector<const Block*>(
+                        current_level->layers[i].rbegin(),
+                        current_level->layers[i].rend());
         }
-
+        current_level = nullptr;
     }
     return start_level;
 }
