@@ -26,6 +26,7 @@
 #include <iostream>
 #include <Powerup.h>
 #include <math.h>
+#include <curl/curl.h>
 
 using namespace std;
 using namespace sf;
@@ -322,6 +323,7 @@ void GameLogic::run()
             state->player.forwardPower = 0;
             music->music_index = 4;
             music->play(4);
+            pushScore("Nobody", state->time);
             break;
         }
     }
@@ -402,5 +404,24 @@ void GameLogic::keyPressed(Keyboard::Key key) {
             state->player.schnitzel = true;
             break;
         }
+    }
+}
+
+void GameLogic::pushScore(string name, int time) {
+	CURL *curl = curl_easy_init();
+    if (curl) {
+        struct curl_slist *headers = nullptr;
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, "https://speed.jbtec.eu/score");
+    	curl_easy_setopt(curl, CURLOPT_POST, 1L);
+		headers = curl_slist_append(headers, "Expect:");
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+		char body[100];
+		sprintf(body, "{\"name\":\"%s\",\"score\":%d}", name.c_str(), time);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
+        curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
     }
 }
