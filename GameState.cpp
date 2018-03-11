@@ -35,6 +35,7 @@ void GameState::reload()
         fprintf(stderr, "ERROR: Could not load startlevel.\n");
     }
     player.reset();
+    finished = false;
     time = 0;
 }
 
