@@ -201,7 +201,6 @@ void GameLogic::run()
     {
         state->player.inair = true;
     }
-    cout << state->player.inair << endl;
 
     if (state->player.pos.y < 0)
     {
