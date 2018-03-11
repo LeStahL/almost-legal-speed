@@ -45,7 +45,7 @@ public:
     
 private:
     std::vector<sf::Texture> t, p_run_left, p_run_right;
-    sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup, p_stand_left, p_stand_right, p_jump_left, p_jump_right, up_pictogram;
+    sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup, p_stand_left, p_stand_right, p_jump_left, p_jump_right, up_pictogram, jump_pictogram, run_pictogram;
     int drogen_counter, player_counter;
     sf::Time last_bg_change, last_player_change;
     sf::Shader brainfreeze;

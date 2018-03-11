@@ -74,6 +74,10 @@ int main(int argc, char **args)
     LevelImporter imp;
     std::string fn(levelpath);
     const Level *level = imp.loadLevel(fn, m);
+    if (level == nullptr) {
+        fprintf(stderr, "ERROR: Could not load startlevel.\n");
+        return -1;
+    }
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
     GameState state;
     state.level = *level;

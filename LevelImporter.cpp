@@ -55,8 +55,13 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
     int x_p = 0;
     int y_p = 0;
 
+    if (!infile.is_open()) {
+        fprintf(stderr, "ERROR: Could not load level-file.\n");
+        return nullptr;
+    }
     for(std::string line; getline( infile, line ); )
-    {
+    {      
+
         if (line.find("block") == 0)
         {
             // name, path, w, h, solid
@@ -188,11 +193,12 @@ Block *GfxManager::loadBlock(char name, string &pathToFile, size_t w, size_t h, 
 void Block::init()
 {
 
-    if (!texture->loadFromFile(pathToFile))
+    if (!texture->loadFromFile(pathToFile, sf::IntRect(0.,0.,width,heigth)))
     {
         // Fail
         // FIXME throw an exception
         fprintf(stderr, "could not load texture file from %s", pathToFile.c_str());
         exit(0);
     }
+
 }

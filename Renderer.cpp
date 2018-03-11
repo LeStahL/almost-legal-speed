@@ -139,11 +139,25 @@ Renderer::Renderer(sf::RenderWindow* w, const char* font_path)
     last_bg_change = sf::Time::Zero;
     last_player_change = sf::Time::Zero;
     
-    if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up2.png"))
+    if(!up_pictogram.loadFromFile("../gfx/piktogram_jump_up.png"))
     {
         fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
         exit(0);
     }
+
+    if(!run_pictogram.loadFromFile("../gfx/piktogram_run.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
+        exit(0);
+    }
+
+    if(!jump_pictogram.loadFromFile("../gfx/piktogram_jump.png"))
+    {
+        fprintf(stderr, "ERROR: Could not load piktogram_jump_up.png\n");
+        exit(0);
+    }
+
+
     
     //brainfreeze
     if (!brainfreeze.loadFromFile("../shaders/brainfreeze.frag", sf::Shader::Fragment))
@@ -190,67 +204,77 @@ void Renderer::render(GameState *state)
     speedDopingBar.setOutlineColor(Color(255.,255.,255.));
     speedDopingBar.setFillColor(Color(0.,0.,0.,0.));
     speedDopingBar.setOutlineThickness(2.);
-    speedDopingBar.setPosition(260.,10.);
+    speedDopingBar.setPosition(60.,10.);
     window->draw(speedDopingBar);
 
     RectangleShape speedDopingProgress(Vector2f(140*state->player.speedPower, 14.));
     speedDopingProgress.setFillColor(Color(255.,0.,0.));
-    speedDopingProgress.setPosition(265.,13.);
+    speedDopingProgress.setPosition(65.,13.);
     window->draw(speedDopingProgress);
 
-    Text speedText("Speed doping", *font);
+    /*Text speedText("Speed doping", *font);
     speedText.setPosition(10.,0.);
-    window->draw(speedText);
+    window->draw(speedText);*/
+    sf::Sprite sprite_pictogram_speed;
+    sprite_pictogram_speed.setTexture(run_pictogram);
+    sprite_pictogram_speed.setPosition(10., 0.);
+    window->draw(sprite_pictogram_speed);
 
     RectangleShape upwardDopingBar(Vector2f(150.,20.));
     upwardDopingBar.setOutlineColor(Color(255.,255.,255.));
     upwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
     upwardDopingBar.setOutlineThickness(2.);
-    upwardDopingBar.setPosition(260.,40.);
+    upwardDopingBar.setPosition(60.,40.);
     window->draw(upwardDopingBar);
 
     RectangleShape upwardDopingProgress(Vector2f(140*state->player.upwardPower, 14.));
     upwardDopingProgress.setFillColor(Color(0.,0.,255.));
-    upwardDopingProgress.setPosition(265.,43.);
+    upwardDopingProgress.setPosition(65.,43.);
     window->draw(upwardDopingProgress);
 
-    Text upwardText("Upward doping", *font);
+    /*Text upwardText("Upward doping", *font);
     upwardText.setPosition(10.,30.);
-    window->draw(upwardText);
+    window->draw(upwardText);*/
+    sf::Sprite sprite_pictogram_up;
+    sprite_pictogram_up.setTexture(up_pictogram);
+    sprite_pictogram_up.setPosition(10., 30.);
+    window->draw(sprite_pictogram_up);
 
     RectangleShape forwardDopingBar(Vector2f(150.,20.));
     forwardDopingBar.setOutlineColor(Color(255.,255.,255.));
     forwardDopingBar.setFillColor(Color(0.,0.,0.,0.));
     forwardDopingBar.setOutlineThickness(2.);
-    forwardDopingBar.setPosition(260.,70.);
+    forwardDopingBar.setPosition(60.,70.);
     window->draw(forwardDopingBar);
 
     RectangleShape forwardDopingProgress(Vector2f(140*state->player.forwardPower, 14.));
     forwardDopingProgress.setFillColor(Color(0.,255.,0.));
-    forwardDopingProgress.setPosition(265.,73.);
+    forwardDopingProgress.setPosition(65.,73.);
     window->draw(forwardDopingProgress);
 
 /*    Text forwardText("Forward doping", *font);
     forwardText.setPosition(10.,60.);
     window->draw(forwardText);*/
-    sf::Sprite sprite_pictogram_speed;
-    sprite_pictogram_speed.setTexture(up_pictogram);
-    sprite_pictogram_speed.setPosition(10., 60.);
-    window->draw(sprite_pictogram_speed);
+    sf::Sprite sprite_pictogram_jump;
+    sprite_pictogram_jump.setTexture(jump_pictogram);
+    sprite_pictogram_jump.setPosition(10., 60.);
+    window->draw(sprite_pictogram_jump);
+
+
 
     sf::Sprite sprite_red_powerup;
     sprite_red_powerup.setTexture(t_red_powerup);
-    sprite_red_powerup.setPosition(425, 0.);
+    sprite_red_powerup.setPosition(225, 0.);
     window->draw(sprite_red_powerup);
 
     sf::Sprite sprite_blue_powerup;
     sprite_blue_powerup.setTexture(t_blue_powerup);
-    sprite_blue_powerup.setPosition(425, 30.);
+    sprite_blue_powerup.setPosition(225, 30.);
     window->draw(sprite_blue_powerup);
 
     sf::Sprite sprite_green_powerup;
     sprite_green_powerup.setTexture(t_green_powerup);
-    sprite_green_powerup.setPosition(425, 60.);
+    sprite_green_powerup.setPosition(225, 60.);
     window->draw(sprite_green_powerup);
 
     //level
