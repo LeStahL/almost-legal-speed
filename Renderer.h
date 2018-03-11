@@ -30,19 +30,20 @@ class Renderer
 public:
     Renderer(RenderWindow *w, const char *font_path);
     virtual ~Renderer();
-    
+
     void render(GameState *state);
-    
+
     RenderWindow *window;
     Font *font;
-    
+
     void renderMenu(int);
-    std::vector<sf::Text> texts;
+    std::vector<sf::Text*> texts;
+    sf::Text title;
 
     void renderHighscore(GameState *state);
     
     float tile_width, tile_height;
-    
+
 private:
     std::vector<sf::Texture> t, p_run_left, p_run_right;
     sf::Texture texture, t_red_powerup, t_green_powerup, t_blue_powerup, p_stand_left, p_stand_right, p_jump_left, p_jump_right, up_pictogram, jump_pictogram, run_pictogram;

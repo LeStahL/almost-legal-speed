@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
-MenuLogic::MenuLogic(GameState* s, std::vector<sf::Text> txts) {
+MenuLogic::MenuLogic(GameState* s, std::vector<sf::Text*> txts) {
     state = s;
     texts = txts;
     selectedItem = -1;
@@ -55,11 +55,11 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
 
 void MenuLogic::mouseMoved(int x, int y) {
     for (int i = 0; i < texts.size(); i++) {
-        float txtX = .45*800.;
-        float txtY = .45*600. + i*60.;
-        float txtWidth = texts[i].getGlobalBounds().width;
-        float txtHeight = texts[i].getGlobalBounds().height;
-        if (x > txtX && y > txtY + .5*txtHeight && x < txtX + txtWidth && y < txtY + 1.5*txtHeight) {
+        float txtX = texts[i]->getGlobalBounds().left;
+        float txtY = texts[i]->getGlobalBounds().top;
+        float txtWidth = texts[i]->getGlobalBounds().width;
+        float txtHeight = texts[i]->getGlobalBounds().height;
+        if (x > txtX && y > txtY && x < txtX + txtWidth && y < txtY + txtHeight) {
             selectedItem = i;
             return;
         }

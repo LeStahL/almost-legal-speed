@@ -89,7 +89,7 @@ int main(int argc, char **args)
         make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.)
     };
     BackgroundMusic music(music_data);
-    music.music_index = 1;
+    music.play(1);
     GameLogic gameLogic(&state, cheat, &music);
     MenuLogic menuLogic(&state, r.texts);
 
