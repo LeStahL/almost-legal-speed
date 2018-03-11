@@ -276,52 +276,45 @@ void GameLogic::run()
     double y_center = y_i + 0.5;
     if ((x_center >= x + 0.5) && (x_center <= x + 1.5) && (y_center >= y - 1) && (y_center <= y + 1))
     {
-        if (state->level.layers.size() > x_i)
+        switch (state->getBlockType(x_i, y_i))
         {
-            if (state->level.layers[x_i].size() > y_i)
-            {
-                const Block* b = state->level.layers[x_i][y_i];
-                if (b != nullptr)
-                {
-                    switch (b->powerupType)
-                    {
-                    case (SpeedPowerup):
-                        state->player.speedPower += powerup_value;
-                        if (state->player.speedPower > 1) state->player.speedPower = 1;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (JumpForwardPowerup):
-                        state->player.forwardPower += powerup_value;
-                        if (state->player.forwardPower > 1) state->player.forwardPower = 1;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (JumpUpwardPowerup):
-                        state->player.upwardPower += powerup_value;
-                        if (state->player.upwardPower > 1) state->player.upwardPower = 1;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (Schnitzel):
-                        state->player.schnitzel = true;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (Pizza):
-                        state->player.pizza = true;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (IceCream):
-                        state->player.brainfreeze += powerup_value;
-                        if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
-                        state->level.layers[x_i][y_i] = nullptr;
-                        break;
-                    case (Money):
-                        // TODO
-                        break;
-                    case (Alcohol):
-                        // TODO
-                        break;
-                    }
-                }
-            }
+        case (SpeedPowerup):
+            state->player.speedPower += powerup_value;
+            if (state->player.speedPower > 1) state->player.speedPower = 1;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (JumpForwardPowerup):
+            state->player.forwardPower += powerup_value;
+            if (state->player.forwardPower > 1) state->player.forwardPower = 1;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (JumpUpwardPowerup):
+            state->player.upwardPower += powerup_value;
+            if (state->player.upwardPower > 1) state->player.upwardPower = 1;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (Schnitzel):
+            state->player.schnitzel = true;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (Pizza):
+            state->player.pizza = true;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (IceCream):
+            state->player.brainfreeze += powerup_value;
+            if (state->player.brainfreeze > 1) state->player.brainfreeze = 1;
+            state->level.layers[x_i][y_i] = nullptr;
+            break;
+        case (Money):
+            // TODO
+            break;
+        case (Alcohol):
+            // TODO
+            break;
+        case (Finish):
+            state->ingame = false;
+            break;
         }
     }
 

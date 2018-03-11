@@ -25,6 +25,7 @@
 #include <SFML/System/Clock.hpp>
 #include <Player.h>
 #include "LevelImporter.h"
+#include <Powerup.h>
 using namespace sf;
 
 class Renderer;
@@ -39,6 +40,8 @@ class GameState
 public:
     GameState();
     virtual ~GameState() = default;
+
+    PowerupType getBlockType(int, int);
 
     Player player;
 

@@ -17,9 +17,26 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "GameState.h"
+#include <Powerup.h>
 
 GameState::GameState()
-    : ingame(false), onscores(false)
+: ingame(false), onscores(false)
 {
-    
+
+}
+
+PowerupType GameState::getBlockType(int x, int y)
+{
+    if (level.layers.size() > x)
+    {
+        if (level.layers[x].size() > y)
+        {
+            const Block* b = level.layers[x][y];
+            if (b != nullptr)
+            {
+                return b->powerupType;
+            }
+        }
+    }
+    return None;
 }

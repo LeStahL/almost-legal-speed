@@ -1,8 +1,8 @@
-block _ ../gfx/g0.png 32 32 1 9
-block ( ../gfx/left_block.png 32 32 1 9
-block ) ../gfx/right_block.png 32 32 1 9
-block = ../gfx/middle_block.png 32 32 1 9
-block # ../gfx/full_block.png 32 32 1 9
+block _ ../gfx/g0.png 32 32 1 -1
+block ( ../gfx/left_block.png 32 32 1 -1
+block ) ../gfx/right_block.png 32 32 1 -1
+block = ../gfx/middle_block.png 32 32 1 -1
+block # ../gfx/full_block.png 32 32 1 -1
 block 0 ../gfx/p_red.png 32 32 0 0
 block 1 ../gfx/p_blue.png 32 32 0 2
 block 2 ../gfx/p_green.png 32 32 0 1
