@@ -303,7 +303,7 @@ void GameLogic::run()
         case (IceCream):
             state->player.brainfreeze += powerup_value;
             if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Money):
             // TODO
@@ -315,6 +315,10 @@ void GameLogic::run()
             state->finished = true;
             state->player.v.x = 0;
             state->player.v.y = 0;
+            state->player.brainfreeze = 0;
+            state->player.speedPower = 0;
+            state->player.upwardPower = 0;
+            state->player.forwardPower = 0;
             music->play(4);
             break;
         }
