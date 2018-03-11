@@ -385,6 +385,22 @@ void Renderer::render(GameState *state)
             }
         }
     }
+    
+    //alcohol
+    for(int i=0; i<n; ++i)
+    {
+        for(int j=0; j<m; ++j)
+        {
+            double xpos = double(i)*wx, ypos = double(j)*wy, r = sqrt((xpos-400.)*(xpos-400.)+(ypos-300.)*(ypos-300.));
+            if(r/rmax > 1.-player->brainfreeze)
+            {
+                RectangleShape blackrect(Vector2f(wx,wy));
+                blackrect.setPosition(xpos, ypos);
+                blackrect.setFillColor(Color(222.,222.,222.,100.+50.*sin(state->time * 1.e0 - 1.e-1*r)));
+                window->draw(blackrect);
+            }
+        }
+    }
 }
 
 void Renderer::renderMenu(int selected)
