@@ -387,6 +387,19 @@ void Renderer::render(GameState *state)
     }
     
     //alcohol
+    if(player->drunken > 0)
+    {
+        sf::View v = window->getView();
+        v.setRotation(10.*sin(state->timer.getElapsedTime().asMilliseconds()*1.e-3));
+        window->setView(v);
+    }
+    else
+    {
+        sf::View v = window->getView();
+        v.setRotation(0.);
+        window->setView(v);
+    }
+    
     for(int i=0; i<n; ++i)
     {
         for(int j=0; j<m; ++j)
@@ -396,7 +409,7 @@ void Renderer::render(GameState *state)
             {
                 RectangleShape blackrect(Vector2f(wx,wy));
                 blackrect.setPosition(xpos, ypos);
-                blackrect.setFillColor(Color(222.,222.,222.,100.+50.*sin(state->time *r* 1.e0*player->drunken - state->timer.getElapsedTime().asMilliseconds()*2.e3)));
+                blackrect.setFillColor(Color(222.,222.,222.,50.+50.*sin(state->time *r* 1.e0*player->drunken - state->timer.getElapsedTime().asMilliseconds()*2.e3)));
                 window->draw(blackrect);
             }
         }
