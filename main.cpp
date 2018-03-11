@@ -28,6 +28,8 @@
 
 #include <string.h>
 #include <math.h>
+#include <vector>
+#include <utility>
 
 #include <iostream>
 
@@ -76,13 +78,14 @@ int main(int argc, char **args)
     GameState state;
     state.level = *level;
     Renderer r(&window, fontpath);
-    BackgroundMusic music(
-        "../matzesmagicmusic/Chilly.ogg",
-        "../matzesmagicmusic/Chilly.ogg",
-        "../matzesmagicmusic/MoreDopeThanHope.ogg",
-        "../matzesmagicmusic/TooMuchFood.ogg"
-    );
-    music.menu.play();
+    vector<pair<string, double>> music_data = {
+        make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
+        make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
+        make_pair("../matzesmagicmusic/MoreDopeThanHope.ogg", 4 * 60./157.0),
+        make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.)
+    };
+    BackgroundMusic music(music_data);
+    music.music_index = 1;
     GameLogic gameLogic(&state, cheat, &music);
     MenuLogic menuLogic(&state, r.texts);
 

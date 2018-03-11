@@ -30,15 +30,61 @@
 using namespace std;
 using namespace sf;
 
-BackgroundMusic::BackgroundMusic(string fn_menu, string fn_normal, string fn_dope, string fn_slow) {
-    menu.openFromFile(fn_menu);
-    menu.setLoop(true);
-    normal.openFromFile(fn_normal);
-    normal.setLoop(true);
-    dope.openFromFile(fn_dope);
-    dope.setLoop(true);
-    slow.openFromFile(fn_slow);
-    slow.setLoop(true);
+BackgroundMusic::BackgroundMusic(vector<pair<string, double>> d)
+{
+    music.clear();
+    measure_time.clear();
+    for (auto p: d)
+    {
+        Music* m = new Music();
+        m->openFromFile(get<0>(p));
+        m->setLoop(true);
+        music.push_back(m);
+        measure_time.push_back(get<1>(p));
+    }
+    last_i = -1;
+}
+
+
+void BackgroundMusic::update(Time current)
+{
+    int i = music_index % music.size();
+    if (i == last_i) return;
+
+    Music* m = music.at(i);
+    double time = m->getPlayingOffset().asSeconds();
+    int count = floor(time / measure_time.at(i));
+    double bar_time = time - count*measure_time.at(i);
+
+    if (change_time == Time::Zero)
+    {
+        change_time = current;
+    }
+
+    if ((bar_time < 0.1) || ((current - change_time).asSeconds() > 2))
+    {
+        play(i);
+        change_time = Time::Zero;
+    }
+}
+
+void BackgroundMusic::play(int ind)
+{
+    music_index = ind;
+    for (int i=0; i<music.size(); i++)
+    {
+        Music* m = music.at(i);
+        if (i == ind)
+        {
+            double time = m->getPlayingOffset().asSeconds();
+            int count = floor(time / measure_time.at(i));
+            m->setPlayingOffset(seconds(count * measure_time.at(i)));
+            m->play();
+        } else {
+            m->pause();
+        }
+    }
+    last_i = ind;
 }
 
 GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m) {
@@ -50,6 +96,8 @@ GameLogic::GameLogic(GameState* s, bool c, BackgroundMusic *m) {
 
 void GameLogic::run()
 {
+    auto current = state->timer.getElapsedTime();
+    music->update(current);
     if (!state->player.initialized)
     {
         for (int i = 0; i < state->level.layers.size(); i++)
@@ -70,7 +118,7 @@ void GameLogic::run()
         }
     }
     if (last == Time::Zero) {
-        last = state->timer.getElapsedTime();
+        last = current;
         return;
     }
 
@@ -97,7 +145,6 @@ void GameLogic::run()
     }
 
     // Update speed vector.
-    auto current = state->timer.getElapsedTime();
     double elapsed = (current - last).asSeconds();
     double acc = acc_scale * (1. + state->player.speedPower);
     if (state->player.pizza)
@@ -290,39 +337,12 @@ void GameLogic::run()
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
 
     // Update music.
-    if (music->menu.getStatus() == Music::Status::Playing) {
-        music->menu.stop();
-    }
     if (state->player.pizza || state->player.schnitzel) {
-        if (music->normal.getStatus() == Music::Status::Playing) {
-            music->normal.pause();
-        }
-        if (music->dope.getStatus() == Music::Status::Playing) {
-            music->dope.pause();
-        }
-        if (music->slow.getStatus() != Music::Status::Playing) {
-            music->slow.play();
-        }
+        music->music_index = 3;
     } else if ((state->player.speedPower + state->player.forwardPower + state->player.upwardPower) > 1.5) {
-        if (music->normal.getStatus() == Music::Status::Playing) {
-            music->normal.pause();
-        }
-        if (music->dope.getStatus() != Music::Status::Playing) {
-            music->dope.play();
-        }
-        if (music->slow.getStatus() == Music::Status::Playing) {
-            music->slow.pause();
-        }
+        music->music_index = 2;
     } else {
-        if (music->normal.getStatus() != Music::Status::Playing) {
-            music->normal.play();
-        }
-        if (music->dope.getStatus() == Music::Status::Playing) {
-            music->dope.pause();
-        }
-        if (music->slow.getStatus() == Music::Status::Playing) {
-            music->slow.pause();
-        }
+        music->music_index = 1;
     }
 
     last = current;
@@ -336,10 +356,7 @@ void GameLogic::keyPressed(Keyboard::Key key) {
         break;
     case (Keyboard::Escape):
         state->ingame = false;
-        music->normal.stop();
-        music->dope.stop();
-        music->slow.stop();
-        music->menu.play();
+        music->music_index = 0;
         break;
     }
     if (cheat)

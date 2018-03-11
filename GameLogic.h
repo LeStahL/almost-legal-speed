@@ -24,12 +24,23 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <string>
+#include <vector>
 
 class BackgroundMusic {
 public:
-    BackgroundMusic(std::string, std::string, std::string, std::string);
+    BackgroundMusic(std::vector<std::pair<std::string, double>>);
     virtual ~BackgroundMusic() = default;
+
+    void update(sf::Time);
+    void play(int);
+    int music_index;
+
+private:
+    int last_i;
+    std::vector<sf::Music*> music;
+    std::vector<double> measure_time;
     sf::Music menu, normal, slow, dope;
+    sf::Time change_time;
 };
 
 class GameLogic {
