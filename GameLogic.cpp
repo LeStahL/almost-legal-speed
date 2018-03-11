@@ -26,6 +26,7 @@
 #include <iostream>
 #include <Powerup.h>
 #include <math.h>
+#include <curl/curl.h>
 
 using namespace std;
 using namespace sf;
@@ -99,23 +100,20 @@ void GameLogic::run()
     auto current = state->timer.getElapsedTime();
     music->update(current);
     if (state->finished) {
+        music->music_index = 4;
         return;
     }
     if (!state->player.initialized)
     {
-        for (int i = 0; i < state->level.layers.size(); i++)
+        for (int i = 0; i < state->level->layers.size(); i++)
         {
-            for (int j = 0; j < state->level.layers[i].size(); j++) {
-                const Block* b = state->level.layers[i][j];
-                if (b != nullptr)
+            for (int j = 0; j < state->level->layers[i].size(); j++) {
+                if (state->getBlockType(i, j) == PowerupType::PlayerStart)
                 {
-                    if (b->powerupType == PowerupType::PlayerStart)
-                    {
-                        state->level.layers[i][j] = nullptr;
-                        state->player.initialized = true;
-                        state->player.pos.x = i;
-                        state->player.pos.y = j;
-                    }
+                    state->level->layers[i][j] = nullptr;
+                    state->player.initialized = true;
+                    state->player.pos.x = i;
+                    state->player.pos.y = j;
                 }
             }
         }
@@ -173,7 +171,7 @@ void GameLogic::run()
     {
         if (state->player.jumping)
         {
-            if (state->player.jump_count < max_jumps * state->player.upwardPower)
+            if ((state->player.jump_count < max_jumps * state->player.upwardPower) && !state->player.schnitzel)
             {
                 state->player.jump_count++;
                 state->player.v.y = jump_speed;
@@ -184,7 +182,7 @@ void GameLogic::run()
         }
         max_speed *= 1 + state->player.forwardPower;
     } else {
-        if (state->player.jumping)
+        if (state->player.jumping && !state->player.schnitzel)
         {
             state->player.inair = true;
             state->player.v.y = jump_speed;
@@ -218,18 +216,18 @@ void GameLogic::run()
     // Check for collisions.
     double x = state->player.pos.x;
     double y = state->player.pos.y;
-    bool col_left = state->level.collides(x + 0.5, y)
-        || state->level.collides(x + 0.5, y + 0.6)
-        || state->level.collides(x + 0.5, y - 0.9);
-    bool col_right = state->level.collides(x + 1.5, y)
-        || state->level.collides(x + 1.5, y - 0.9)
-        || state->level.collides(x + 1.5, y + 0.6);
-    bool col_top = state->level.collides(x + 1., y + 0.7)
-        || state->level.collides(x + 0.6, y + 0.7)
-        || state->level.collides(x + 1.4, y + 0.7);
-    bool col_bottom = state->level.collides(x + 1., y - 1.01)
-        || state->level.collides(x + 0.6, y - 1.01)
-        || state->level.collides(x + 1.4, y - 1.01);
+    bool col_left = state->level->collides(x + 0.5, y)
+        || state->level->collides(x + 0.5, y + 0.6)
+        || state->level->collides(x + 0.5, y - 0.9);
+    bool col_right = state->level->collides(x + 1.5, y)
+        || state->level->collides(x + 1.5, y - 0.9)
+        || state->level->collides(x + 1.5, y + 0.6);
+    bool col_top = state->level->collides(x + 1., y + 0.7)
+        || state->level->collides(x + 0.6, y + 0.7)
+        || state->level->collides(x + 1.4, y + 0.7);
+    bool col_bottom = state->level->collides(x + 1., y - 1.01)
+        || state->level->collides(x + 0.6, y - 1.01)
+        || state->level->collides(x + 1.4, y - 1.01);
     int x_i = floor(x + 0.5);
     int y_i = floor(y - 0.5);
     if ((col_left && (state->player.v.x < 0)) || (col_right && (state->player.v.x > 0)))
@@ -284,30 +282,30 @@ void GameLogic::run()
         case (SpeedPowerup):
             state->player.speedPower += powerup_value;
             if (state->player.speedPower > 1) state->player.speedPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (JumpForwardPowerup):
             state->player.forwardPower += powerup_value;
             if (state->player.forwardPower > 1) state->player.forwardPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (JumpUpwardPowerup):
             state->player.upwardPower += powerup_value;
             if (state->player.upwardPower > 1) state->player.upwardPower = 1;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Schnitzel):
             state->player.schnitzel = true;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Pizza):
             state->player.pizza = true;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (IceCream):
             state->player.brainfreeze += powerup_value;
             if (state->player.brainfreeze > .9) state->player.brainfreeze = .9;
-            state->level.layers[x_i][y_i] = nullptr;
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         case (Money):
             // TODO
@@ -319,7 +317,19 @@ void GameLogic::run()
             state->finished = true;
             state->player.v.x = 0;
             state->player.v.y = 0;
+            state->player.brainfreeze = 0;
+            state->player.speedPower = 0;
+            state->player.upwardPower = 0;
+            state->player.forwardPower = 0;
+            music->music_index = 4;
             music->play(4);
+            break;
+        case (Doping):
+            if (state->player.speedPower + state->player.upwardPower + state->player.forwardPower > 0.5)
+            {
+                state->time += 10;
+            }
+            state->level->layers[x_i][y_i] = nullptr;
             break;
         }
     }
@@ -331,7 +341,7 @@ void GameLogic::run()
     if (state->player.forwardPower < 0) state->player.forwardPower = 0;
     state->player.upwardPower -= power_decrease * elapsed;
     if (state->player.upwardPower < 0) state->player.upwardPower = 0;
-    state->player.brainfreeze -= power_decrease * elapsed;
+    state->player.brainfreeze -= freeze_decrease * elapsed;
     if (state->player.brainfreeze < 0) state->player.brainfreeze = 0;
 
     // Update music.
@@ -346,7 +356,25 @@ void GameLogic::run()
     last = current;
 }
 
+void GameLogic::textEntered(Keyboard::Key key, Uint32 c) {
+    if ((c >= 48) && (c < 176)) {
+        state->name.push_back((char) c);
+    }
+}
+
 void GameLogic::keyPressed(Keyboard::Key key) {
+    if (state->finished)
+    {
+        if (key == Keyboard::BackSpace && state->name.size() != 0)
+        {
+            state->name.pop_back();
+        } else if (key == Keyboard::Return) {
+            pushScore(state->name, state->time);
+            state->ingame = false;
+            music->play(0);
+        }
+        return;
+    }
     switch (key)
     {
     case (Keyboard::Space):
@@ -354,7 +382,7 @@ void GameLogic::keyPressed(Keyboard::Key key) {
         break;
     case (Keyboard::Escape):
         state->ingame = false;
-        music->music_index = 0;
+        music->play(0);
         break;
     }
     if (cheat)
@@ -400,5 +428,24 @@ void GameLogic::keyPressed(Keyboard::Key key) {
             state->player.schnitzel = true;
             break;
         }
+    }
+}
+
+void GameLogic::pushScore(string name, double time) {
+	CURL *curl = curl_easy_init();
+    if (curl) {
+        struct curl_slist *headers = nullptr;
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, "https://speed.jbtec.eu/score");
+    	curl_easy_setopt(curl, CURLOPT_POST, 1L);
+		headers = curl_slist_append(headers, "Expect:");
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+		char body[100];
+		sprintf(body, "{\"name\":\"%s\",\"score\":%f}", name.c_str(), time);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
+        curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
     }
 }

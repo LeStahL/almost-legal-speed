@@ -55,11 +55,7 @@ void MenuLogic::keyPressed(sf::Keyboard::Key key) {
 
 void MenuLogic::mouseMoved(int x, int y) {
     for (int i = 0; i < texts.size(); i++) {
-        float txtX = texts[i]->getGlobalBounds().left;
-        float txtY = texts[i]->getGlobalBounds().top;
-        float txtWidth = texts[i]->getGlobalBounds().width;
-        float txtHeight = texts[i]->getGlobalBounds().height;
-        if (x > txtX && y > txtY && x < txtX + txtWidth && y < txtY + txtHeight) {
+        if (texts[i]->getGlobalBounds().contains(x, y)) {
             selectedItem = i;
             return;
         }
@@ -80,7 +76,10 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string* data) {
 
 void MenuLogic::activateMenuItem(int index) {
     if (index == 0)
+    {
         state->ingame = true;
+        state->reload();
+    }
     else if (index == 1) {
         state->onscores = true;
         curl = curl_easy_init();

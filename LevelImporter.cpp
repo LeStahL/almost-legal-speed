@@ -45,7 +45,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxManager)
+Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager* gfxManager)
 {
     std::ifstream infile(pathToFile);
     Level* current_level = nullptr;
@@ -60,7 +60,7 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
         return nullptr;
     }
     for(std::string line; getline( infile, line ); )
-    {      
+    {
 
         if (line.find("block") == 0)
         {
@@ -80,12 +80,12 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
                 {
                     block = new Block(type);
                 } else {
-                    block = gfxManager.loadBlock(name, split_line[2], w, h, solid, type);
+                    block = gfxManager->loadBlock(name, split_line[2], w, h, solid, type);
                 }
 
                 blocks.insert ( std::pair<char, Block*>(name,block) );
             } else {
-                cout<< "wrong count of parameters in " << line << endl;
+                cout << "wrong count of parameters in " << line << endl;
             }
         } else if (line.find("level") == 0)
         {
@@ -100,7 +100,8 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
 
             size_t id = stoull(line.substr(line.find_first_of(" "), line.size()));
             added_levels.push_back(id);
-            current_level = &levels[id];
+            levels[id] = new Level();
+            current_level = levels[id];
         } else if (line.find("clevel") == 0)
         {
 
@@ -118,11 +119,15 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
                 continue;
 
             size_t id = stoull(split_line[1]);
-            Level& level = levels[id];
-            level.id = id;
+            if (levels[id] == nullptr)
+            {
+                levels[id] = new Level();
+            }
+            Level* level = levels[id];
+            level->id = id;
             for (size_t i = 2; i < split_line.size(); ++i) {
                 size_t cid = stoull(split_line[i]);
-                level.addLevel(levels[cid]);
+                level->addLevel(levels[cid]);
             }
         } else if (line.find("slevel") == 0)
         {
@@ -135,7 +140,7 @@ const Level* LevelImporter::loadLevel(std::string& pathToFile, GfxManager& gfxMa
                 current_level = nullptr;
             }
             size_t id = stoull(line.substr(7, line.size()));
-            start_level = &levels[id];
+            start_level = levels[id];
         } else if (current_level != nullptr){
             for (size_t i = 0; i < line.size(); ++i) {
                 current_level->layers.resize(std::max(current_level->layers.size(), line.size()));
@@ -171,9 +176,9 @@ Block::Block(PowerupType p)
 {
 }
 
-void Level::addLevel(Level &level)
+void Level::addLevel(Level* level)
 {
-    for (std::vector<const Block*>& row : level.layers) {
+    for (std::vector<const Block*>& row : level->layers) {
         this->layers.push_back(row);
     }
 }

@@ -22,6 +22,11 @@
 
 Player::Player()
 {
+    reset();
+}
+
+void Player::reset()
+{
     pos.x = -10;
     pos.y = -10;
     initialized = false;

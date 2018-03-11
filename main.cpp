@@ -70,24 +70,15 @@ int main(int argc, char **args)
     }
     printf("Rendering level: %s\n", levelpath);
 
-    GfxManager m;
-    LevelImporter imp;
-    std::string fn(levelpath);
-    const Level *level = imp.loadLevel(fn, m);
-    if (level == nullptr) {
-        fprintf(stderr, "ERROR: Could not load startlevel.\n");
-        return -1;
-    }
     sf::RenderWindow window(sf::VideoMode(800, 600), "Almost legal speed");
-    GameState state;
-    state.level = *level;
+    GameState state(levelpath);
     Renderer r(&window, fontpath);
     vector<pair<string, double>> music_data = {
         make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
         make_pair("../matzesmagicmusic/Chilly.ogg", 4 * 60./157.0),
         make_pair("../matzesmagicmusic/MoreDopeThanHope.ogg", 4 * 60./157.0),
         make_pair("../matzesmagicmusic/TooMuchFood.ogg", 0.),
-        make_pair("../matzesmagicmusic/MoreDopeThanHope.ogg", 0.)
+        make_pair("../matzesmagicmusic/Winning.ogg", 0.)
     };
     BackgroundMusic music(music_data);
     music.play(1);
@@ -117,6 +108,10 @@ int main(int argc, char **args)
             case (sf::Event::MouseButtonPressed):
                 if (!state.ingame)
                     menuLogic.mouseButtonPressed(event.mouseButton.button);
+                break;
+            case (sf::Event::TextEntered):
+                if (state.ingame && state.finished)
+                    gameLogic.textEntered(event.key.code, event.text.unicode);
                 break;
             }
         }

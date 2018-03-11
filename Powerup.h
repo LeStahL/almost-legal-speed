@@ -31,6 +31,7 @@ typedef enum {
     Alcohol, //Level starts to tilt and blur
     PlayerStart,
     Finish,
+    Doping,
     None = -1
 } PowerupType;
 

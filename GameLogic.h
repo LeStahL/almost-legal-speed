@@ -50,6 +50,7 @@ public:
 
     void run();
     void keyPressed(sf::Keyboard::Key);
+    void textEntered(sf::Keyboard::Key, Uint32);
 
 private:
     GameState* state;
@@ -64,8 +65,10 @@ private:
     const double pizza_time = 3;
     const double schnitzel_time = 1;
     const double power_decrease = 0.02;
+    const double freeze_decrease = 0.1;
     const double powerup_value = 0.2;
     BackgroundMusic* music;
+    void pushScore(string, double);
 };
 
 #endif
