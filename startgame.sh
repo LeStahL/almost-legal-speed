@@ -13,7 +13,7 @@
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m'
-
+CHEAT="" # set to "--cheat" if you are an idiot
 
 # INSTALLATION
 if [ ! -d "build" ]; then
@@ -64,8 +64,11 @@ fi
 
 LEVEL="$1"
 FONT="$2"
+if [ "$3"=="--cheat" ]; then
+	CHEAT="--cheat"
+fi
 
-if [ -z "$LEVEL"]; then
+if [ -z "$LEVEL" ]; then
 	LEVEL="4"
 fi
 
@@ -73,11 +76,24 @@ if [ -z "$FONT" ]; then
 	FONT="../gfx/fonts/FreeSans.ttf"
 fi 
 
-echo Level $LEVEL
-echo with Font $FONT
+
+echo $FONT
+if [ ! $(echo $FONT | sed "s/.*\.//") == ttf ]; then
+	echo
+	echo -e "${RED}  [WARNING]${NC}"
+	echo
+	echo ">> Argument 2 is not a font!"
+	echo
+	exit 1
+fi
+
+echo 
+echo ">> playing level" $LEVEL
+echo ">> with font" $FONT
+echo
 
 cd build
-if ./speed -f $FONT -l ../levels/level0$LEVEL; then
+if ./speed -f $FONT -l ../levels/level0$LEVEL $CHEAT; then
 	echo
 	echo -e "${GREEN}  [GOODBYE]${NC}"
 	echo ">> Thanks for playing"
