@@ -1,8 +1,15 @@
-# mx 2018
-# run script that executes the following line a little nicer
-# works only if built in "../build"
+# mx 2018, installs and runs the game
 #
-# ./speed -f /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf -l ../levels/level04
+#
+# SINGLE INT NUMBER CHARACTER AS FIRST ARGUMENT TO CHOOSE LEVEL
+# CURRENTLY WORKS ONLY FOR LESS THAN 10 LEVELS
+#
+# .TTF FILE AS SECOND ARGUMENT TO CHOOSE PERSONAL FONT
+#
+#
+# DEFAULT: LEVEL 4, FREESANS.TTF
+
+
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m'
